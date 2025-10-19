@@ -111,12 +111,15 @@ export default function SoundscapesPage() {
           </Link>
           
           {/* Freemium badge */}
-          <Link href="/">
-            <span className="text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary hover:opacity-80 transition-opacity">
-              freemium
-            </span>
-          </Link>
+          <span className="text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary">
+            freemium
+          </span>
         </div>
+        
+        {/* Sign out button - right side */}
+        <button className="text-xs lowercase tracking-wide text-brand-text-secondary hover:text-brand-text-primary transition-colors">
+          sign out
+        </button>
       </div>
 
       {/* Rotating Insight */}

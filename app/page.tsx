@@ -8,6 +8,15 @@ export default function Home() {
     <div className="bg-brand-bg text-brand-text-primary">
       {/* Hero Section */}
       <section className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative">
+        {/* Auth buttons - top right */}
+        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 flex items-center gap-3 z-20">
+          <Button variant="ghost" className="rounded-full lowercase text-sm text-brand-text-secondary hover:text-brand-text-primary transition-colors">
+            sign in
+          </Button>
+          <Button className="rounded-full bg-brand-accent hover:bg-brand-accent/90 text-brand-bg lowercase text-sm font-medium transition-all">
+            sign up
+          </Button>
+        </div>
 
         {/* Subtle glow background */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
