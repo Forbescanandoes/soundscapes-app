@@ -92,7 +92,7 @@ export default function SoundscapesPage() {
         return
       }
       
-      // Use Supabase Storage URL if configured, otherwise fall back to local
+      // Use Supabase Storage URL
       const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
       const audioUrl = `${storageUrl}/${encodeURIComponent(filename)}`
       
@@ -125,18 +125,17 @@ export default function SoundscapesPage() {
       {/* Rotating Insight */}
       <RotatingInsight />
 
-      {/* Soundscapes Grid */}
-      <div className="flex-1 p-4 sm:p-6 pb-32 overflow-y-auto">
-        <div className="max-w-5xl mx-auto space-y-12">
+      {/* Soundscapes List */}
+      <div className="flex-1 overflow-y-auto pb-32">
+        <div className="max-w-3xl mx-auto">
           {soundCategories.map((category) => (
-            <div key={category.title}>
-              <h2 className="text-lg sm:text-xl font-light lowercase mb-4 text-brand-text-secondary tracking-wide">
+            <div key={category.title} className="mb-8">
+              <h2 className="text-2xl font-light lowercase mb-4 px-4 sm:px-6 text-brand-text-primary tracking-tight">
                 {category.title}
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-0">
                 {category.items.map((item) => {
                   const isActive = currentTrack?.id === item.id && isPlaying
-                  const isCurrentTrack = currentTrack?.id === item.id
 
                   return (
                     <button
@@ -144,51 +143,58 @@ export default function SoundscapesPage() {
                       onClick={() => handlePlay(item.id, item.name, category.title, item.unlocked)}
                       disabled={!item.unlocked}
                       className={`
-                        group relative flex items-center gap-4 p-4 rounded-lg border transition-all
+                        w-full flex items-center justify-between px-4 sm:px-6 py-4 border-b border-brand-text-muted/10 transition-all
                         ${!item.unlocked
-                          ? 'border-brand-text-muted/10 bg-brand-bg-secondary/30 cursor-not-allowed opacity-40'
-                          : isActive
-                          ? 'border-brand-accent bg-brand-accent/10'
-                          : isCurrentTrack
-                          ? 'border-brand-text-muted/30 bg-brand-bg-secondary hover:border-brand-accent/50'
-                          : 'border-brand-text-muted/20 bg-brand-bg-secondary hover:border-brand-text-muted/40'
+                          ? 'opacity-40 cursor-not-allowed'
+                          : 'hover:bg-brand-bg-secondary cursor-pointer'
                         }
                       `}
                     >
-                      {/* Play/Pause icon */}
-                      <div className={`
-                        flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center border transition-all
-                        ${!item.unlocked
-                          ? 'border-brand-text-muted/20 bg-brand-text-muted/5'
-                          : isActive
-                          ? 'border-brand-accent bg-brand-accent/20 animate-pulse-glow'
-                          : 'border-brand-text-muted/30 bg-brand-text-muted/10 group-hover:border-brand-accent/50'
-                        }
-                      `}>
-                        {!item.unlocked ? (
-                          <Lock className="w-4 h-4 text-brand-text-muted" />
-                        ) : (
-                          <Play 
-                            className={`w-4 h-4 ${isActive ? 'text-brand-accent' : 'text-brand-text-secondary group-hover:text-brand-accent'} transition-colors`}
-                            fill={isActive ? 'currentColor' : 'none'}
-                          />
-                        )}
-                      </div>
-
-                      {/* Track name */}
-                      <div className="flex-1 text-left">
+                      {/* Left: Icon + Name */}
+                      <div className="flex items-center gap-4 flex-1 min-w-0">
+                        {/* Circular Icon */}
                         <div className={`
-                          text-sm sm:text-base lowercase
+                          flex-shrink-0 w-12 h-12 rounded-full border flex items-center justify-center transition-all
+                          ${!item.unlocked
+                            ? 'border-brand-text-muted/30 bg-brand-bg-secondary'
+                            : isActive
+                            ? 'border-brand-accent bg-brand-accent/10'
+                            : 'border-brand-text-muted/30 bg-brand-bg-secondary'
+                          }
+                        `}>
+                          {!item.unlocked ? (
+                            <Lock className="w-5 h-5 text-brand-text-muted" />
+                          ) : (
+                            <div className="w-6 h-6 rounded-full border-2 border-current" />
+                          )}
+                        </div>
+
+                        {/* Track name */}
+                        <div className={`
+                          text-left text-lg font-light lowercase truncate
                           ${!item.unlocked
                             ? 'text-brand-text-muted'
                             : isActive
-                            ? 'text-brand-accent font-normal'
-                            : 'text-brand-text-primary group-hover:text-brand-accent'
-                          } transition-colors
+                            ? 'text-brand-accent'
+                            : 'text-brand-text-primary'
+                          }
                         `}>
                           {item.name}
                         </div>
                       </div>
+
+                      {/* Right: Play button */}
+                      {item.unlocked && (
+                        <div className={`
+                          flex-shrink-0 ml-4
+                          ${isActive ? 'text-brand-accent' : 'text-brand-text-secondary'}
+                        `}>
+                          <Play 
+                            className="w-5 h-5" 
+                            fill={isActive ? 'currentColor' : 'none'}
+                          />
+                        </div>
+                      )}
                     </button>
                   )
                 })}
