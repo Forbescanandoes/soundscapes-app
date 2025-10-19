@@ -83,27 +83,33 @@ export default function SoundscapesPage() {
     category: string
   } | null>(null)
 
-  // Initialize audio player with analytics
-  const { play, toggle, isPlaying, isLoading } = useAudioPlayer({
-    onPlay: () => {
-      if (currentTrack) {
-        startSession(currentTrack.id, currentTrack.name, currentTrack.category, user?.id)
-      }
-    },
-    onPause: () => {
-      endSession()
-    },
-  })
+  // Initialize audio player
+  const { play, toggle, isPlaying, isLoading } = useAudioPlayer()
 
   const handlePlay = async (itemId: string, itemName: string, categoryTitle: string, unlocked: boolean) => {
     if (!unlocked) return
     
     // If clicking same track, toggle play/pause
     if (currentTrack?.id === itemId) {
+      if (isPlaying) {
+        // Pausing - end the session
+        endSession()
+      } else {
+        // Resuming - start new session
+        startSession(itemId, itemName, categoryTitle, user?.id)
+      }
       toggle()
     } else {
+      // Switching tracks - end previous session
+      if (currentTrack && isPlaying) {
+        endSession()
+      }
+      
       // Track the play
       trackPlay(itemId, itemName, categoryTitle, user?.id)
+      
+      // Start new session
+      startSession(itemId, itemName, categoryTitle, user?.id)
       
       // Set as current track and play
       setCurrentTrack({ id: itemId, name: itemName, category: categoryTitle })
