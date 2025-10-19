@@ -69,9 +69,9 @@ export function RotatingInsight() {
   const current = insights[currentIndex]
 
   return (
-    <div className="py-8 px-4 sm:px-6 border-b border-brand-text-muted/10">
+    <div className="py-4 px-4 sm:px-6 border-b border-brand-text-muted/10">
       <div className="max-w-3xl mx-auto">
-        <div className="space-y-3">
+        <div className="space-y-2">
           {/* Quote */}
           <p className="text-sm sm:text-base font-light text-brand-text-primary lowercase leading-relaxed">
             "{current.quote}"
@@ -84,7 +84,7 @@ export function RotatingInsight() {
 
           {/* Fact (if exists) */}
           {current.fact && (
-            <p className="text-xs text-brand-accent lowercase pt-2">
+            <p className="text-xs text-brand-accent lowercase pt-1">
               → {current.fact}
             </p>
           )}
