@@ -1,12 +1,20 @@
 "use client"
 
 import { useState } from 'react'
-import { Play, Lock } from 'lucide-react'
+import { Play, Lock, ChevronDown } from 'lucide-react'
 import { Player } from '@/components/soundscape/player'
 import { RotatingMessage } from '@/components/soundscape/rotating-message'
 import { RotatingInsight } from '@/components/soundscape/rotating-insight'
 import { useAudioPlayer } from '@/hooks/use-audio-player'
+import { SignedIn, SignedOut, useClerk } from '@clerk/nextjs'
 import Link from 'next/link'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 const soundCategories = [
   {
@@ -66,6 +74,7 @@ const fileMap: Record<string, string> = {
 }
 
 export default function SoundscapesPage() {
+  const { signOut, openUserProfile } = useClerk()
   const [currentTrack, setCurrentTrack] = useState<{
     id: string
     name: string
@@ -104,22 +113,63 @@ export default function SoundscapesPage() {
     <div className="min-h-screen bg-brand-bg text-brand-text-primary flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-4 sm:p-6 border-b border-brand-text-muted/10">
+        {/* Left: Logo + Badge */}
         <div className="flex items-center gap-3">
           {/* Logo - clickable to go home */}
           <Link href="/" className="w-10 h-10 rounded-full bg-brand-text-primary flex items-center justify-center hover:opacity-80 transition-opacity">
             <div className="w-6 h-6 rounded-full border-2 border-brand-bg" />
           </Link>
           
-          {/* Freemium badge */}
-          <span className="text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary">
-            freemium
-          </span>
+          {/* Freemium badge - becomes dropdown when signed in */}
+          <SignedOut>
+            <span className="text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary">
+              freemium
+            </span>
+          </SignedOut>
+
+          <SignedIn>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary hover:border-brand-accent/50 hover:text-brand-accent transition-colors focus:outline-none">
+                  freemium
+                  <ChevronDown className="w-3 h-3" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                align="start" 
+                className="w-48 bg-brand-bg-secondary border-brand-text-muted/20 text-brand-text-primary"
+              >
+                <DropdownMenuItem 
+                  onClick={() => openUserProfile()}
+                  className="lowercase cursor-pointer focus:bg-brand-text-muted/10 focus:text-brand-text-primary"
+                >
+                  account settings
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  asChild
+                  className="lowercase cursor-pointer focus:bg-brand-text-muted/10 focus:text-brand-text-primary"
+                >
+                  <Link href="/">
+                    back to home
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-brand-text-muted/10" />
+                <DropdownMenuItem 
+                  onClick={async () => {
+                    await signOut()
+                    window.location.href = '/'
+                  }}
+                  className="lowercase cursor-pointer text-brand-error focus:bg-brand-error/10 focus:text-brand-error"
+                >
+                  sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SignedIn>
         </div>
         
-        {/* Sign out button - right side */}
-        <button className="text-xs lowercase tracking-wide text-brand-text-secondary hover:text-brand-text-primary transition-colors">
-          sign out
-        </button>
+        {/* Right: Empty for now, sign out is in dropdown */}
+        <div />
       </div>
 
       {/* Rotating Insight */}

@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { SignInButton, SignUpButton } from '@clerk/nextjs'
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 export default function Home() {
   return (
@@ -11,16 +11,36 @@ export default function Home() {
       <section className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative">
         {/* Auth buttons - top right */}
         <div className="absolute top-4 sm:top-6 right-4 sm:right-6 flex items-center gap-3 z-20">
-          <SignInButton mode="modal">
-            <Button variant="ghost" className="rounded-full lowercase text-sm text-brand-text-secondary hover:text-brand-text-primary transition-colors">
-              sign in
-            </Button>
-          </SignInButton>
-          <SignUpButton mode="modal">
-            <Button className="rounded-full bg-brand-accent hover:bg-brand-accent/90 text-brand-bg lowercase text-sm font-medium transition-all">
-              sign up
-            </Button>
-          </SignUpButton>
+          <SignedOut>
+            <SignInButton 
+              mode="modal"
+              fallbackRedirectUrl="/soundscapes"
+              signUpFallbackRedirectUrl="/soundscapes"
+            >
+              <Button variant="ghost" className="rounded-full lowercase text-sm text-brand-text-secondary hover:text-brand-text-primary transition-colors">
+                sign in
+              </Button>
+            </SignInButton>
+            <SignUpButton 
+              mode="modal"
+              fallbackRedirectUrl="/soundscapes"
+              signInFallbackRedirectUrl="/soundscapes"
+            >
+              <Button className="rounded-full bg-brand-accent hover:bg-brand-accent/90 text-brand-bg lowercase text-sm font-medium transition-all">
+                sign up
+              </Button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton 
+              afterSignOutUrl="/"
+              appearance={{
+                elements: {
+                  avatarBox: "w-10 h-10"
+                }
+              }}
+            />
+          </SignedIn>
         </div>
 
         {/* Subtle glow background */}
