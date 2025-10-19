@@ -41,12 +41,12 @@ export default function Home() {
 
         <div className="max-w-5xl mx-auto text-center relative z-10 px-4">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight lowercase leading-[1.05] mb-12">
-            <div className="mb-3">while you're stuck</div>
+            <div className="mb-3">while you&apos;re stuck</div>
             <div className="text-brand-accent">someone else is shipping.</div>
           </h1>
           
           <p className="text-base sm:text-lg font-light text-brand-text-secondary lowercase max-w-2xl mx-auto tracking-wide leading-relaxed">
-            the fastest reset for founders who can't afford to stay fried.
+            the fastest reset for founders who can&apos;t afford to stay fried.
           </p>
 
           <div className="mt-16">
@@ -70,7 +70,7 @@ export default function Home() {
           </p>
           
           <p className="text-lg sm:text-xl font-light lowercase text-brand-text-secondary leading-relaxed tracking-wide">
-            the real killer isn't distractions. it's the days you lose to brain fog and bad calls on fumes.
+            the real killer isn&apos;t distractions. it&apos;s the days you lose to brain fog and bad calls on fumes.
           </p>
         </div>
       </section>
@@ -83,7 +83,7 @@ export default function Home() {
           </p>
           
           <p className="text-2xl sm:text-3xl font-light lowercase leading-relaxed text-brand-text-primary tracking-tight">
-            stop losing time you can't get back.
+            stop losing time you can&apos;t get back.
           </p>
         </div>
       </section>
@@ -101,7 +101,7 @@ export default function Home() {
       <section className="py-24 sm:py-32 px-6 bg-brand-bg-secondary">
         <div className="max-w-5xl mx-auto">
           <p className="text-xl sm:text-2xl font-light lowercase mb-16 text-brand-text-primary tracking-wide">
-            we made these for when you're:
+            we made these for when you&apos;re:
           </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 sm:gap-16">
