@@ -1,32 +1,102 @@
-import { createClient } from '@/utils/supabase/client'
+import { createClient } from '@supabase/supabase-js'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AdminPage() {
-  const supabase = createClient()
+  // Create Supabase client directly with env vars
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   
-  if (!supabase) {
+  if (!supabaseUrl || !supabaseKey) {
     return (
       <div className="min-h-screen bg-brand-bg text-brand-text-primary flex items-center justify-center p-6">
         <div className="max-w-2xl">
           <h1 className="text-2xl mb-4">Supabase not configured</h1>
-          <p className="text-brand-text-secondary">Add your Supabase credentials to .env.local</p>
+          <p className="text-brand-text-secondary mb-4">Missing environment variables in .env.local:</p>
+          <pre className="text-sm bg-brand-bg-secondary p-4 rounded">
+            NEXT_PUBLIC_SUPABASE_URL={supabaseUrl || 'missing'}
+            NEXT_PUBLIC_SUPABASE_ANON_KEY={supabaseKey ? 'present' : 'missing'}
+          </pre>
         </div>
       </div>
     )
   }
 
+  const supabase = createClient(supabaseUrl, supabaseKey)
+
   // Get play counts
-  const { data: plays } = await supabase
+  const { data: plays, error: playsError } = await supabase
     .from('soundscape_plays')
     .select('soundscape_name, category')
 
   // Get session durations
-  const { data: sessions } = await supabase
+  const { data: sessions, error: sessionsError } = await supabase
     .from('soundscape_sessions')
     .select('soundscape_name, duration_seconds')
     .not('duration_seconds', 'is', null)
+
+  // Show errors if tables don't exist
+  if (playsError || sessionsError) {
+    return (
+      <div className="min-h-screen bg-brand-bg text-brand-text-primary flex items-center justify-center p-6">
+        <div className="max-w-2xl">
+          <h1 className="text-2xl mb-4">Database tables not set up</h1>
+          <p className="text-brand-text-secondary mb-4">Run this SQL in your Supabase dashboard:</p>
+          <pre className="text-xs bg-brand-bg-secondary p-4 rounded overflow-auto max-h-96">
+{`-- Create soundscape analytics tables
+create table public.soundscape_plays (
+  id uuid default gen_random_uuid() primary key,
+  user_id text,
+  soundscape_id text not null,
+  soundscape_name text not null,
+  category text not null,
+  played_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  session_id uuid,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+create table public.soundscape_sessions (
+  id uuid default gen_random_uuid() primary key,
+  user_id text,
+  soundscape_id text not null,
+  soundscape_name text not null,
+  category text not null,
+  started_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  ended_at timestamp with time zone,
+  duration_seconds integer,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable RLS
+alter table public.soundscape_plays enable row level security;
+alter table public.soundscape_sessions enable row level security;
+
+-- Allow public access
+create policy "Allow public insert on soundscape_plays"
+  on public.soundscape_plays for insert to public with check (true);
+
+create policy "Allow public insert on soundscape_sessions"
+  on public.soundscape_sessions for insert to public with check (true);
+
+create policy "Allow public update on soundscape_sessions"
+  on public.soundscape_sessions for update to public using (true) with check (true);
+
+create policy "Allow public read on soundscape_plays"
+  on public.soundscape_plays for select to public using (true);
+
+create policy "Allow public read on soundscape_sessions"
+  on public.soundscape_sessions for select to public using (true);`}
+          </pre>
+          <div className="mt-4">
+            <p className="text-sm text-brand-text-muted">Error details:</p>
+            <p className="text-xs text-brand-error mt-2">{playsError?.message || sessionsError?.message}</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   // Aggregate data
   const stats: Record<string, { name: string; plays: number; totalMinutes: number }> = {}
@@ -134,4 +204,3 @@ export default async function AdminPage() {
     </div>
   )
 }
-
