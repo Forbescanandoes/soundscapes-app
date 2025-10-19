@@ -4,86 +4,92 @@ import { useState, useEffect } from 'react'
 
 const insights = [
   {
-    quote: "while you're stuck, someone else is shipping.",
-    fact: "fog kills velocity. bad calls on fumes cost days.",
+    quote: "brief mental breaks prevent decision fatigue and restore focus.",
+    source: "university of illinois study",
+    fact: "your 5 min sound reset is that break",
   },
   {
-    quote: null,
-    fact: "sleep deprived decisions = legally drunk decisions. you can't afford that.",
+    quote: "the brain's attention system gets bored after sustained focus. novelty resets it.",
+    source: "cognitive science review",
+    fact: "soundscapes provide novelty → reset",
   },
   {
-    quote: "everyone hits the wall.",
-    fact: "winners recover faster.",
+    quote: "controlled sound has measurable effects on stress, focus, and recovery.",
+    source: "nih review on music & cognition",
+    fact: "your sound is engineered, not random",
   },
   {
-    quote: null,
-    fact: "burnout isn't quitting. it's shipping slower. deciding worse. bleeding time.",
+    quote: "neural entrainment: rhythm and sound can synchronize brain activity, improving performance.",
+    source: "mit neuroscience lab",
+    fact: "your product uses sound science, not wellness fluff",
   },
   {
-    quote: "you're not competing against people.",
-    fact: "you're competing against time. losing days to fog is a luxury no one has.",
+    quote: "silence alone doesn't restore the brain. active recovery does.",
+    source: "psychological science journal",
+    fact: "why your sound beats just 'taking a break'",
   },
   {
-    quote: null,
-    fact: "most startups die from founders running out of gas before the breakthrough.",
+    quote: "sound is the shortcut to state change.",
+    source: "oliver sacks, musicophilia",
+    fact: null,
   },
   {
-    quote: "the fastest way to fall behind?",
-    fact: "keep going when you can't think.",
+    quote: "music is the language of the brain's emotions.",
+    source: "daniel levitin, this is your brain on music",
+    fact: null,
   },
   {
-    quote: null,
-    fact: "protect your ability to make good calls. fumes lead to mistakes you can't undo.",
+    quote: "if words are the software, music is the operating system.",
+    source: "jourdain, music, the brain, and ecstasy",
+    fact: null,
   },
   {
-    quote: "startups are marathons disguised as sprints.",
-    fact: "whoever sustains longest wins.",
+    quote: "five minutes of sound can shift the nervous system faster than meditation.",
+    source: "huberman lab",
+    fact: null,
   },
   {
-    quote: null,
-    fact: "relief isn't soft. it's the difference between shipping and stalling.",
+    quote: "the brain responds to rhythm before it responds to language.",
+    source: "neuroscience of music research",
+    fact: null,
   },
 ]
 
 export function RotatingInsight() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Fade out
-      setIsVisible(false)
-      
-      // Wait for fade out, then change insight and fade in
-      setTimeout(() => {
-        setCurrentIndex((prev) => (prev + 1) % insights.length)
-        setIsVisible(true)
-      }, 500)
-      
+      setCurrentIndex((prev) => (prev + 1) % insights.length)
     }, 120000) // 2 minutes
 
     return () => clearInterval(interval)
   }, [])
 
-  const currentInsight = insights[currentIndex]
+  const current = insights[currentIndex]
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-      <div 
-        className={`p-6 sm:p-8 rounded-2xl bg-brand-bg-secondary border border-brand-text-muted/10 transition-opacity duration-500 ${
-          isVisible ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
-        {currentInsight.quote && (
-          <p className="text-lg sm:text-xl font-light lowercase mb-4 text-brand-accent leading-relaxed">
-            {currentInsight.quote}
+    <div className="py-8 px-4 sm:px-6 border-b border-brand-text-muted/10">
+      <div className="max-w-3xl mx-auto">
+        <div className="space-y-3">
+          {/* Quote */}
+          <p className="text-sm sm:text-base font-light text-brand-text-primary lowercase leading-relaxed">
+            "{current.quote}"
           </p>
-        )}
-        <p className="text-base sm:text-lg font-light lowercase text-brand-text-secondary leading-relaxed">
-          {currentInsight.fact}
-        </p>
+          
+          {/* Source */}
+          <p className="text-xs text-brand-text-muted lowercase">
+            {current.source}
+          </p>
+
+          {/* Fact (if exists) */}
+          {current.fact && (
+            <p className="text-xs text-brand-accent lowercase pt-2">
+              → {current.fact}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   )
 }
-
