@@ -2,37 +2,12 @@
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 
 export default function Home() {
   return (
     <div className="bg-brand-bg text-brand-text-primary">
       {/* Hero Section */}
       <section className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 relative">
-        {/* Auth buttons */}
-        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 flex items-center gap-3 z-20">
-          <SignedOut>
-            <SignInButton mode="modal">
-              <Button variant="ghost" className="rounded-full lowercase text-sm text-brand-text-secondary hover:text-brand-text-primary transition-colors">
-                sign in
-              </Button>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <Button className="rounded-full bg-brand-accent hover:bg-brand-accent/90 text-brand-bg lowercase text-sm font-medium transition-all">
-                sign up
-              </Button>
-            </SignUpButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton 
-              appearance={{
-                elements: {
-                  avatarBox: "w-10 h-10"
-                }
-              }}
-            />
-          </SignedIn>
-        </div>
 
         {/* Subtle glow background */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

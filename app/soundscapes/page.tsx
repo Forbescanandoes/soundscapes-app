@@ -1,14 +1,12 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Play, Lock } from 'lucide-react'
 import { Player } from '@/components/soundscape/player'
 import { RotatingMessage } from '@/components/soundscape/rotating-message'
 import { RotatingInsight } from '@/components/soundscape/rotating-insight'
 import { useAudioPlayer } from '@/hooks/use-audio-player'
-import { soundscapeAnalytics } from '@/utils/analytics/soundscape-analytics'
-import { useUser } from '@clerk/nextjs'
-import { FreemiumBadge } from '@/components/soundscape/account-menu'
+import Link from 'next/link'
 
 const soundCategories = [
   {
@@ -56,186 +54,159 @@ const soundCategories = [
   },
 ]
 
+// Map of track IDs to actual audio filenames
+const fileMap: Record<string, string> = {
+  'shipping too fast': 'Shipping Too Fast.mp3',
+  'slept at desk': 'Slept at Desk.wav',
+  'one too many hats': 'One Too Many Hats.wav',
+  'the dread of marketing': 'the dread of marketing.wav',
+  'imposter hour': 'Imposter Hour.wav',
+  'idea avalanche': 'Idea Avalanche.wav',
+  'twelve tabs open': 'Twelve Tabs Open.wav',
+}
+
 export default function SoundscapesPage() {
-  const { user } = useUser()
   const [currentTrack, setCurrentTrack] = useState<{
     id: string
     name: string
     category: string
   } | null>(null)
 
-  // Initialize audio player with analytics callbacks
-  const { play, toggle, isPlaying, isLoading, error } = useAudioPlayer({
-    onPlay: async () => {
-      if (currentTrack) {
-        await soundscapeAnalytics.startSession({
-          soundscapeId: currentTrack.id,
-          soundscapeName: currentTrack.name,
-          category: currentTrack.category,
-          userId: user?.id,
-        })
-      }
-    },
-    onPause: async () => {
-      await soundscapeAnalytics.endSession()
-    },
-    onError: (err) => {
-      console.error('Audio playback error:', err)
-    },
-  })
-
-  // Handle cleanup on unmount or tab close
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      soundscapeAnalytics.endSession()
-    }
-
-    window.addEventListener('beforeunload', handleBeforeUnload)
-    
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload)
-      soundscapeAnalytics.endSession()
-    }
-  }, [])
+  // Initialize audio player
+  const { play, toggle, isPlaying, isLoading } = useAudioPlayer()
 
   const handlePlay = async (itemId: string, itemName: string, categoryTitle: string, unlocked: boolean) => {
     if (!unlocked) return
-    
-    const userId = user?.id
     
     // If clicking same track, toggle play/pause
     if (currentTrack?.id === itemId) {
       toggle()
     } else {
-      // Track the play event with user ID
-      await soundscapeAnalytics.trackPlay({
-        soundscapeId: itemId,
-        soundscapeName: itemName,
-        category: categoryTitle,
-        userId,
-      })
-
-      // If switching tracks, handle the switch
-      if (currentTrack) {
-        await soundscapeAnalytics.switchSoundscape({
-          soundscapeId: itemId,
-          soundscapeName: itemName,
-          category: categoryTitle,
-          userId,
-        })
-      }
-
-      // Update current track
+      // Set as current track and play
       setCurrentTrack({ id: itemId, name: itemName, category: categoryTitle })
-
-      // Map track names to actual filenames
-      const fileMap: Record<string, string> = {
-        'shipping too fast': 'Shipping Too Fast.mp3',
-        'slept at desk': 'Slept at Desk.wav',
-        'one too many hats': 'One Too Many Hats.wav',
-        'the dread of marketing': 'the dread of marketing.wav',
-        'imposter hour': 'Imposter Hour.wav',
-        'idea avalanche': 'Idea Avalanche.wav',
-        'twelve tabs open': 'Twelve Tabs Open.wav',
+      
+      // Get filename from map
+      const filename = fileMap[itemName]
+      if (!filename) {
+        console.error(`No filename found for: ${itemName}`)
+        return
       }
       
-      const filename = fileMap[itemName]
-      
-      // Get audio URL - check for Supabase Storage first, fallback to local
-      const storageUrl = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL
-      const audioUrl = storageUrl 
-        ? `${storageUrl}/${encodeURIComponent(filename)}`
-        : `/MUSIC/${filename}`
+      // Use Supabase Storage URL if configured, otherwise fall back to local
+      const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
+      const audioUrl = `${storageUrl}/${encodeURIComponent(filename)}`
       
       play(itemId, audioUrl)
     }
   }
 
-  const handleTogglePlay = () => {
-    toggle()
-  }
-
   return (
-    <div className="min-h-screen bg-brand-bg text-brand-text-primary pb-32">
+    <div className="min-h-screen bg-brand-bg text-brand-text-primary flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between p-4 sm:p-6 border-b border-brand-text-muted/10">
-        <FreemiumBadge />
+        <div className="flex items-center gap-3">
+          {/* Logo - clickable to go home */}
+          <Link href="/" className="w-10 h-10 rounded-full bg-brand-text-primary flex items-center justify-center hover:opacity-80 transition-opacity">
+            <div className="w-6 h-6 rounded-full border-2 border-brand-bg" />
+          </Link>
+          
+          {/* Freemium badge */}
+          <Link href="/">
+            <span className="text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary hover:opacity-80 transition-opacity">
+              freemium
+            </span>
+          </Link>
+        </div>
       </div>
 
       {/* Rotating Insight */}
       <RotatingInsight />
 
-      {/* Soundscapes List */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-        {soundCategories.map((category, idx) => (
-          <div key={category.title} className={idx > 0 ? 'mt-16' : ''}>
-            <h2 className="text-3xl sm:text-4xl font-light mb-8 lowercase text-brand-text-primary">{category.title}</h2>
-            <div className="space-y-2">
-              {category.items.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => handlePlay(item.id, item.name, category.title, item.unlocked)}
-                  disabled={!item.unlocked}
-                  className={`w-full flex items-center justify-between p-4 sm:p-6 rounded-2xl transition-all group ${
-                    item.unlocked
-                      ? 'hover:bg-brand-bg-secondary cursor-pointer'
-                      : 'opacity-40 cursor-not-allowed'
-                  } ${currentTrack?.id === item.id && isPlaying ? 'bg-brand-bg-secondary border border-brand-accent/50' : 'border border-transparent'}`}
-                >
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all ${
-                      item.unlocked 
-                        ? currentTrack?.id === item.id && isPlaying 
-                          ? 'bg-brand-accent/20 border border-brand-accent' 
-                          : 'bg-brand-text-muted/10 border border-brand-text-muted/20 group-hover:border-brand-accent/50'
-                        : 'bg-brand-text-muted/5 border border-brand-text-muted/10'
-                    }`}>
-                      {/* Icon placeholder - you can customize per item */}
-                      <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full border transition-all ${
-                        currentTrack?.id === item.id && isPlaying
-                          ? 'border-brand-accent'
-                          : 'border-brand-text-muted/30'
-                      }`} />
-                    </div>
-                    <span className="text-base sm:text-xl font-light lowercase text-brand-text-primary">{item.name}</span>
-                  </div>
-                  {item.unlocked ? (
-                    <Play className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
-                      currentTrack?.id === item.id && isPlaying
-                        ? 'text-brand-accent'
-                        : 'text-brand-text-secondary group-hover:text-brand-accent'
-                    }`} />
-                  ) : (
-                    <Lock className="w-4 h-4 sm:w-5 sm:h-5 text-brand-text-muted" />
-                  )}
-                </button>
-              ))}
+      {/* Soundscapes Grid */}
+      <div className="flex-1 p-4 sm:p-6 pb-32 overflow-y-auto">
+        <div className="max-w-5xl mx-auto space-y-12">
+          {soundCategories.map((category) => (
+            <div key={category.title}>
+              <h2 className="text-lg sm:text-xl font-light lowercase mb-4 text-brand-text-secondary tracking-wide">
+                {category.title}
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {category.items.map((item) => {
+                  const isActive = currentTrack?.id === item.id && isPlaying
+                  const isCurrentTrack = currentTrack?.id === item.id
+
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handlePlay(item.id, item.name, category.title, item.unlocked)}
+                      disabled={!item.unlocked}
+                      className={`
+                        group relative flex items-center gap-4 p-4 rounded-lg border transition-all
+                        ${!item.unlocked
+                          ? 'border-brand-text-muted/10 bg-brand-bg-secondary/30 cursor-not-allowed opacity-40'
+                          : isActive
+                          ? 'border-brand-accent bg-brand-accent/10'
+                          : isCurrentTrack
+                          ? 'border-brand-text-muted/30 bg-brand-bg-secondary hover:border-brand-accent/50'
+                          : 'border-brand-text-muted/20 bg-brand-bg-secondary hover:border-brand-text-muted/40'
+                        }
+                      `}
+                    >
+                      {/* Play/Pause icon */}
+                      <div className={`
+                        flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center border transition-all
+                        ${!item.unlocked
+                          ? 'border-brand-text-muted/20 bg-brand-text-muted/5'
+                          : isActive
+                          ? 'border-brand-accent bg-brand-accent/20 animate-pulse-glow'
+                          : 'border-brand-text-muted/30 bg-brand-text-muted/10 group-hover:border-brand-accent/50'
+                        }
+                      `}>
+                        {!item.unlocked ? (
+                          <Lock className="w-4 h-4 text-brand-text-muted" />
+                        ) : (
+                          <Play 
+                            className={`w-4 h-4 ${isActive ? 'text-brand-accent' : 'text-brand-text-secondary group-hover:text-brand-accent'} transition-colors`}
+                            fill={isActive ? 'currentColor' : 'none'}
+                          />
+                        )}
+                      </div>
+
+                      {/* Track name */}
+                      <div className="flex-1 text-left">
+                        <div className={`
+                          text-sm sm:text-base lowercase
+                          ${!item.unlocked
+                            ? 'text-brand-text-muted'
+                            : isActive
+                            ? 'text-brand-accent font-normal'
+                            : 'text-brand-text-primary group-hover:text-brand-accent'
+                          } transition-colors
+                        `}>
+                          {item.name}
+                        </div>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       {/* Player */}
       {currentTrack && (
         <Player
           trackName={currentTrack.name}
-          category={currentTrack.category}
           isPlaying={isPlaying}
           isLoading={isLoading}
-          onTogglePlay={handleTogglePlay}
+          onTogglePlay={toggle}
         />
       )}
 
-      {/* Error display (optional - for development) */}
-      {error && process.env.NODE_ENV === 'development' && (
-        <div className="fixed top-20 right-4 bg-brand-error text-white p-4 rounded-lg max-w-md">
-          <p className="text-sm">{error.message}</p>
-        </div>
-      )}
-
-      {/* Rotating message at bottom */}
+      {/* Rotating Message */}
       <RotatingMessage />
     </div>
   )
 }
-

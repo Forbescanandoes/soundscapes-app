@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button'
 
 interface PlayerProps {
   trackName: string
-  category: string
   isPlaying: boolean
   isLoading?: boolean
   onTogglePlay: () => void
