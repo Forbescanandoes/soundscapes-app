@@ -6,8 +6,9 @@ import { Player } from '@/components/soundscape/player'
 import { RotatingMessage } from '@/components/soundscape/rotating-message'
 import { RotatingInsight } from '@/components/soundscape/rotating-insight'
 import { useAudioPlayer } from '@/hooks/use-audio-player'
-import { SignedIn, SignedOut, useClerk } from '@clerk/nextjs'
+import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/nextjs'
 import Link from 'next/link'
+import { trackPlay, startSession, endSession } from '@/utils/analytics/track'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -75,14 +76,24 @@ const fileMap: Record<string, string> = {
 
 export default function SoundscapesPage() {
   const { signOut, openUserProfile } = useClerk()
+  const { user } = useUser()
   const [currentTrack, setCurrentTrack] = useState<{
     id: string
     name: string
     category: string
   } | null>(null)
 
-  // Initialize audio player
-  const { play, toggle, isPlaying, isLoading } = useAudioPlayer()
+  // Initialize audio player with analytics
+  const { play, toggle, isPlaying, isLoading } = useAudioPlayer({
+    onPlay: () => {
+      if (currentTrack) {
+        startSession(currentTrack.id, currentTrack.name, currentTrack.category, user?.id)
+      }
+    },
+    onPause: () => {
+      endSession()
+    },
+  })
 
   const handlePlay = async (itemId: string, itemName: string, categoryTitle: string, unlocked: boolean) => {
     if (!unlocked) return
@@ -91,6 +102,9 @@ export default function SoundscapesPage() {
     if (currentTrack?.id === itemId) {
       toggle()
     } else {
+      // Track the play
+      trackPlay(itemId, itemName, categoryTitle, user?.id)
+      
       // Set as current track and play
       setCurrentTrack({ id: itemId, name: itemName, category: categoryTitle })
       
