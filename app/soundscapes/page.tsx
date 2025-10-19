@@ -197,10 +197,10 @@ export default function SoundscapesPage() {
 
       {/* Soundscapes List */}
       <div className="flex-1 overflow-y-auto pb-32">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto pt-8">
           {soundCategories.map((category) => (
-            <div key={category.title} className="mb-8">
-              <h2 className="text-2xl font-light lowercase mb-4 px-4 sm:px-6 text-brand-text-primary tracking-tight">
+            <div key={category.title} className="mb-12">
+              <h2 className="text-2xl font-light lowercase mb-6 px-4 sm:px-6 text-brand-text-primary tracking-tight">
                 {category.title}
               </h2>
               <div className="space-y-0">
