@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { Play, Lock } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { Player } from '@/components/soundscape/player'
 import { RotatingMessage } from '@/components/soundscape/rotating-message'
 import { RotatingInsight } from '@/components/soundscape/rotating-insight'
@@ -66,7 +65,7 @@ export default function SoundscapesPage() {
   } | null>(null)
 
   // Initialize audio player with analytics callbacks
-  const { play, pause, toggle, isPlaying, isLoading, error } = useAudioPlayer({
+  const { play, toggle, isPlaying, isLoading, error } = useAudioPlayer({
     onPlay: async () => {
       if (currentTrack) {
         await soundscapeAnalytics.startSession({

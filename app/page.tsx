@@ -110,7 +110,7 @@ export default function Home() {
                 burnt out
               </h3>
               <p className="text-base text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-                shipping nonstop. brain's static. can't think. this clears it.
+                shipping nonstop. brain&apos;s static. can&apos;t think. this clears it.
               </p>
             </div>
 
@@ -119,7 +119,7 @@ export default function Home() {
                 overloaded
               </h3>
               <p className="text-base text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-                ten tabs deep. everything's on fire. wearing every hat. pause here.
+                ten tabs deep. everything&apos;s on fire. wearing every hat. pause here.
               </p>
             </div>
 
@@ -137,7 +137,7 @@ export default function Home() {
                 adhd as hell
               </h3>
               <p className="text-base text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-                ideas avalanching. scrolling not shipping. can't start. can't stop. reset.
+                ideas avalanching. scrolling not shipping. can&apos;t start. can&apos;t stop. reset.
               </p>
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function Home() {
       <section className="py-24 sm:py-32 px-6 bg-brand-bg-secondary">
         <div className="max-w-4xl mx-auto">
           <p className="text-2xl sm:text-3xl font-light lowercase leading-relaxed text-brand-text-secondary mb-10 tracking-tight">
-            most founders don't quit because it's hard.
+            most founders don&apos;t quit because it&apos;s hard.
           </p>
           <p className="text-2xl sm:text-3xl font-light lowercase leading-relaxed text-brand-text-primary tracking-tight">
             they run out of gas before the breakthrough.
@@ -190,7 +190,7 @@ export default function Home() {
       <footer className="py-12 px-4 sm:px-6 border-t border-brand-text-muted/10">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-brand-text-muted lowercase">
-            we see you when you're fried
+            we see you when you&apos;re fried
           </p>
           <div className="flex items-center gap-6 text-sm text-brand-text-muted lowercase">
             <Link href="/soundscapes" className="hover:text-brand-accent transition-colors">
