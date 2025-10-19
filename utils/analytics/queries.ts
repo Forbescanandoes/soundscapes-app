@@ -81,7 +81,7 @@ export async function getCategoryStats() {
 
   // Count by category
   const categoryCount: Record<string, number> = {}
-  data?.forEach((play) => {
+  data?.forEach((play: { category: string }) => {
     categoryCount[play.category] = (categoryCount[play.category] || 0) + 1
   })
 
