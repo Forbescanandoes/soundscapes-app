@@ -127,7 +127,7 @@ export async function getAnalyticsSummary() {
     .from('soundscape_plays')
     .select('user_id')
 
-  const uniqueUsers = new Set(uniqueUserData?.map(d => d.user_id || 'anonymous')).size
+  const uniqueUsers = new Set(uniqueUserData?.map((d: { user_id: string | null }) => d.user_id || 'anonymous')).size
 
   // Top soundscapes
   const topSoundscapes = await getTopSoundscapes(5)
