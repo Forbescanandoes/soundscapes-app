@@ -39,7 +39,7 @@ export async function getSoundscapeStats(soundscapeId: string) {
     .not('duration_seconds', 'is', null)
 
   const avgDuration = sessions && sessions.length > 0
-    ? sessions.reduce((sum, s) => sum + (s.duration_seconds || 0), 0) / sessions.length
+    ? sessions.reduce((sum: number, s: { duration_seconds: number | null }) => sum + (s.duration_seconds || 0), 0) / sessions.length
     : 0
 
   return {
