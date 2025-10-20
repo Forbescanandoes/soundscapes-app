@@ -19,88 +19,30 @@
   }
   
   .glow-accent-lg {
-    box-shadow: 0 0 30px rgba(47, 128, 237, 0.5), 0 0 60px rgba(47, 128, 237, 0.3);
+    box-shadow: 0 0 30px rgba(47, 128, 237, 0.5), 0 0 60px rgba(47, 128, 237, 0.3), 0 0 90px rgba(47, 128, 237, 0.2);
   }
 
-  .glow-text {
-    text-shadow: 0 0 40px rgba(47, 128, 237, 0.3), 0 0 80px rgba(47, 128, 237, 0.15);
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
   }
 
-  /* Fade in animations */
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
   }
 
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  ::-webkit-scrollbar-track {
+    background: #0E0E0E;
   }
 
-  @keyframes pulse-slow {
-    0%, 100% {
-      opacity: 0.8;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.05);
-    }
+  ::-webkit-scrollbar-thumb {
+    background: #2F80ED;
+    border-radius: 4px;
   }
 
-  @keyframes bounce-slow {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .animate-fade-in {
-    animation: fade-in 0.8s ease-out forwards;
-  }
-
-  .animate-fade-in-up {
-    animation: fade-in-up 0.8s ease-out forwards;
-  }
-
-  .animate-pulse-slow {
-    animation: pulse-slow 6s ease-in-out infinite;
-  }
-
-  .animate-bounce-slow {
-    animation: bounce-slow 3s ease-in-out infinite;
-  }
-
-  /* Animation delays */
-  .animation-delay-200 {
-    animation-delay: 0.2s;
-  }
-
-  .animation-delay-400 {
-    animation-delay: 0.4s;
-  }
-
-  .animation-delay-1000 {
-    animation-delay: 1s;
-  }
-
-  /* Ensure delayed animations start invisible */
-  .animation-delay-200,
-  .animation-delay-400,
-  .animation-delay-1000 {
-    opacity: 0;
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5094ed;
   }
 }
 
