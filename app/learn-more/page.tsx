@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Brain, Zap, Moon, Activity } from 'lucide-react'
+import { ArrowLeft, Brain, Zap, Target, Sparkles } from 'lucide-react'
 
 export default function LearnMorePage() {
   return (
@@ -29,26 +29,31 @@ export default function LearnMorePage() {
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-light lowercase leading-tight mb-8 tracking-tight">
             how it works
           </h1>
-          <p className="text-xl sm:text-2xl font-light text-brand-text-secondary lowercase leading-relaxed mb-16">
-            neuroscience-backed soundscapes designed for founders who need to perform.
+          <h2 className="text-2xl sm:text-3xl font-light text-brand-text-primary lowercase leading-relaxed mb-6 tracking-tight">
+            sound built for endurance
+          </h2>
+          <p className="text-lg sm:text-xl font-light text-brand-text-secondary lowercase leading-relaxed mb-16">
+            neuroscience backed soundscapes designed for founders who need to perform — not unwind. quick resets that clear the noise, restore clarity, and keep you shipping when everything&apos;s on fire.
           </p>
         </motion.div>
 
-        {/* Soundscape Types */}
-        <div className="space-y-16 mb-24">
+        {/* Soundscape States */}
+        <div className="space-y-12 mb-24">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-8"
+            className="space-y-4 pb-12 border-b border-brand-text-muted/10"
           >
             <div className="flex items-center gap-4">
               <Brain className="w-8 h-8 text-brand-accent" />
-              <h2 className="text-3xl font-light lowercase tracking-tight">relax</h2>
+              <h2 className="text-3xl font-light lowercase tracking-tight">burnout</h2>
             </div>
-            <p className="text-lg text-brand-text-secondary leading-relaxed">
-              calms your mind to create feelings of comfort and safety. when you&apos;re running on fumes, 
-              these soundscapes help your nervous system downshift so you can actually rest.
+            <p className="text-lg text-brand-text-secondary leading-relaxed lowercase">
+              shipping nonstop. brain&apos;s static. can&apos;t think.
+            </p>
+            <p className="text-lg text-brand-text-primary leading-relaxed lowercase">
+              this clears the mental jam so you don&apos;t stall.
             </p>
           </motion.div>
 
@@ -56,15 +61,17 @@ export default function LearnMorePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="space-y-8"
+            className="space-y-4 pb-12 border-b border-brand-text-muted/10"
           >
             <div className="flex items-center gap-4">
               <Zap className="w-8 h-8 text-brand-accent" />
-              <h2 className="text-3xl font-light lowercase tracking-tight">focus</h2>
+              <h2 className="text-3xl font-light lowercase tracking-tight">overload</h2>
             </div>
-            <p className="text-lg text-brand-text-secondary leading-relaxed">
-              boosts your productivity by helping you concentrate for longer. cuts through the noise 
-              when you have ten tabs open and need to actually ship something.
+            <p className="text-lg text-brand-text-secondary leading-relaxed lowercase">
+              ten tabs deep. inbox on fire. wearing every hat.
+            </p>
+            <p className="text-lg text-brand-text-primary leading-relaxed lowercase">
+              pause here — come back sharper.
             </p>
           </motion.div>
 
@@ -72,15 +79,17 @@ export default function LearnMorePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="space-y-8"
+            className="space-y-4 pb-12 border-b border-brand-text-muted/10"
           >
             <div className="flex items-center gap-4">
-              <Moon className="w-8 h-8 text-brand-accent" />
-              <h2 className="text-3xl font-light lowercase tracking-tight">sleep</h2>
+              <Target className="w-8 h-8 text-brand-accent" />
+              <h2 className="text-3xl font-light lowercase tracking-tight">anxious</h2>
             </div>
-            <p className="text-lg text-brand-text-secondary leading-relaxed">
-              soothes you into a deep sleep with soft, gentle sounds. because sleeping at your desk 
-              isn&apos;t a sustainable strategy.
+            <p className="text-lg text-brand-text-secondary leading-relaxed lowercase">
+              runway math. pitch nerves. imposter loop.
+            </p>
+            <p className="text-lg text-brand-text-primary leading-relaxed lowercase">
+              stop the spiral before it wrecks your focus.
             </p>
           </motion.div>
 
@@ -88,41 +97,35 @@ export default function LearnMorePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="space-y-8"
+            className="space-y-4 pb-12 border-b border-brand-text-muted/10"
           >
             <div className="flex items-center gap-4">
-              <Activity className="w-8 h-8 text-brand-accent" />
-              <h2 className="text-3xl font-light lowercase tracking-tight">activity</h2>
+              <Sparkles className="w-8 h-8 text-brand-accent" />
+              <h2 className="text-3xl font-light lowercase tracking-tight">adhd</h2>
             </div>
-            <p className="text-lg text-brand-text-secondary leading-relaxed">
-              powers your movement with sounds to keep you present and grounded. for when you need 
-              to move your body before you can move your business forward.
+            <p className="text-lg text-brand-text-secondary leading-relaxed lowercase">
+              ideas avalanching. scrolling not shipping. can&apos;t start. can&apos;t stop.
+            </p>
+            <p className="text-lg text-brand-text-primary leading-relaxed lowercase">
+              reset. lock in. ship.
             </p>
           </motion.div>
         </div>
 
-        {/* The Science */}
+        {/* The Tech */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
           className="border-t border-brand-text-muted/10 pt-16"
         >
-          <h2 className="text-4xl font-light lowercase mb-8 tracking-tight">the science</h2>
-          <div className="space-y-6 text-lg text-brand-text-secondary leading-relaxed">
+          <h2 className="text-4xl font-light lowercase mb-8 tracking-tight">the tech</h2>
+          <div className="space-y-6 text-lg text-brand-text-secondary leading-relaxed lowercase">
             <p>
-              our soundscapes use binaural beats, isochronic tones, and nature sounds that directly 
-              influence your brainwave patterns. not meditation. not wellness. just functional audio 
-              that changes your state.
+              our soundscapes use binaural beats, isochronic tones, and nature based frequencies tuned to shift your brain&apos;s state fast.
             </p>
-            <p>
-              neuroscience shows that specific frequencies can improve focus by up to 7x, reduce 
-              stress by 3.6x with regular use, and help maintain 95% of concentration during extended 
-              listening sessions.
-            </p>
-            <p>
-              every soundscape is built for a specific founder state. burnt out. overloaded. anxious. 
-              adhd as hell. we know because we&apos;ve been there.
+            <p className="text-brand-text-primary">
+              not meditation. not wellness. functional audio that rebuilds momentum.
             </p>
           </div>
         </motion.div>
