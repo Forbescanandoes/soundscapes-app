@@ -364,14 +364,16 @@ export default function Home() {
                       }`}
                       style={{ borderWidth: '1.5px' }}
                       animate={{
-                        scale: [1, 3],
-                        opacity: [0.8, 0],
+                        scale: [1, 3, 3],
+                        opacity: [0.8, 0, 0],
                       }}
                       transition={{
                         duration: 4,
                         repeat: Infinity,
+                        repeatType: "loop",
                         delay: i * 1.3,
-                        ease: [0.4, 0, 0.2, 1],
+                        ease: "linear",
+                        times: [0, 0.95, 1],
                       }}
                     />
                   ))}
