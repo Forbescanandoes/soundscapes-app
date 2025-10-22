@@ -10,12 +10,14 @@ import { useAudioPlayer } from '@/hooks/use-audio-player'
 export default function Home() {
   const { play, pause, isPlaying, currentTrackId } = useAudioPlayer()
 
+  const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
+  
   const soundscapeCategories = [
     {
       id: 'burnout',
       title: 'burnout',
       description: 'shipping nonstop. brain\'s static. can\'t think. this clears it.',
-      audioFile: '/soundscapes/Slept at Desk.wav',
+      audioFile: `${storageUrl}/${encodeURIComponent('Slept at Desk.wav')}`,
       icon: Brain,
       gradient: 'from-red-500/20 to-orange-500/20'
     },
@@ -23,7 +25,7 @@ export default function Home() {
       id: 'overload',
       title: 'overload',
       description: 'ten tabs deep. everything\'s on fire. wearing every hat. pause here.',
-      audioFile: '/soundscapes/One Too Many Hats.wav',
+      audioFile: `${storageUrl}/${encodeURIComponent('One Too Many Hats.wav')}`,
       icon: Zap,
       gradient: 'from-yellow-500/20 to-orange-500/20'
     },
@@ -31,7 +33,7 @@ export default function Home() {
       id: 'anxious',
       title: 'anxious',
       description: 'runway math. pitch anxiety. imposter loop. stop the spiral.',
-      audioFile: '/soundscapes/Imposter Hour.wav',
+      audioFile: `${storageUrl}/${encodeURIComponent('Imposter Hour.wav')}`,
       icon: Target,
       gradient: 'from-purple-500/20 to-pink-500/20'
     },
@@ -39,7 +41,7 @@ export default function Home() {
       id: 'adhd',
       title: 'adhd',
       description: 'ideas avalanching. scrolling not shipping. can\'t start. can\'t stop. reset.',
-      audioFile: '/soundscapes/Twelve Tabs Open.wav',
+      audioFile: `${storageUrl}/${encodeURIComponent('Twelve Tabs Open.wav')}`,
       icon: Sparkles,
       gradient: 'from-blue-500/20 to-cyan-500/20'
     }
