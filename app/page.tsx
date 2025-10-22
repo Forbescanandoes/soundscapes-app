@@ -381,6 +381,10 @@ export default function Home() {
 
                 {/* Center content */}
                 <div className="relative z-10 text-center">
+                  <p className="text-xl sm:text-2xl font-light lowercase text-brand-accent tracking-tight mb-6">
+                    {soundscapeCategories.find(c => c.id === currentTrackId)?.title}
+                  </p>
+                  
                   <motion.div
                     animate={{
                       scale: [1, 1.05, 1],
@@ -390,7 +394,6 @@ export default function Home() {
                       repeat: Infinity,
                       ease: "easeInOut"
                     }}
-                    className="mb-6"
                   >
                     {(() => {
                       const category = soundscapeCategories.find(c => c.id === currentTrackId)
@@ -398,10 +401,6 @@ export default function Home() {
                       return Icon ? <Icon className="w-16 h-16 mx-auto text-brand-accent" /> : null
                     })()}
                   </motion.div>
-                  
-                  <p className="text-xl sm:text-2xl font-light lowercase text-brand-accent tracking-tight">
-                    {soundscapeCategories.find(c => c.id === currentTrackId)?.title}
-                  </p>
 
                   {/* Audio wave animation */}
                   <div className="flex items-center justify-center gap-1 mt-8">
