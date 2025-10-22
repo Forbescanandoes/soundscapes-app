@@ -61,7 +61,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-brand-text-muted/10 bg-brand-bg/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="text-xl font-light lowercase tracking-tight">rewired</div>
+            <div className="text-xl font-light lowercase tracking-tight">reliefware</div>
             <div className="flex items-center gap-3">
               <SignedOut>
                 <SignInButton 
@@ -795,7 +795,7 @@ export default function Home() {
       <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-brand-text-muted/10">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-brand-text-muted lowercase tracking-wide">
-            we see you when you&apos;re fried
+            brain fog kills more startups than bad code.
           </p>
           <div className="flex items-center gap-6 text-sm text-brand-text-muted lowercase">
             <Link href="/soundscapes" className="hover:text-brand-accent transition-colors tracking-wide">
