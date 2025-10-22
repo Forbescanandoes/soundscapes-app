@@ -390,17 +390,15 @@ export default function Home() {
                       repeat: Infinity,
                       ease: "easeInOut"
                     }}
+                    className="mb-6"
                   >
                     {(() => {
                       const category = soundscapeCategories.find(c => c.id === currentTrackId)
                       const Icon = category?.icon
-                      return Icon ? <Icon className="w-16 h-16 mx-auto mb-6 text-brand-accent" /> : null
+                      return Icon ? <Icon className="w-16 h-16 mx-auto text-brand-accent" /> : null
                     })()}
                   </motion.div>
                   
-                  <h3 className="text-3xl sm:text-4xl font-light lowercase mb-3 text-brand-text-primary tracking-tight">
-                    now playing
-                  </h3>
                   <p className="text-xl sm:text-2xl font-light lowercase text-brand-accent tracking-tight">
                     {soundscapeCategories.find(c => c.id === currentTrackId)?.title}
                   </p>
