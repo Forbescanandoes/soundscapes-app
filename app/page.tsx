@@ -356,21 +356,22 @@ export default function Home() {
                   {[...Array(3)].map((_, i) => (
                     <motion.div
                       key={i}
-                      className={`absolute w-32 h-32 rounded-full border-2 ${
-                        currentTrackId === 'burnout' ? 'border-red-500/30' :
-                        currentTrackId === 'overload' ? 'border-yellow-500/30' :
-                        currentTrackId === 'anxious' ? 'border-purple-500/30' :
-                        'border-blue-500/30'
+                      className={`absolute w-24 h-24 rounded-full border ${
+                        currentTrackId === 'burnout' ? 'border-red-500/40' :
+                        currentTrackId === 'overload' ? 'border-yellow-500/40' :
+                        currentTrackId === 'anxious' ? 'border-purple-500/40' :
+                        'border-blue-500/40'
                       }`}
+                      style={{ borderWidth: '1.5px' }}
                       animate={{
-                        scale: [1, 2.5, 2.5],
-                        opacity: [0.6, 0, 0],
+                        scale: [1, 3],
+                        opacity: [0.8, 0],
                       }}
                       transition={{
-                        duration: 3,
+                        duration: 4,
                         repeat: Infinity,
-                        delay: i * 1,
-                        ease: "easeOut"
+                        delay: i * 1.3,
+                        ease: [0.4, 0, 0.2, 1],
                       }}
                     />
                   ))}
