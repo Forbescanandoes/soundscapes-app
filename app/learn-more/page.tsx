@@ -33,7 +33,7 @@ export default function LearnMorePage() {
             sound built for endurance
           </h2>
           <p className="text-lg sm:text-xl font-light text-brand-text-secondary lowercase leading-relaxed mb-16">
-            neuroscience backed soundscapes designed for founders who need to perform — not unwind. quick resets that clear the noise, restore clarity, and keep you shipping when everything&apos;s on fire.
+            neuroscience backed soundscapes designed for founders who need to perform, not unwind. quick resets that clear the noise, restore clarity, and keep you shipping when everything&apos;s on fire.
           </p>
         </motion.div>
 
@@ -71,7 +71,7 @@ export default function LearnMorePage() {
               ten tabs deep. inbox on fire. wearing every hat.
             </p>
             <p className="text-lg text-brand-text-primary leading-relaxed lowercase">
-              pause here — come back sharper.
+              pause here, come back sharper.
             </p>
           </motion.div>
 
