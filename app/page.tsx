@@ -602,68 +602,53 @@ export default function Home() {
           >
             <div className="max-w-6xl mx-auto">
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {[
                   {
-                    number: "1",
-                    text: "your body can clear stress in 90 seconds if you actually give it space to regulate. most founders never do. (harvard neuroanatomist jill bolte taylor).",
+                    headline: "most founders never do.",
+                    text: "your body can clear stress in 90 seconds if you actually give it space to regulate.",
+                    source: "harvard neuroanatomist jill bolte taylor",
                     delay: 0.8
                   },
                   {
-                    number: "2",
-                    text: "2-5 minute breaks restore focus and reduce fatigue better than pushing through. you already know this works. you just don't do it. (university of illinois, 2011).",
+                    headline: "you just don't do it.",
+                    text: "2-5 minute breaks restore focus and reduce fatigue better than pushing through. you already know this works.",
+                    source: "university of illinois, 2011",
                     delay: 0.85
                   },
                   {
-                    number: "3",
-                    text: "you face higher stress than 70% of traditional workers. pretending you don't need resets is how you burn out before the breakthrough. (gallup, 2019).",
+                    headline: "burn out before the breakthrough.",
+                    text: "you face higher stress than 70% of traditional workers. pretending you don't need resets is how you",
+                    source: "gallup, 2019",
                     delay: 0.9
                   },
                   {
-                    number: "4",
-                    text: "sound based resets double your recovery speed from stress spikes. the ones who last build this into their rhythm, not their wish list. (applied psychology review, 2020).",
+                    headline: "rhythm, not your wish list.",
+                    text: "sound based resets double your recovery speed from stress spikes. the ones who last build this into their",
+                    source: "applied psychology review, 2020",
                     delay: 0.95
                   }
-                ].map((citation) => (
+                ].map((citation, index) => (
                   <motion.div
-                    key={citation.number}
+                    key={index}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: citation.delay }}
                     viewport={{ once: true }}
                     className="group relative"
                   >
-                    <div className="relative h-full p-6 rounded-xl border border-brand-text-muted/20 bg-brand-bg-secondary/50 backdrop-blur-sm hover:border-brand-accent/30 transition-all duration-300">
-                      {/* Accent gradient on hover */}
-                      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-brand-accent/0 via-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="relative h-full p-8 border-l-2 border-brand-accent/30 bg-brand-bg/30 backdrop-blur-sm hover:border-brand-accent transition-all duration-300">
+                      <h3 className="text-2xl sm:text-3xl font-light lowercase mb-4 text-brand-text-primary tracking-tight leading-tight">
+                        {citation.headline}
+                      </h3>
                       
-                      {/* Animated number badge */}
-                      <div className="relative z-10 flex items-start gap-4">
-                        <motion.div
-                          className="flex-shrink-0 w-8 h-8 rounded-lg bg-brand-accent/10 border border-brand-accent/30 flex items-center justify-center"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          transition={{ type: "spring", stiffness: 400 }}
-                        >
-                          <span className="text-brand-accent font-medium text-sm">{citation.number}</span>
-                        </motion.div>
-                        
-                        <p className="text-sm text-brand-text-muted lowercase leading-relaxed tracking-wide flex-1 group-hover:text-brand-text-secondary transition-colors duration-300">
-                          {citation.text}
-                        </p>
-                      </div>
-
-                      {/* Corner accent */}
-                      <motion.div
-                        className="absolute top-3 right-3 w-2 h-2 rounded-full bg-brand-accent/0 group-hover:bg-brand-accent/50"
-                        animate={{
-                          scale: [1, 1.2, 1],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
+                      <p className="text-base text-brand-text-secondary lowercase leading-relaxed tracking-wide mb-3">
+                        {citation.text}
+                      </p>
+                      
+                      <p className="text-sm text-brand-text-muted lowercase tracking-wide">
+                        {citation.source}
+                      </p>
                     </div>
                   </motion.div>
                 ))}
