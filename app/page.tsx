@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { motion } from 'framer-motion'
-import { Brain, Zap, Target, Sparkles, Play, Pause, Check, Copy } from 'lucide-react'
+import { Brain, Zap, Target, Sparkles, Play, Pause, Check, Copy, BriefcaseBusiness, Frown, Moon, Sandwich } from 'lucide-react'
 import { useAudioPlayer } from '@/hooks/use-audio-player'
 import { useState } from 'react'
 
@@ -519,8 +519,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Neuroscience Stats Section */}
-      <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 bg-brand-bg relative overflow-hidden">
+      {/* Real Simulations Section */}
+      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-brand-bg relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-accent/5 via-transparent to-transparent" />
         </div>
@@ -529,156 +529,99 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-20"
+            className="mb-12"
           >
-            <h2 className="text-4xl sm:text-5xl font-light lowercase mb-8 tracking-tight">
-              backed by neuroscience
+            <h2 className="text-4xl sm:text-5xl font-light lowercase mb-6 tracking-tight text-center">
+              real simulations
             </h2>
-            <p className="text-lg sm:text-xl text-brand-text-secondary lowercase max-w-4xl mx-auto leading-relaxed">
-              our soundscapes aren&apos;t therapy. they&apos;re survival gear. resets that clear the static in your head, restore energy in minutes, and give you back momentum when the grind tries to take it away.
+            <p className="text-lg sm:text-xl text-brand-text-secondary lowercase leading-relaxed tracking-wide text-center max-w-4xl mx-auto">
+              each sound starts from a real founder moment, the nervous system under pressure.
             </p>
           </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             {[
               {
-                stat: "90s",
-                description: "stress can biologically clear in as little as 90 seconds with the right reset",
-                superscript: "1",
-                delay: 0
-              },
-              {
-                stat: "2-5 min",
-                description: "micro breaks restore attention and reduce fatigue",
-                superscript: "2",
-                delay: 0.1
-              },
-              {
-                stat: "70%",
-                description: "of entrepreneurs report higher stress than traditional workers",
-                superscript: "3",
+                emoji: "🎭",
+                title: "one too many hats",
+                situation: "for when every tab screams for attention. too many roles, not enough bandwidth.",
+                solution: "sound built to reorganize chaos into coherence.",
+                icon: BriefcaseBusiness,
+                gradient: "from-yellow-500/20 to-orange-500/20",
                 delay: 0.2
               },
               {
-                stat: "2x",
-                description: "faster bounce back from stress spikes with sound based resets",
-                superscript: "4",
+                emoji: "😬",
+                title: "the dread of marketing",
+                situation: "for when visibility feels like threat.",
+                solution: "sound that meets anxiety, then opens space inside it.",
+                icon: Frown,
+                gradient: "from-purple-500/20 to-pink-500/20",
                 delay: 0.3
+              },
+              {
+                emoji: "💤",
+                title: "slept at desk",
+                situation: "for when your body quits before your code does.",
+                solution: "sound that holds you long enough to stop fighting rest.",
+                icon: Moon,
+                gradient: "from-red-500/20 to-orange-500/20",
+                delay: 0.4
+              },
+              {
+                emoji: "🍽️",
+                title: "forgot to eat",
+                situation: "for when you're hollow and detached from your body.",
+                solution: "sound that brings you back into gravity.",
+                icon: Sandwich,
+                gradient: "from-blue-500/20 to-cyan-500/20",
+                delay: 0.5
               }
-            ].map((item, index) => (
+            ].map((sim, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: item.delay }}
+                transition={{ duration: 0.6, delay: sim.delay }}
                 viewport={{ once: true }}
-                className="text-center group"
+                className="group relative"
               >
-                <div className="relative inline-block mb-6">
+                <div className="relative h-full p-8 rounded-2xl border border-brand-text-muted/20 bg-brand-bg-secondary/50 backdrop-blur-sm hover:border-brand-accent/30 transition-all duration-300 overflow-hidden">
+                  {/* Background gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${sim.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                  
+                  <div className="relative z-10">
+                    {/* Emoji */}
+                    <div className="text-4xl mb-4">
+                      {sim.emoji}
+                    </div>
+                    
+                    <h4 className="text-2xl font-light lowercase mb-4 text-brand-text-primary tracking-tight flex items-center gap-2">
+                      {sim.title}
+                    </h4>
+                    
+                    <p className="text-base text-brand-text-secondary lowercase leading-relaxed mb-3 tracking-wide">
+                      {sim.situation}
+                    </p>
+                    
+                    <p className="text-base text-brand-text-primary lowercase leading-relaxed tracking-wide">
+                      {sim.solution}
+                    </p>
+                  </div>
+
+                  {/* Corner accent */}
                   <motion.div
-                    className="text-4xl sm:text-5xl md:text-6xl font-light text-brand-text-primary tracking-tight"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 300 }}
+                    className="absolute bottom-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity"
+                    whileHover={{ rotate: 10, scale: 1.1 }}
                   >
-                    {item.stat}
+                    <sim.icon className="w-8 h-8 text-brand-accent" />
                   </motion.div>
                 </div>
-                <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide px-2">
-                  {item.description}
-                </p>
               </motion.div>
             ))}
           </div>
-
-          {/* Citations - "backing sauce" */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            viewport={{ once: true }}
-            className="mt-20 pt-12 border-t border-brand-text-muted/10"
-          >
-            <div className="max-w-6xl mx-auto">
-              <motion.h3 
-                className="text-xl sm:text-2xl font-light lowercase text-brand-text-primary mb-12 tracking-wide text-center"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                viewport={{ once: true }}
-              >
-                backing sauce
-              </motion.h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[
-                  {
-                    number: "1",
-                    text: "your body can clear stress in 90 seconds if you actually give it space to regulate. most founders never do. (harvard neuroanatomist jill bolte taylor).",
-                    delay: 0.8
-                  },
-                  {
-                    number: "2",
-                    text: "2-5 minute breaks restore focus and reduce fatigue better than pushing through. you already know this works. you just don't do it. (university of illinois, 2011).",
-                    delay: 0.85
-                  },
-                  {
-                    number: "3",
-                    text: "you face higher stress than 70% of traditional workers. pretending you don't need resets is how you burn out before the breakthrough. (gallup, 2019).",
-                    delay: 0.9
-                  },
-                  {
-                    number: "4",
-                    text: "sound based resets double your recovery speed from stress spikes. the ones who last build this into their rhythm, not their wish list. (applied psychology review, 2020).",
-                    delay: 0.95
-                  }
-                ].map((citation) => (
-                  <motion.div
-                    key={citation.number}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: citation.delay }}
-                    viewport={{ once: true }}
-                    className="group relative"
-                  >
-                    <div className="relative h-full p-6 rounded-xl border border-brand-text-muted/20 bg-brand-bg-secondary/50 backdrop-blur-sm hover:border-brand-accent/30 transition-all duration-300">
-                      {/* Accent gradient on hover */}
-                      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-brand-accent/0 via-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      
-                      {/* Animated number badge */}
-                      <div className="relative z-10 flex items-start gap-4">
-                        <motion.div
-                          className="flex-shrink-0 w-8 h-8 rounded-lg bg-brand-accent/10 border border-brand-accent/30 flex items-center justify-center"
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                          transition={{ type: "spring", stiffness: 400 }}
-                        >
-                          <span className="text-brand-accent font-medium text-sm">{citation.number}</span>
-                        </motion.div>
-                        
-                        <p className="text-sm text-brand-text-muted lowercase leading-relaxed tracking-wide flex-1 group-hover:text-brand-text-secondary transition-colors duration-300">
-                          {citation.text}
-                        </p>
-                      </div>
-
-                      {/* Corner accent */}
-                      <motion.div
-                        className="absolute top-3 right-3 w-2 h-2 rounded-full bg-brand-accent/0 group-hover:bg-brand-accent/50"
-                        animate={{
-                          scale: [1, 1.2, 1],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
