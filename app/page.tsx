@@ -772,6 +772,122 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
+      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-brand-bg-secondary">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl sm:text-5xl font-light lowercase mb-4 tracking-tight text-brand-text-primary">
+              others already know
+            </h2>
+            <p className="text-lg text-brand-text-secondary lowercase tracking-wide">
+              what sound does for focus
+            </p>
+          </motion.div>
+
+          {/* Staggered testimonial grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto">
+            {[
+              {
+                quote: "brown noise has fundamentally made my life better",
+                author: "r/adhdwomen",
+                platform: "reddit",
+                delay: 0
+              },
+              {
+                quote: "in a world of constant notifications, staying focused is one of the most valuable skills we can cultivate. my method? sound.",
+                author: "stephen luke",
+                role: "fire officer",
+                delay: 0.1
+              },
+              {
+                quote: "brown noise with isochronic tones. work wonders for me.",
+                author: "u/confused_ox_97",
+                platform: "reddit",
+                delay: 0.2
+              },
+              {
+                quote: "i accidentally found the perfect productivity hack while optimising my work environment.",
+                author: "nagarjun mallesh",
+                role: "backend engineer",
+                delay: 0.15
+              },
+              {
+                quote: "ohhh yes. i work from home and use them every day. it really helps with focus",
+                author: "u/calminteraction",
+                platform: "reddit",
+                delay: 0.25
+              },
+              {
+                quote: "sustained focus is key in a noisy world. beyond typical productivity hacks, sound profoundly influences our cognitive performance.",
+                author: "simon bubb",
+                role: "consultant & coach",
+                delay: 0.3
+              },
+              {
+                quote: "lofi hip hop, minimal electronic, deep house. mostly just stuff without singing.",
+                author: "u/shogunDii",
+                platform: "reddit",
+                delay: 0.35
+              },
+            ].map((testimonial, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: testimonial.delay }}
+                viewport={{ once: true }}
+                className={`group ${index % 3 === 1 ? 'md:mt-12' : ''} ${index % 3 === 2 ? 'md:mt-24' : ''}`}
+              >
+                <div className="relative h-full p-6 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/30 transition-all duration-300">
+                  {/* Quote mark decoration */}
+                  <div className="absolute top-4 right-4 text-6xl text-brand-accent/10 font-serif leading-none">
+                    "
+                  </div>
+
+                  <div className="relative z-10">
+                    <p className="text-base text-brand-text-secondary lowercase leading-relaxed mb-6 tracking-wide">
+                      {testimonial.quote}
+                    </p>
+                    
+                    <div className="flex items-center gap-3 pt-4 border-t border-brand-text-muted/10">
+                      <div className="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center">
+                        <span className="text-brand-accent text-sm font-medium">
+                          {testimonial.author.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-sm text-brand-text-primary lowercase font-medium tracking-wide">
+                          {testimonial.author}
+                        </p>
+                        {testimonial.role && (
+                          <p className="text-xs text-brand-text-muted lowercase tracking-wide">
+                            {testimonial.role}
+                          </p>
+                        )}
+                        {testimonial.platform && (
+                          <p className="text-xs text-brand-text-muted lowercase tracking-wide">
+                            {testimonial.platform}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Hover gradient */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-accent/0 via-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA Section */}
       <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Dramatic gradient background */}
