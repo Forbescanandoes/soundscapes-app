@@ -592,7 +592,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Citations - "backing sauce" */}
+          {/* Citations */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -601,15 +601,6 @@ export default function Home() {
             className="mt-20 pt-12 border-t border-brand-text-muted/10"
           >
             <div className="max-w-6xl mx-auto">
-              <motion.h3 
-                className="text-xl sm:text-2xl font-light lowercase text-brand-text-primary mb-12 tracking-wide text-center"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                viewport={{ once: true }}
-              >
-                backing sauce
-              </motion.h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
