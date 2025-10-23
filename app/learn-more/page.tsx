@@ -216,7 +216,7 @@ export default function LearnMorePage() {
               {
                 emoji: "🍽️",
                 title: "forgot to eat",
-                situation: "for when you&apos;re hollow and detached from your body.",
+                situation: "for when you're hollow and detached from your body.",
                 solution: "sound that brings you back into gravity.",
                 icon: Sandwich,
                 gradient: "from-blue-500/20 to-cyan-500/20",
