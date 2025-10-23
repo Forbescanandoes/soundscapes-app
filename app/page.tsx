@@ -803,6 +803,7 @@ export default function Home() {
                 quote: "in a world of constant notifications, staying focused is one of the most valuable skills we can cultivate. my method? sound.",
                 author: "stephen luke",
                 role: "fire officer",
+                platform: "linkedin",
                 delay: 0.1
               },
               {
@@ -815,6 +816,7 @@ export default function Home() {
                 quote: "i accidentally found the perfect productivity hack while optimising my work environment.",
                 author: "nagarjun mallesh",
                 role: "backend engineer",
+                platform: "linkedin",
                 delay: 0.15
               },
               {
@@ -827,6 +829,7 @@ export default function Home() {
                 quote: "sustained focus is key in a noisy world. beyond typical productivity hacks, sound profoundly influences our cognitive performance.",
                 author: "simon bubb",
                 role: "consultant & coach",
+                platform: "linkedin",
                 delay: 0.3
               },
               {
@@ -870,9 +873,14 @@ export default function Home() {
                             {testimonial.role}
                           </p>
                         )}
-                        {testimonial.platform && (
+                        {testimonial.platform && !testimonial.role && (
                           <p className="text-xs text-brand-text-muted lowercase tracking-wide">
                             {testimonial.platform}
+                          </p>
+                        )}
+                        {testimonial.platform && testimonial.role && (
+                          <p className="text-xs text-brand-text-muted lowercase tracking-wide flex items-center gap-1">
+                            via {testimonial.platform}
                           </p>
                         )}
                       </div>
