@@ -4,11 +4,13 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { motion } from 'framer-motion'
-import { Brain, Zap, Target, Sparkles, Play, Pause } from 'lucide-react'
+import { Brain, Zap, Target, Sparkles, Play, Pause, Check, Copy } from 'lucide-react'
 import { useAudioPlayer } from '@/hooks/use-audio-player'
+import { useState } from 'react'
 
 export default function Home() {
   const { play, pause, isPlaying, currentTrackId } = useAudioPlayer()
+  const [copied, setCopied] = useState(false)
 
   const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
   
@@ -52,6 +54,16 @@ export default function Home() {
       pause()
     } else {
       play(id, audioFile)
+    }
+  }
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.origin)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error('Failed to copy:', err)
     }
   }
 
@@ -787,6 +799,62 @@ export default function Home() {
                 start now
               </Button>
             </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Share Section */}
+      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 border-t border-brand-text-muted/10">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase leading-tight text-brand-text-secondary mb-4 tracking-tight">
+              every founder crashes.
+            </p>
+            <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase leading-tight text-brand-text-primary mb-12 tracking-tight">
+              the smart ones don&apos;t crash alone.
+            </p>
+
+            <motion.button
+              onClick={handleCopyLink}
+              className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full border border-brand-text-muted/30 hover:border-brand-accent/50 bg-brand-bg-secondary/50 backdrop-blur-sm hover:bg-brand-bg-secondary transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <span className="text-base sm:text-lg font-light lowercase text-brand-text-primary tracking-wide">
+                send them a reset
+              </span>
+              {copied ? (
+                <motion.div
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ type: "spring", stiffness: 200 }}
+                >
+                  <Check className="w-5 h-5 text-brand-accent" />
+                </motion.div>
+              ) : (
+                <Copy className="w-5 h-5 text-brand-text-secondary group-hover:text-brand-accent transition-colors" />
+              )}
+
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 rounded-full bg-brand-accent/0 group-hover:bg-brand-accent/5 transition-all duration-300" />
+            </motion.button>
+
+            {copied && (
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="mt-4 text-sm text-brand-accent lowercase tracking-wide"
+              >
+                link copied
+              </motion.p>
+            )}
           </motion.div>
         </div>
       </section>
