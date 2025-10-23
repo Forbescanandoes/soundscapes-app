@@ -786,7 +786,7 @@ export default function Home() {
               others already know
             </h2>
             <p className="text-lg text-brand-text-secondary lowercase tracking-wide">
-              what sound does for focus
+              what sound does.
             </p>
           </motion.div>
 
