@@ -839,10 +839,16 @@ export default function Home() {
                 delay: 0.35
               },
               {
+                quote: "ambient noise, when used strategically and in moderation, can be a powerful tool for enhancing focus and improving performance. by understanding the science behind it and experimenting with different types of ambient sounds, you can unlock your full potential.",
+                author: "focuslabs",
+                platform: "research",
+                delay: 0.4
+              },
+              {
                 quote: "lofi hip hop, minimal electronic, deep house. mostly just stuff without singing.",
                 author: "u/shogunDii",
                 platform: "reddit",
-                delay: 0.4
+                delay: 0.45
               },
             ].map((testimonial, index) => (
               <motion.div
