@@ -73,7 +73,7 @@ export default function LearnMorePage() {
           </h4>
           <div className="space-y-4 text-lg text-brand-text-secondary leading-relaxed lowercase">
             <p>
-              a neuro-acoustic system that gives overstimulated founders rapid decompression.
+              a neuroacoustic system that gives overstimulated founders rapid decompression.
             </p>
             <p>
               not mindfulness. not mood management.
@@ -123,7 +123,7 @@ export default function LearnMorePage() {
               {
                 number: "4",
                 title: "test in the wild",
-                description: "each sound runs with real founders, mid-build, mid-burnout. tuned for results, not vibes.",
+                description: "each sound runs with real founders, mid build, mid burnout. tuned for results, not vibes.",
                 icon: TestTube,
                 delay: 0.45
               },
@@ -275,7 +275,7 @@ export default function LearnMorePage() {
           viewport={{ once: true }}
           className="mt-20 text-center"
         >
-          <Link href="/">
+          <Link href="/soundscapes">
             <Button 
               size="lg"
               className="rounded-full bg-brand-accent hover:bg-brand-accent/90 text-white text-base px-12 py-7 lowercase font-normal glow-accent-lg hover:scale-105 transition-all duration-300 tracking-wide"
