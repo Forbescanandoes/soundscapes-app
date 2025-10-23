@@ -800,7 +800,7 @@ export default function Home() {
                 delay: 0
               },
               {
-                quote: "in a world of constant notifications, staying focused is one of the most valuable skills we can cultivate. my method? sound.",
+                quote: "in a world of constant notifications, staying focused is one of the most valuable skills we can cultivate. my method? sound. meditation audio to reset my thoughts.",
                 author: "stephen luke",
                 role: "fire officer",
                 platform: "linkedin",
@@ -833,10 +833,16 @@ export default function Home() {
                 delay: 0.3
               },
               {
+                quote: "dead silence is actually unnerving. it makes every tiny distraction sound like a gunshot. your brain goes on high alert, and your focus is shattered. now, imagine the gentle sound of a fountain, or the soft rustle of leaves. this is auditory wallpaper.",
+                author: "intl biophilic products assoc",
+                platform: "linkedin",
+                delay: 0.35
+              },
+              {
                 quote: "lofi hip hop, minimal electronic, deep house. mostly just stuff without singing.",
                 author: "u/shogunDii",
                 platform: "reddit",
-                delay: 0.35
+                delay: 0.4
               },
             ].map((testimonial, index) => (
               <motion.div
