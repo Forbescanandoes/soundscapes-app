@@ -845,6 +845,12 @@ export default function Home() {
                 delay: 0.4
               },
               {
+                quote: "pay attention to the invisible transitions, the space between work blocks. by building a focus to rest routine using sound, you're creating rhythm. rhythm is the heartbeat of sustainable productivity.",
+                author: "sam mccarthy",
+                platform: "linkedin",
+                delay: 0.425
+              },
+              {
                 quote: "lofi hip hop, minimal electronic, deep house. mostly just stuff without singing.",
                 author: "u/shogunDii",
                 platform: "reddit",
