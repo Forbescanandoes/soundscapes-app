@@ -59,7 +59,7 @@ export default function Home() {
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.origin)
+      await navigator.clipboard.writeText('https://workingonname.vercel.app')
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
