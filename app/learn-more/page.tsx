@@ -20,20 +20,20 @@ export default function LearnMorePage() {
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pb-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-light lowercase leading-tight mb-20 tracking-tight">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-light lowercase leading-tight mb-12 tracking-tight">
             how it works
           </h1>
         </motion.div>
       </div>
 
       {/* Built Like a Product Section */}
-      <div className="bg-brand-bg-secondary py-24 sm:py-32">
+      <div className="bg-brand-bg-secondary py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
