@@ -830,26 +830,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Reality Check */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <p className="text-3xl sm:text-4xl font-light lowercase leading-relaxed text-brand-text-secondary tracking-tight">
-              most founders don&apos;t quit because it&apos;s hard.
-            </p>
-            <p className="text-3xl sm:text-4xl font-light lowercase leading-relaxed text-brand-text-primary tracking-tight">
-              they run out of gas before the breakthrough.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Testimonials Section */}
       <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-brand-bg-secondary">
         <div className="max-w-7xl mx-auto">
