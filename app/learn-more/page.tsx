@@ -64,13 +64,10 @@ export default function LearnMorePage() {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-8">
             <Brain className="w-8 h-8 text-brand-accent" />
             <h3 className="text-3xl sm:text-4xl font-light lowercase tracking-tight">the framework</h3>
           </div>
-          <h4 className="text-2xl sm:text-3xl font-light text-brand-text-primary lowercase leading-relaxed mb-6 tracking-tight">
-            the founder&apos;s sonic framework
-          </h4>
           <div className="space-y-4 text-lg text-brand-text-secondary leading-relaxed lowercase">
             <p>
               a neuroacoustic system that gives overstimulated founders rapid decompression.
