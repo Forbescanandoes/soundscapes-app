@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
+import Script from 'next/script'
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,6 +30,11 @@ export default function RootLayout({
       <html lang="en" className="dark">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           {children}
+          {/* Simple Analytics - 100% privacy-first */}
+          <Script 
+            src="https://scripts.simpleanalyticscdn.com/latest.js" 
+            strategy="afterInteractive"
+          />
         </body>
       </html>
     </ClerkProvider>
