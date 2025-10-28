@@ -38,3 +38,6 @@ next-env.d.ts
 
 # unused ui components
 /components/ui parts/
+
+# clerk configuration (can include secrets)
+/.clerk/

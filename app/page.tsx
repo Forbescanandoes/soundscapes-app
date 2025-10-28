@@ -783,6 +783,245 @@ export default function Home() {
         </div>
       </section>
 
+      {/* How To Roadmap Section */}
+      <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 bg-brand-bg-secondary relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-bg via-brand-bg-secondary to-brand-bg" />
+        </div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
+          {/* When to Use It */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-5xl mx-auto mb-[32rem]"
+          >
+            <div className="text-center mb-12">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-8 text-brand-text-primary tracking-tight">
+                when to use it
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                {
+                  trigger: "when you can't think straight",
+                  moment: "brain fog. tabs open but nothing landing. you're reading the same line three times.",
+                  gradient: "from-red-500/20 to-orange-500/20"
+                },
+                {
+                  trigger: "when you're stuck in a loop",
+                  moment: "same thought. same worry. same mental tab refreshing. you're spinning, not solving.",
+                  gradient: "from-purple-500/20 to-pink-500/20"
+                },
+                {
+                  trigger: "when decisions feel impossible",
+                  moment: "every option looks bad. analysis paralysis. you need clarity but you're running on fumes.",
+                  gradient: "from-yellow-500/20 to-orange-500/20"
+                },
+                {
+                  trigger: "when you feel the crash coming",
+                  moment: "that moment before burnout fully hits. when you know you're about to lose hours or days if you don't stop now.",
+                  gradient: "from-blue-500/20 to-cyan-500/20"
+                }
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 + (index * 0.1) }}
+                  viewport={{ once: true }}
+                  className="group relative"
+                >
+                  <div className="relative h-full p-6 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/40 transition-all duration-300 overflow-hidden">
+                    {/* Gradient overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                    
+                    <div className="relative z-10">
+                      <h4 className="text-xl sm:text-2xl font-light lowercase mb-3 text-brand-text-primary tracking-tight">
+                        {item.trigger}
+                      </h4>
+                      <p className="text-base text-brand-text-secondary lowercase leading-relaxed tracking-wide">
+                        {item.moment}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Emphasis */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="mt-12 text-center"
+            >
+              <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-secondary tracking-wide">
+                don&apos;t wait until you&apos;re already gone.
+              </p>
+              <p className="text-xl sm:text-2xl font-light lowercase text-brand-accent tracking-wide mt-2">
+                catch it early. reset now.
+              </p>
+            </motion.div>
+          </motion.div>
+
+          {/* How to Use It Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-6 tracking-tight text-brand-text-primary">
+              how to actually use this
+            </h2>
+            <p className="text-xl sm:text-2xl text-brand-accent lowercase tracking-wide font-light">
+              this isn&apos;t background music.
+            </p>
+          </motion.div>
+
+          {/* Roadmap Timeline */}
+          <div className="relative max-w-4xl mx-auto">
+            {/* Connecting line */}
+            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand-accent/0 via-brand-accent/40 to-brand-accent/0 hidden sm:block" />
+
+            {/* Steps */}
+            <div className="space-y-20">
+              {[
+                {
+                  number: "01",
+                  title: "headphones on. 100%.",
+                  description: "not speakers. not airpods on low. actual headphones. this only works if the sound wraps around your brain.",
+                  side: "left",
+                  delay: 0.1
+                },
+                {
+                  number: "02",
+                  title: "stop everything.",
+                  description: "you don't just turn it on and call it a day. you stop. desk, couch, floor. doesn't matter. but you stop.",
+                  side: "right",
+                  delay: 0.2
+                },
+                {
+                  number: "03",
+                  title: "eyes off. eyes shut.",
+                  description: "screen off. phone face down. eyes closed. if you're still scrolling, you're not resetting. you're stalling.",
+                  side: "left",
+                  delay: 0.3
+                },
+                {
+                  number: "04",
+                  title: "let go.",
+                  description: "try not to think. try not to solve. try not to plan. just breathe and let the sound do the work.",
+                  side: "right",
+                  delay: 0.4
+                },
+                {
+                  number: "05",
+                  title: "this is the reset.",
+                  description: "5 minutes. 10 if you can. this isn't a break. it's a biological reset. your nervous system clearing the static so you can think again.",
+                  side: "left",
+                  delay: 0.5
+                }
+              ].map((step, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: step.side === 'left' ? -40 : 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: step.delay }}
+                  viewport={{ once: true }}
+                  className={`relative flex items-center ${
+                    step.side === 'right' ? 'md:flex-row-reverse' : ''
+                  }`}
+                >
+                  {/* Mobile layout (stacked) */}
+                  <div className="flex items-start gap-6 md:hidden w-full">
+                    {/* Number badge */}
+                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-brand-accent/10 border-2 border-brand-accent flex items-center justify-center">
+                      <span className="text-brand-accent font-light text-lg tracking-tight">
+                        {step.number}
+                      </span>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 pt-2">
+                      <h3 className="text-2xl sm:text-3xl font-light lowercase mb-3 text-brand-text-primary tracking-tight">
+                        {step.title}
+                      </h3>
+                      <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Desktop layout (alternating sides) */}
+                  <div className="hidden md:flex md:items-center md:w-full">
+                    {/* Left content */}
+                    <div className={`w-full md:w-[calc(50%-2rem)] ${
+                      step.side === 'left' ? 'pr-12 text-right' : 'pl-12 text-left order-2'
+                    }`}>
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                        className="group"
+                      >
+                        <div className="relative p-8 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/50 transition-all duration-300">
+                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          
+                          <div className="relative z-10">
+                            <h3 className="text-2xl sm:text-3xl font-light lowercase mb-4 text-brand-text-primary tracking-tight">
+                              {step.title}
+                            </h3>
+                            <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
+                              {step.description}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </div>
+
+                    {/* Center node */}
+                    <div className="absolute left-1/2 -translate-x-1/2 flex-shrink-0 z-20">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                        className="w-16 h-16 rounded-full bg-brand-bg border-2 border-brand-accent flex items-center justify-center relative"
+                      >
+                        <div className="absolute inset-0 rounded-full bg-brand-accent/20 blur-xl" />
+                        <span className="text-brand-accent font-light text-lg tracking-tight relative z-10">
+                          {step.number}
+                        </span>
+                      </motion.div>
+                    </div>
+
+                    {/* Spacer for opposite side */}
+                    <div className="w-full md:w-[calc(50%-2rem)]" />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Final emphasis */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="mt-32 text-center"
+            >
+              <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase text-brand-text-primary tracking-tight leading-tight">
+                do it right or don&apos;t do it at all.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Advantage Section */}
       <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 relative">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
