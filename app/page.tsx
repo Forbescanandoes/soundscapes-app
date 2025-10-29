@@ -111,7 +111,7 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-16 pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-4 sm:px-6 lg:px-8">
         {/* Animated gradient orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div 
@@ -146,9 +146,9 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tight lowercase leading-[1.05] mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight lowercase leading-[1.05] mb-6">
               <div className="relative inline-block">
-                <span className="relative z-10">lost focus? get back in motion in <span className="text-brand-accent">90 seconds.</span></span>
+                <span className="relative z-10">get back in motion in <span className="text-brand-accent">90 seconds.</span></span>
                 <motion.div 
                   className="absolute inset-0 blur-2xl bg-brand-accent/30 -z-10"
                   animate={{
@@ -170,7 +170,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            the fastest reset for founders who can&apos;t afford to take a day off.
+            for founders who can&apos;t afford to take a day off.
           </motion.p>
 
           <motion.div
