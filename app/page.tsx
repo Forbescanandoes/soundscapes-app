@@ -147,9 +147,8 @@ export default function Home() {
             transition={{ duration: 0.8 }}
           >
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tight lowercase leading-[1.05] mb-6">
-              <div className="mb-4">while you&apos;re stuck</div>
               <div className="relative inline-block">
-                <span className="text-brand-accent relative z-10">someone else is shipping.</span>
+                <span className="relative z-10">lost focus? get back in motion in <span className="text-brand-accent">90 seconds.</span></span>
                 <motion.div 
                   className="absolute inset-0 blur-2xl bg-brand-accent/30 -z-10"
                   animate={{
