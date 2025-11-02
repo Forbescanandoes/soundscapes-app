@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Play, Lock, ChevronDown } from 'lucide-react'
 import { Player } from '@/components/soundscape/player'
 import { RotatingMessage } from '@/components/soundscape/rotating-message'
-import { RotatingInsight } from '@/components/soundscape/rotating-insight'
 import { useAudioPlayer } from '@/hooks/use-audio-player'
 import { SignedIn, SignedOut, useClerk, useUser } from '@clerk/nextjs'
 import Link from 'next/link'
@@ -191,9 +190,6 @@ export default function SoundscapesPage() {
         {/* Right: Empty for now, sign out is in dropdown */}
         <div />
       </div>
-
-      {/* Rotating Insight */}
-      <RotatingInsight />
 
       {/* Soundscapes List */}
       <div className="flex-1 overflow-y-auto pb-32">
