@@ -73,7 +73,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-brand-text-muted/10 bg-brand-bg/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="text-xl font-light lowercase tracking-tight">reliefware</div>
+            <div className="text-xl font-bold tracking-tight">ReliefWare</div>
             <div className="flex items-center gap-3">
               <SignedOut>
                 <SignInButton 
@@ -146,77 +146,38 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight lowercase leading-[1.05] mb-6">
-              <div className="relative inline-block">
-                <span className="relative z-10">get back in motion in <span className="text-brand-accent">90 seconds.</span></span>
-                <motion.div 
-                  className="absolute inset-0 blur-2xl bg-brand-accent/30 -z-10"
-                  animate={{
-                    opacity: [0.3, 0.6, 0.3],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </div>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.1] mb-8">
+              <span className="font-light text-brand-text-secondary lowercase">Your best work</span>
+              <br />
+              <span className="font-light text-brand-text-secondary lowercase">happens when</span>
+              <br />
+              <span className="font-medium text-brand-text-primary lowercase">your brain is clear</span>
             </h1>
           </motion.div>
-          
-          <motion.p 
-            className="text-lg sm:text-xl md:text-2xl font-light text-brand-text-secondary lowercase max-w-3xl mx-auto tracking-wide leading-relaxed mb-12"
+
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-lg sm:text-xl text-brand-text-secondary lowercase max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            for founders who can&apos;t afford to take a day off.
+            science-backed soundscapes that reset your nervous system in 90 seconds, so you can get back to shipping.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Link href="/soundscapes">
-              <Button 
-                size="lg"
-                className="rounded-full bg-brand-accent hover:bg-brand-accent/90 text-white text-base px-12 py-7 lowercase font-normal glow-accent-lg hover:scale-105 transition-all duration-300 tracking-wide shadow-[0_0_40px_rgba(47,128,237,0.3)]"
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="relative rounded-xl border-2 border-brand-accent bg-transparent px-12 py-4 text-lg font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]"
               >
-                open app
-              </Button>
+                start your reset
+              </motion.button>
             </Link>
-            <Link href="/learn-more">
-              <Button 
-                size="lg"
-                variant="ghost"
-                className="rounded-full border border-brand-text-muted/30 hover:border-brand-accent/50 text-brand-text-secondary hover:text-brand-text-primary text-base px-12 py-7 lowercase font-normal transition-all duration-300 tracking-wide"
-              >
-                learn more
-              </Button>
-            </Link>
-          </motion.div>
-
-          {/* Floating stats */}
-          <motion.div 
-            className="mt-24 flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-sm text-brand-text-muted"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-brand-accent animate-pulse" />
-              <span className="lowercase">instant access</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-brand-accent animate-pulse" />
-              <span className="lowercase">science backed</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-brand-accent animate-pulse" />
-              <span className="lowercase">built for founders</span>
-            </div>
           </motion.div>
         </div>
       </section>
