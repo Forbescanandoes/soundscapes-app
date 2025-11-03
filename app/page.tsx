@@ -161,7 +161,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg sm:text-xl text-brand-text-secondary lowercase max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            science-backed soundscapes that reset your nervous system in 90 seconds, so you can get back to shipping.
+            science backed soundscapes that reset your nervous system in 90 seconds, so you can get back to shipping.
           </motion.p>
 
           <motion.div
