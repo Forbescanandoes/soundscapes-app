@@ -18,6 +18,9 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Soundscapes - Relief for Builders",
   description: "When you hit the wall, hit play.",
+  icons: {
+    icon: '/favcon.png',
+  },
 };
 
 export default function RootLayout({
