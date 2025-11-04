@@ -47,7 +47,7 @@ const soundCategories = [
     ],
   },
   {
-    title: 'Anxiety',
+    title: 'Anxious',
     items: [
       { id: 'dread-of-marketing', name: 'the dread of marketing' },
       { id: 'runway-math', name: 'runway math' },
