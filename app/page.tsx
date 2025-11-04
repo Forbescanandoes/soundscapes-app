@@ -90,7 +90,7 @@ export default function Home() {
                   fallbackRedirectUrl="/soundscapes"
                   signInFallbackRedirectUrl="/soundscapes"
                 >
-                  <Button className="rounded-full bg-brand-accent hover:bg-brand-accent/90 text-white lowercase text-sm font-medium transition-all">
+                  <Button className="rounded-full border-2 border-brand-accent bg-transparent hover:bg-brand-accent/10 text-brand-accent lowercase text-sm font-medium transition-all">
                     sign up
                   </Button>
                 </SignUpButton>
