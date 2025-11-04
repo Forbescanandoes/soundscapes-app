@@ -7,12 +7,16 @@ export interface UseAudioPlayerOptions {
   onPause?: () => void
   onEnded?: () => void
   onError?: (error: Error) => void
+  durationLimit?: number // Duration limit in seconds (e.g., 20 for 20 seconds)
+  onDurationLimitReached?: () => void
 }
 
 export function useAudioPlayer(options?: UseAudioPlayerOptions) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const playPromiseRef = useRef<Promise<void> | null>(null)
   const optionsRef = useRef(options)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const playStartTimeRef = useRef<number | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
@@ -22,6 +26,56 @@ export function useAudioPlayer(options?: UseAudioPlayerOptions) {
   useEffect(() => {
     optionsRef.current = options
   }, [options])
+
+  // Fade out audio
+  const fadeOut = useCallback((duration: number = 2000) => {
+    if (!audioRef.current) return
+
+    const audio = audioRef.current
+    const startVolume = audio.volume
+    const fadeStep = startVolume / (duration / 50) // 50ms intervals
+
+    const fadeInterval = setInterval(() => {
+      if (audio.volume > fadeStep) {
+        audio.volume = Math.max(0, audio.volume - fadeStep)
+      } else {
+        audio.volume = 0
+        audio.pause()
+        clearInterval(fadeInterval)
+        // Reset volume for next play
+        audio.volume = startVolume
+      }
+    }, 50)
+  }, [])
+
+  // Clear timer
+  const clearTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+    playStartTimeRef.current = null
+  }, [])
+
+  // Start duration limit timer
+  const startTimer = useCallback(() => {
+    clearTimer()
+    
+    const durationLimit = optionsRef.current?.durationLimit
+    if (!durationLimit) return
+
+    playStartTimeRef.current = Date.now()
+    
+    timerRef.current = setTimeout(() => {
+      // Fade out over 2 seconds
+      fadeOut(2000)
+      
+      // Call the callback after fade starts
+      optionsRef.current?.onDurationLimitReached?.()
+      
+      clearTimer()
+    }, durationLimit * 1000)
+  }, [fadeOut, clearTimer])
 
   // Initialize audio element
   useEffect(() => {
@@ -38,11 +92,13 @@ export function useAudioPlayer(options?: UseAudioPlayerOptions) {
 
     const handlePlay = () => {
       setIsPlaying(true)
+      startTimer() // Start the duration limit timer
       optionsRef.current?.onPlay?.()
     }
 
     const handlePause = () => {
       setIsPlaying(false)
+      clearTimer() // Clear the timer when paused
       optionsRef.current?.onPause?.()
     }
 
@@ -72,6 +128,7 @@ export function useAudioPlayer(options?: UseAudioPlayerOptions) {
 
     return () => {
       // Cleanup
+      clearTimer()
       if (playPromiseRef.current) {
         playPromiseRef.current.then(() => audio.pause()).catch(() => {})
       } else {
@@ -85,7 +142,7 @@ export function useAudioPlayer(options?: UseAudioPlayerOptions) {
       audio.removeEventListener('loadstart', handleLoadStart)
       audioRef.current = null
     }
-  }, [])
+  }, [clearTimer])
 
   // Load and play a track
   const play = useCallback((trackId: string, audioUrl: string) => {

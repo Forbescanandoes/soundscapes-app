@@ -2,15 +2,30 @@
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs'
 import { motion } from 'framer-motion'
 import { Brain, Zap, Target, Sparkles, Play, Pause, Check, Copy, BriefcaseBusiness, Frown, Moon, Sandwich } from 'lucide-react'
 import { useAudioPlayer } from '@/hooks/use-audio-player'
 import { useState } from 'react'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog'
 
 export default function Home() {
-  const { play, pause, isPlaying, currentTrackId } = useAudioPlayer()
+  const { isSignedIn } = useUser()
+  const [showConversionModal, setShowConversionModal] = useState(false)
   const [copied, setCopied] = useState(false)
+  
+  const { play, pause, isPlaying, currentTrackId } = useAudioPlayer({
+    durationLimit: isSignedIn ? undefined : 20, // 20 seconds for non-signed-in users
+    onDurationLimitReached: () => {
+      setShowConversionModal(true)
+    }
+  })
 
   const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
   
@@ -1153,6 +1168,53 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Conversion Modal */}
+      <Dialog open={showConversionModal} onOpenChange={setShowConversionModal}>
+        <DialogContent className="bg-brand-bg-secondary border-brand-text-muted/20 sm:max-w-md">
+          <DialogHeader className="text-center space-y-4">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="mx-auto w-16 h-16 rounded-full bg-brand-accent/10 border-2 border-brand-accent flex items-center justify-center"
+            >
+              <Sparkles className="w-8 h-8 text-brand-accent" />
+            </motion.div>
+            
+            <DialogTitle className="text-3xl sm:text-4xl font-light lowercase tracking-tight text-brand-text-primary">
+              ready for the full experience?
+            </DialogTitle>
+            
+            <DialogDescription className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
+              that was just a taste. sign up for unlimited access to all soundscapes and reset whenever you need.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex flex-col gap-3 mt-6">
+            <SignUpButton 
+              mode="modal"
+              fallbackRedirectUrl="/soundscapes"
+              signInFallbackRedirectUrl="/soundscapes"
+            >
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full rounded-xl border-2 border-brand-accent bg-transparent px-8 py-3 text-base font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]"
+              >
+                sign up free
+              </motion.button>
+            </SignUpButton>
+
+            <button
+              onClick={() => setShowConversionModal(false)}
+              className="text-sm text-brand-text-muted hover:text-brand-text-secondary lowercase tracking-wide transition-colors"
+            >
+              maybe later
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
