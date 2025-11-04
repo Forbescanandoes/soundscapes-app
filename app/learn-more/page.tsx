@@ -273,12 +273,13 @@ export default function LearnMorePage() {
           className="mt-20 text-center"
         >
           <Link href="/soundscapes">
-            <Button 
-              size="lg"
-              className="rounded-full bg-brand-accent hover:bg-brand-accent/90 text-white text-base px-12 py-7 lowercase font-normal glow-accent-lg hover:scale-105 transition-all duration-300 tracking-wide"
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="relative rounded-xl border-2 border-brand-accent bg-transparent px-12 py-4 text-lg font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]"
             >
               explore the states
-            </Button>
+            </motion.button>
           </Link>
         </motion.div>
       </div>
