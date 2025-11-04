@@ -182,112 +182,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Philosophy Section */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 border-t border-brand-text-muted/10 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-bg-secondary/50 to-transparent" />
-        <div className="max-w-6xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <div className="text-5xl sm:text-6xl md:text-7xl font-light lowercase leading-tight text-brand-text-secondary mb-6 tracking-tight">
-                forget
-              </div>
-              <div className="text-5xl sm:text-6xl md:text-7xl font-light lowercase leading-tight text-brand-text-primary tracking-tight">
-                productivity porn.
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-secondary leading-relaxed tracking-wide">
-                the real killer isn&apos;t distractions.
-              </p>
-              <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-primary leading-relaxed tracking-wide">
-                it&apos;s the days you lose to brain fog and bad calls on fumes.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* States Bento Grid */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-brand-bg-secondary">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <p className="text-2xl sm:text-3xl font-light lowercase text-brand-text-primary tracking-wide">
-              we made these for when you&apos;re:
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                icon: Brain,
-                title: "burnt out",
-                description: "shipping nonstop. brain's static. can't think. this clears it.",
-                delay: 0
-              },
-              {
-                icon: Zap,
-                title: "overloaded",
-                description: "ten tabs deep. everything's on fire. wearing every hat. pause here.",
-                delay: 0.1
-              },
-              {
-                icon: Target,
-                title: "anxious",
-                description: "runway math. pitch anxiety. imposter loop. stop the spiral.",
-                delay: 0.2
-              },
-              {
-                icon: Sparkles,
-                title: "adhd as hell",
-                description: "ideas avalanching. scrolling not shipping. can't start. can't stop. reset.",
-                delay: 0.3
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: item.delay }}
-                viewport={{ once: true }}
-                className="group relative"
-              >
-                <div className="relative h-full p-8 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/50 transition-all duration-300 hover:bg-brand-bg/80">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-accent/0 via-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
-                  <div className="relative z-10">
-                    <item.icon className="w-8 h-8 mb-6 text-brand-accent opacity-80 group-hover:opacity-100 transition-opacity" />
-                    <h3 className="text-2xl sm:text-3xl font-light lowercase mb-4 text-brand-text-primary tracking-tight">
-                      {item.title}
-                    </h3>
-                    <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-                      {item.description}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Soundscape Categories Section */}
       <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0">
@@ -475,6 +369,351 @@ export default function Home() {
                 </motion.div>
               )
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* How To Roadmap Section */}
+      <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 bg-brand-bg-secondary relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-bg via-brand-bg-secondary to-brand-bg" />
+        </div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
+          {/* When to Use It */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="max-w-5xl mx-auto mb-[32rem]"
+          >
+            <div className="text-center mb-12">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-8 text-brand-text-primary tracking-tight">
+                when to use it
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                {
+                  trigger: "when you can't think straight",
+                  moment: "brain fog. tabs open but nothing landing. you're reading the same line three times.",
+                  gradient: "from-red-500/20 to-orange-500/20"
+                },
+                {
+                  trigger: "when you're stuck in a loop",
+                  moment: "same thought. same worry. same mental tab refreshing. you're spinning, not solving.",
+                  gradient: "from-purple-500/20 to-pink-500/20"
+                },
+                {
+                  trigger: "when decisions feel impossible",
+                  moment: "every option looks bad. analysis paralysis. you need clarity but you're running on fumes.",
+                  gradient: "from-yellow-500/20 to-orange-500/20"
+                },
+                {
+                  trigger: "when you feel the crash coming",
+                  moment: "that moment before burnout fully hits. when you know you're about to lose hours or days if you don't stop now.",
+                  gradient: "from-blue-500/20 to-cyan-500/20"
+                }
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 + (index * 0.1) }}
+                  viewport={{ once: true }}
+                  className="group relative"
+                >
+                  <div className="relative h-full p-6 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/40 transition-all duration-300 overflow-hidden">
+                    {/* Gradient overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                    
+                    <div className="relative z-10">
+                      <h4 className="text-xl sm:text-2xl font-light lowercase mb-3 text-brand-text-primary tracking-tight">
+                        {item.trigger}
+                      </h4>
+                      <p className="text-base text-brand-text-secondary lowercase leading-relaxed tracking-wide">
+                        {item.moment}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Emphasis */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="mt-12 text-center"
+            >
+              <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-secondary tracking-wide">
+                don&apos;t wait until you&apos;re already gone.
+              </p>
+              <p className="text-xl sm:text-2xl font-light lowercase text-brand-accent tracking-wide mt-2">
+                catch it early. reset now.
+              </p>
+            </motion.div>
+          </motion.div>
+
+          {/* How to Use It Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-6 tracking-tight text-brand-text-primary">
+              how to actually use this
+            </h2>
+            <p className="text-xl sm:text-2xl text-brand-accent lowercase tracking-wide font-light">
+              this isn&apos;t background music.
+            </p>
+          </motion.div>
+
+          {/* Roadmap Timeline */}
+          <div className="relative max-w-4xl mx-auto">
+            {/* Connecting line */}
+            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand-accent/0 via-brand-accent/40 to-brand-accent/0 hidden sm:block" />
+
+            {/* Steps */}
+            <div className="space-y-20">
+              {[
+                {
+                  number: "01",
+                  title: "headphones on. 100%.",
+                  description: "not speakers. not airpods on low. actual headphones. this only works if the sound wraps around your brain.",
+                  side: "left",
+                  delay: 0.1
+                },
+                {
+                  number: "02",
+                  title: "stop everything.",
+                  description: "you don't just turn it on and call it a day. you stop. desk, couch, floor. doesn't matter. but you stop.",
+                  side: "right",
+                  delay: 0.2
+                },
+                {
+                  number: "03",
+                  title: "eyes off. eyes shut.",
+                  description: "screen off. phone face down. eyes closed. if you're still scrolling, you're not resetting. you're stalling.",
+                  side: "left",
+                  delay: 0.3
+                },
+                {
+                  number: "04",
+                  title: "let go.",
+                  description: "try not to think. try not to solve. try not to plan. just breathe and let the sound do the work.",
+                  side: "right",
+                  delay: 0.4
+                },
+                {
+                  number: "05",
+                  title: "this is the reset.",
+                  description: "5 minutes. 10 if you can. this isn't a break. it's a biological reset. your nervous system clearing the static so you can think again.",
+                  side: "left",
+                  delay: 0.5
+                }
+              ].map((step, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: step.side === 'left' ? -40 : 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: step.delay }}
+                  viewport={{ once: true }}
+                  className={`relative flex items-center ${
+                    step.side === 'right' ? 'md:flex-row-reverse' : ''
+                  }`}
+                >
+                  {/* Mobile layout (stacked) */}
+                  <div className="flex items-start gap-6 md:hidden w-full">
+                    {/* Number badge */}
+                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-brand-accent/10 border-2 border-brand-accent flex items-center justify-center">
+                      <span className="text-brand-accent font-light text-lg tracking-tight">
+                        {step.number}
+                      </span>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 pt-2">
+                      <h3 className="text-2xl sm:text-3xl font-light lowercase mb-3 text-brand-text-primary tracking-tight">
+                        {step.title}
+                      </h3>
+                      <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Desktop layout (alternating sides) */}
+                  <div className="hidden md:flex md:items-center md:w-full">
+                    {/* Left content */}
+                    <div className={`w-full md:w-[calc(50%-2rem)] ${
+                      step.side === 'left' ? 'pr-12 text-right' : 'pl-12 text-left order-2'
+                    }`}>
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                        className="group"
+                      >
+                        <div className="relative p-8 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/50 transition-all duration-300">
+                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          
+                          <div className="relative z-10">
+                            <h3 className="text-2xl sm:text-3xl font-light lowercase mb-4 text-brand-text-primary tracking-tight">
+                              {step.title}
+                            </h3>
+                            <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
+                              {step.description}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </div>
+
+                    {/* Center node */}
+                    <div className="absolute left-1/2 -translate-x-1/2 flex-shrink-0 z-20">
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                        className="w-16 h-16 rounded-full bg-brand-bg border-2 border-brand-accent flex items-center justify-center relative"
+                      >
+                        <div className="absolute inset-0 rounded-full bg-brand-accent/20 blur-xl" />
+                        <span className="text-brand-accent font-light text-lg tracking-tight relative z-10">
+                          {step.number}
+                        </span>
+                      </motion.div>
+                    </div>
+
+                    {/* Spacer for opposite side */}
+                    <div className="w-full md:w-[calc(50%-2rem)]" />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Final emphasis */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="mt-32 text-center"
+            >
+              <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase text-brand-text-primary tracking-tight leading-tight">
+                do it right or don&apos;t do it at all.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Philosophy Section */}
+      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 border-t border-brand-text-muted/10 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-bg-secondary/50 to-transparent" />
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-5xl sm:text-6xl md:text-7xl font-light lowercase leading-tight text-brand-text-secondary mb-6 tracking-tight">
+                forget
+              </div>
+              <div className="text-5xl sm:text-6xl md:text-7xl font-light lowercase leading-tight text-brand-text-primary tracking-tight">
+                productivity porn.
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-secondary leading-relaxed tracking-wide">
+                the real killer isn&apos;t distractions.
+              </p>
+              <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-primary leading-relaxed tracking-wide">
+                it&apos;s the days you lose to brain fog and bad calls on fumes.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* States Bento Grid */}
+      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-brand-bg-secondary">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+            <p className="text-2xl sm:text-3xl font-light lowercase text-brand-text-primary tracking-wide">
+              we made these for when you&apos;re:
+            </p>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                icon: Brain,
+                title: "burnt out",
+                description: "shipping nonstop. brain's static. can't think. this clears it.",
+                delay: 0
+              },
+              {
+                icon: Zap,
+                title: "overloaded",
+                description: "ten tabs deep. everything's on fire. wearing every hat. pause here.",
+                delay: 0.1
+              },
+              {
+                icon: Target,
+                title: "anxious",
+                description: "runway math. pitch anxiety. imposter loop. stop the spiral.",
+                delay: 0.2
+              },
+              {
+                icon: Sparkles,
+                title: "adhd as hell",
+                description: "ideas avalanching. scrolling not shipping. can't start. can't stop. reset.",
+                delay: 0.3
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: item.delay }}
+                viewport={{ once: true }}
+                className="group relative"
+              >
+                <div className="relative h-full p-8 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/50 transition-all duration-300 hover:bg-brand-bg/80">
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-accent/0 via-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  
+                  <div className="relative z-10">
+                    <item.icon className="w-8 h-8 mb-6 text-brand-accent opacity-80 group-hover:opacity-100 transition-opacity" />
+                    <h3 className="text-2xl sm:text-3xl font-light lowercase mb-4 text-brand-text-primary tracking-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -743,245 +982,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* How To Roadmap Section */}
-      <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 bg-brand-bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-bg via-brand-bg-secondary to-brand-bg" />
-        </div>
-        
-        <div className="max-w-6xl mx-auto relative z-10">
-          {/* When to Use It */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="max-w-5xl mx-auto mb-[32rem]"
-          >
-            <div className="text-center mb-12">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-8 text-brand-text-primary tracking-tight">
-                when to use it
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                {
-                  trigger: "when you can't think straight",
-                  moment: "brain fog. tabs open but nothing landing. you're reading the same line three times.",
-                  gradient: "from-red-500/20 to-orange-500/20"
-                },
-                {
-                  trigger: "when you're stuck in a loop",
-                  moment: "same thought. same worry. same mental tab refreshing. you're spinning, not solving.",
-                  gradient: "from-purple-500/20 to-pink-500/20"
-                },
-                {
-                  trigger: "when decisions feel impossible",
-                  moment: "every option looks bad. analysis paralysis. you need clarity but you're running on fumes.",
-                  gradient: "from-yellow-500/20 to-orange-500/20"
-                },
-                {
-                  trigger: "when you feel the crash coming",
-                  moment: "that moment before burnout fully hits. when you know you're about to lose hours or days if you don't stop now.",
-                  gradient: "from-blue-500/20 to-cyan-500/20"
-                }
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 + (index * 0.1) }}
-                  viewport={{ once: true }}
-                  className="group relative"
-                >
-                  <div className="relative h-full p-6 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/40 transition-all duration-300 overflow-hidden">
-                    {/* Gradient overlay */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                    
-                    <div className="relative z-10">
-                      <h4 className="text-xl sm:text-2xl font-light lowercase mb-3 text-brand-text-primary tracking-tight">
-                        {item.trigger}
-                      </h4>
-                      <p className="text-base text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-                        {item.moment}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Emphasis */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              viewport={{ once: true }}
-              className="mt-12 text-center"
-            >
-              <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-secondary tracking-wide">
-                don&apos;t wait until you&apos;re already gone.
-              </p>
-              <p className="text-xl sm:text-2xl font-light lowercase text-brand-accent tracking-wide mt-2">
-                catch it early. reset now.
-              </p>
-            </motion.div>
-          </motion.div>
-
-          {/* How to Use It Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-6 tracking-tight text-brand-text-primary">
-              how to actually use this
-            </h2>
-            <p className="text-xl sm:text-2xl text-brand-accent lowercase tracking-wide font-light">
-              this isn&apos;t background music.
-            </p>
-          </motion.div>
-
-          {/* Roadmap Timeline */}
-          <div className="relative max-w-4xl mx-auto">
-            {/* Connecting line */}
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand-accent/0 via-brand-accent/40 to-brand-accent/0 hidden sm:block" />
-
-            {/* Steps */}
-            <div className="space-y-20">
-              {[
-                {
-                  number: "01",
-                  title: "headphones on. 100%.",
-                  description: "not speakers. not airpods on low. actual headphones. this only works if the sound wraps around your brain.",
-                  side: "left",
-                  delay: 0.1
-                },
-                {
-                  number: "02",
-                  title: "stop everything.",
-                  description: "you don't just turn it on and call it a day. you stop. desk, couch, floor. doesn't matter. but you stop.",
-                  side: "right",
-                  delay: 0.2
-                },
-                {
-                  number: "03",
-                  title: "eyes off. eyes shut.",
-                  description: "screen off. phone face down. eyes closed. if you're still scrolling, you're not resetting. you're stalling.",
-                  side: "left",
-                  delay: 0.3
-                },
-                {
-                  number: "04",
-                  title: "let go.",
-                  description: "try not to think. try not to solve. try not to plan. just breathe and let the sound do the work.",
-                  side: "right",
-                  delay: 0.4
-                },
-                {
-                  number: "05",
-                  title: "this is the reset.",
-                  description: "5 minutes. 10 if you can. this isn't a break. it's a biological reset. your nervous system clearing the static so you can think again.",
-                  side: "left",
-                  delay: 0.5
-                }
-              ].map((step, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: step.side === 'left' ? -40 : 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: step.delay }}
-                  viewport={{ once: true }}
-                  className={`relative flex items-center ${
-                    step.side === 'right' ? 'md:flex-row-reverse' : ''
-                  }`}
-                >
-                  {/* Mobile layout (stacked) */}
-                  <div className="flex items-start gap-6 md:hidden w-full">
-                    {/* Number badge */}
-                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-brand-accent/10 border-2 border-brand-accent flex items-center justify-center">
-                      <span className="text-brand-accent font-light text-lg tracking-tight">
-                        {step.number}
-                      </span>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 pt-2">
-                      <h3 className="text-2xl sm:text-3xl font-light lowercase mb-3 text-brand-text-primary tracking-tight">
-                        {step.title}
-                      </h3>
-                      <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Desktop layout (alternating sides) */}
-                  <div className="hidden md:flex md:items-center md:w-full">
-                    {/* Left content */}
-                    <div className={`w-full md:w-[calc(50%-2rem)] ${
-                      step.side === 'left' ? 'pr-12 text-right' : 'pl-12 text-left order-2'
-                    }`}>
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                        className="group"
-                      >
-                        <div className="relative p-8 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/50 transition-all duration-300">
-                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          
-                          <div className="relative z-10">
-                            <h3 className="text-2xl sm:text-3xl font-light lowercase mb-4 text-brand-text-primary tracking-tight">
-                              {step.title}
-                            </h3>
-                            <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-                              {step.description}
-                            </p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </div>
-
-                    {/* Center node */}
-                    <div className="absolute left-1/2 -translate-x-1/2 flex-shrink-0 z-20">
-                      <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                        className="w-16 h-16 rounded-full bg-brand-bg border-2 border-brand-accent flex items-center justify-center relative"
-                      >
-                        <div className="absolute inset-0 rounded-full bg-brand-accent/20 blur-xl" />
-                        <span className="text-brand-accent font-light text-lg tracking-tight relative z-10">
-                          {step.number}
-                        </span>
-                      </motion.div>
-                    </div>
-
-                    {/* Spacer for opposite side */}
-                    <div className="w-full md:w-[calc(50%-2rem)]" />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Final emphasis */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              viewport={{ once: true }}
-              className="mt-32 text-center"
-            >
-              <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase text-brand-text-primary tracking-tight leading-tight">
-                do it right or don&apos;t do it at all.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Advantage Section */}
       <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 relative">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -1026,148 +1026,6 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-brand-bg-secondary">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl sm:text-5xl font-light lowercase mb-4 tracking-tight text-brand-text-primary">
-              others already know
-            </h2>
-            <p className="text-lg text-brand-text-secondary lowercase tracking-wide">
-              what sound does.
-            </p>
-          </motion.div>
-
-          {/* Staggered testimonial grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-auto">
-            {[
-              {
-                quote: "brown noise has fundamentally made my life better",
-                author: "r/adhdwomen",
-                platform: "reddit",
-                delay: 0
-              },
-              {
-                quote: "in a world of constant notifications, staying focused is one of the most valuable skills we can cultivate. my method? sound. meditation audio to reset my thoughts.",
-                author: "stephen luke",
-                role: "fire officer",
-                platform: "linkedin",
-                delay: 0.1
-              },
-              {
-                quote: "brown noise with isochronic tones. work wonders for me.",
-                author: "u/confused_ox_97",
-                platform: "reddit",
-                delay: 0.2
-              },
-              {
-                quote: "i accidentally found the perfect productivity hack while optimising my work environment.",
-                author: "nagarjun mallesh",
-                role: "backend engineer",
-                platform: "linkedin",
-                delay: 0.15
-              },
-              {
-                quote: "ohhh yes. i work from home and use them every day. it really helps with focus",
-                author: "u/calminteraction",
-                platform: "reddit",
-                delay: 0.25
-              },
-              {
-                quote: "sustained focus is key in a noisy world. beyond typical productivity hacks, sound profoundly influences our cognitive performance.",
-                author: "simon bubb",
-                role: "consultant & coach",
-                platform: "linkedin",
-                delay: 0.3
-              },
-              {
-                quote: "dead silence is actually unnerving. it makes every tiny distraction sound like a gunshot. your brain goes on high alert, and your focus is shattered. now, imagine the gentle sound of a fountain, or the soft rustle of leaves. this is auditory wallpaper.",
-                author: "intl biophilic products assoc",
-                platform: "linkedin",
-                delay: 0.35
-              },
-              {
-                quote: "ambient noise, when used strategically and in moderation, can be a powerful tool for enhancing focus and improving performance. by understanding the science behind it and experimenting with different types of ambient sounds, you can unlock your full potential.",
-                author: "focuslabs",
-                platform: "research",
-                delay: 0.4
-              },
-              {
-                quote: "pay attention to the invisible transitions, the space between work blocks. by building a focus to rest routine using sound, you're creating rhythm. rhythm is the heartbeat of sustainable productivity.",
-                author: "sam mccarthy",
-                platform: "linkedin",
-                delay: 0.425
-              },
-              {
-                quote: "lofi hip hop, minimal electronic, deep house. mostly just stuff without singing.",
-                author: "u/shogunDii",
-                platform: "reddit",
-                delay: 0.45
-              },
-            ].map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: testimonial.delay }}
-                viewport={{ once: true }}
-                className={`group ${index % 3 === 1 ? 'md:mt-12' : ''} ${index % 3 === 2 ? 'md:mt-24' : ''}`}
-              >
-                <div className="relative h-full p-6 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/30 transition-all duration-300">
-                  {/* Quote mark decoration */}
-                  <div className="absolute top-4 right-4 text-6xl text-brand-accent/10 font-serif leading-none">
-                    "
-                  </div>
-
-                  <div className="relative z-10">
-                    <p className="text-base text-brand-text-secondary lowercase leading-relaxed mb-6 tracking-wide">
-                      {testimonial.quote}
-                    </p>
-                    
-                    <div className="flex items-center gap-3 pt-4 border-t border-brand-text-muted/10">
-                      <div className="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center">
-                        <span className="text-brand-accent text-sm font-medium">
-                          {testimonial.author.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="text-sm text-brand-text-primary lowercase font-medium tracking-wide">
-                          {testimonial.author}
-                        </p>
-                        {testimonial.role && (
-                          <p className="text-xs text-brand-text-muted lowercase tracking-wide">
-                            {testimonial.role}
-                          </p>
-                        )}
-                        {testimonial.platform && !testimonial.role && (
-                          <p className="text-xs text-brand-text-muted lowercase tracking-wide">
-                            {testimonial.platform}
-                          </p>
-                        )}
-                        {testimonial.platform && testimonial.role && (
-                          <p className="text-xs text-brand-text-muted lowercase tracking-wide flex items-center gap-1">
-                            via {testimonial.platform}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Hover gradient */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-accent/0 via-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
