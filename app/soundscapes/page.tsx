@@ -1,11 +1,11 @@
 "use client"
 
-import { useState, useMemo } from 'react'
-import { Play, Lock, ChevronDown, Sparkles } from 'lucide-react'
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
+import { Play, Lock, ChevronDown, Sparkles, Repeat, Shuffle } from 'lucide-react'
 import { Player } from '@/components/soundscape/player'
 import { RotatingMessage } from '@/components/soundscape/rotating-message'
 import { PricingModal } from '@/components/soundscape/pricing-modal'
-import { useAudioPlayer } from '@/hooks/use-audio-player'
+import { useAudioPlayer, type PlaybackMode } from '@/hooks/use-audio-player'
 import { SignedIn, SignedOut, SignUpButton, useClerk, useUser } from '@clerk/nextjs'
 import Link from 'next/link'
 import { trackPlay, startSession, endSession } from '@/utils/analytics/track'
@@ -132,8 +132,81 @@ export default function SoundscapesPage() {
     }))
   }, [unlockedCount])
 
-  // Initialize audio player
-  const { play, toggle, isPlaying, isLoading } = useAudioPlayer()
+  // Flatten all items for sequential/shuffle playback
+  const allUnlockedItems = useMemo(() => {
+    return categoriesWithAccess.flatMap(category =>
+      category.items
+        .filter(item => item.unlocked)
+        .map(item => ({
+          ...item,
+          category: category.title
+        }))
+    )
+  }, [categoriesWithAccess])
+
+  // Get next track based on playback mode
+  const getNextTrack = useCallback((currentId: string, mode: PlaybackMode) => {
+    if (mode === 'loop') return null // Loop mode doesn't need next track
+
+    const currentIndex = allUnlockedItems.findIndex(item => item.id === currentId)
+    if (currentIndex === -1) return allUnlockedItems[0] // Fallback to first track
+
+    if (mode === 'shuffle') {
+      // Random track (but not the same one)
+      const availableItems = allUnlockedItems.filter((_, idx) => idx !== currentIndex)
+      if (availableItems.length === 0) return allUnlockedItems[0]
+      return availableItems[Math.floor(Math.random() * availableItems.length)]
+    }
+
+    // Sequential mode: next in list, wrap to top
+    const nextIndex = (currentIndex + 1) % allUnlockedItems.length
+    return allUnlockedItems[nextIndex]
+  }, [allUnlockedItems])
+
+  // Callback for when track ends - play next track
+  const handlePlayNext = useCallback(() => {
+    if (!currentTrack) return
+    
+    const nextTrack = getNextTrack(currentTrack.id, playbackModeRef.current)
+    if (!nextTrack) return
+    
+    // End current session and start tracking new track
+    endSession()
+    trackPlay(nextTrack.id, nextTrack.name, nextTrack.category, user?.id)
+    startSession(nextTrack.id, nextTrack.name, nextTrack.category, user?.id)
+    
+    // Update current track
+    setCurrentTrack({ id: nextTrack.id, name: nextTrack.name, category: nextTrack.category })
+    
+    // Get filename and play
+    const filename = fileMap[nextTrack.name]
+    if (!filename) {
+      console.error(`No filename found for: ${nextTrack.name}`)
+      return
+    }
+    
+    const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
+    const audioUrl = `${storageUrl}/${encodeURIComponent(filename)}`
+    
+    playRef.current(nextTrack.id, audioUrl)
+  }, [currentTrack, getNextTrack, user?.id])
+
+  // Initialize audio player with onPlayNext callback
+  const { play, toggle, isPlaying, isLoading, playbackMode, setPlaybackMode } = useAudioPlayer({
+    onPlayNext: handlePlayNext
+  })
+
+  // Store refs for callbacks to avoid stale closures
+  const playRef = useRef(play)
+  const playbackModeRef = useRef(playbackMode)
+  
+  useEffect(() => {
+    playRef.current = play
+  }, [play])
+  
+  useEffect(() => {
+    playbackModeRef.current = playbackMode
+  }, [playbackMode])
 
   const handleLockClick = () => {
     // Show conversion modal for anonymous users
@@ -145,7 +218,7 @@ export default function SoundscapesPage() {
     }
   }
 
-  const handlePlay = async (itemId: string, itemName: string, categoryTitle: string, unlocked: boolean) => {
+  const handlePlay = useCallback(async (itemId: string, itemName: string, categoryTitle: string, unlocked: boolean) => {
     if (!unlocked) {
       handleLockClick()
       return
@@ -189,7 +262,7 @@ export default function SoundscapesPage() {
       
       play(itemId, audioUrl)
     }
-  }
+  }, [currentTrack, isPlaying, toggle, play, user?.id])
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-text-primary flex flex-col">
@@ -332,14 +405,52 @@ export default function SoundscapesPage() {
         </div>
       </div>
 
-      {/* Player */}
+      {/* Player with Playback Controls */}
       {currentTrack && (
-        <Player
-          trackName={currentTrack.name}
-          isPlaying={isPlaying}
-          isLoading={isLoading}
-          onTogglePlay={toggle}
-        />
+        <>
+          <Player
+            trackName={currentTrack.name}
+            isPlaying={isPlaying}
+            isLoading={isLoading}
+            onTogglePlay={toggle}
+          />
+          
+          {/* Playback Mode Controls - positioned above player */}
+          <div className="fixed bottom-[88px] left-0 right-0 z-40 bg-brand-bg-secondary/95 backdrop-blur-xl border-t border-brand-text-muted/10 px-4 py-2 flex items-center justify-center gap-2">
+            <button
+              onClick={() => setPlaybackMode('sequential')}
+              className={`px-3 py-1.5 rounded-lg text-xs lowercase tracking-wide transition-all ${
+                playbackMode === 'sequential'
+                  ? 'bg-brand-accent text-white'
+                  : 'bg-transparent text-brand-text-secondary hover:text-brand-text-primary border border-brand-text-muted/20'
+              }`}
+            >
+              sequential
+            </button>
+            <button
+              onClick={() => setPlaybackMode('loop')}
+              className={`px-3 py-1.5 rounded-lg text-xs lowercase tracking-wide transition-all flex items-center gap-1.5 ${
+                playbackMode === 'loop'
+                  ? 'bg-brand-accent text-white'
+                  : 'bg-transparent text-brand-text-secondary hover:text-brand-text-primary border border-brand-text-muted/20'
+              }`}
+            >
+              <Repeat className="w-3 h-3" />
+              loop
+            </button>
+            <button
+              onClick={() => setPlaybackMode('shuffle')}
+              className={`px-3 py-1.5 rounded-lg text-xs lowercase tracking-wide transition-all flex items-center gap-1.5 ${
+                playbackMode === 'shuffle'
+                  ? 'bg-brand-accent text-white'
+                  : 'bg-transparent text-brand-text-secondary hover:text-brand-text-primary border border-brand-text-muted/20'
+              }`}
+            >
+              <Shuffle className="w-3 h-3" />
+              shuffle
+            </button>
+          </div>
+        </>
       )}
 
       {/* Rotating Message */}

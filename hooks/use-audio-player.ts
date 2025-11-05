@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 
+export type PlaybackMode = 'sequential' | 'loop' | 'shuffle'
+
 export interface UseAudioPlayerOptions {
   onPlay?: () => void
   onPause?: () => void
@@ -9,6 +11,7 @@ export interface UseAudioPlayerOptions {
   onError?: (error: Error) => void
   durationLimit?: number // Duration limit in seconds (e.g., 20 for 20 seconds)
   onDurationLimitReached?: () => void
+  onPlayNext?: () => void // Called when track ends and should play next (for sequential/shuffle)
 }
 
 export function useAudioPlayer(options?: UseAudioPlayerOptions) {
@@ -21,6 +24,7 @@ export function useAudioPlayer(options?: UseAudioPlayerOptions) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   const [currentTrackId, setCurrentTrackId] = useState<string | null>(null)
+  const [playbackMode, setPlaybackMode] = useState<PlaybackMode>('sequential')
 
   // Keep options ref up to date
   useEffect(() => {
@@ -77,10 +81,17 @@ export function useAudioPlayer(options?: UseAudioPlayerOptions) {
     }, durationLimit * 1000)
   }, [fadeOut, clearTimer])
 
+  // Update loop based on playback mode
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.loop = playbackMode === 'loop'
+    }
+  }, [playbackMode])
+
   // Initialize audio element
   useEffect(() => {
     audioRef.current = new Audio()
-    audioRef.current.loop = true // Enable seamless looping
+    audioRef.current.loop = false // Will be controlled by playbackMode
     audioRef.current.preload = 'auto'
 
     const audio = audioRef.current
@@ -104,6 +115,10 @@ export function useAudioPlayer(options?: UseAudioPlayerOptions) {
 
     const handleEnded = () => {
       optionsRef.current?.onEnded?.()
+      // Auto-play next track for sequential/shuffle modes
+      if (playbackMode !== 'loop') {
+        optionsRef.current?.onPlayNext?.()
+      }
     }
 
     const handleError = () => {
@@ -142,7 +157,7 @@ export function useAudioPlayer(options?: UseAudioPlayerOptions) {
       audio.removeEventListener('loadstart', handleLoadStart)
       audioRef.current = null
     }
-  }, [clearTimer])
+  }, [clearTimer, playbackMode, startTimer])
 
   // Load and play a track
   const play = useCallback((trackId: string, audioUrl: string) => {
@@ -261,6 +276,8 @@ export function useAudioPlayer(options?: UseAudioPlayerOptions) {
     isLoading,
     error,
     currentTrackId,
+    playbackMode,
+    setPlaybackMode,
   }
 }
 
