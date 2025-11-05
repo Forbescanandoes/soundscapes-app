@@ -92,8 +92,13 @@ function getUnlockedCount(tier: AccessTier): number {
 const fileMap: Record<string, string> = {
   'shipping too fast': 'Shipping Too Fast.mp3',
   'slept at desk': 'Slept at Desk.wav',
+  'forgot to eat': 'Forgot to Eat.wav',
   'one too many hats': 'One Too Many Hats.wav',
+  "everything's on fire": "Everything's on Fire.wav",
+  'ten tabs deep': 'Ten Tabs Deep.wav',
   'the dread of marketing': 'the dread of marketing.wav',
+  'runway math': 'Runway Math.wav',
+  'waiting on replies': 'Waiting on Replies.wav',
   'imposter hour': 'Imposter Hour.wav',
   'idea avalanche': 'Idea Avalanche.wav',
   'twelve tabs open': 'Twelve Tabs Open.wav',
