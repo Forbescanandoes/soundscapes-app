@@ -101,6 +101,7 @@ const fileMap: Record<string, string> = {
   'waiting on replies': 'Waiting on Replies.wav',
   'imposter hour': 'Imposter Hour.wav',
   'idea avalanche': 'Idea Avalanche.wav',
+  'forgot the point': 'Forgot the Point.wav',
   'twelve tabs open': 'Twelve Tabs Open.wav',
 }
 
