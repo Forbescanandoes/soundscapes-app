@@ -94,7 +94,7 @@ const fileMap: Record<string, string> = {
   'slept at desk': 'Slept at Desk.wav',
   'forgot to eat': 'Forgot to Eat.wav',
   'one too many hats': 'One Too Many Hats.wav',
-  "everything's on fire": "Everything's on Fire.wav",
+  "everything's on fire": "fire.wav",
   'ten tabs deep': 'Ten Tabs Deep.wav',
   'the dread of marketing': 'the dread of marketing.wav',
   'runway math': 'Runway Math.wav',
