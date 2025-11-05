@@ -1171,7 +1171,7 @@ export default function Home() {
 
       {/* Conversion Modal */}
       <Dialog open={showConversionModal} onOpenChange={setShowConversionModal}>
-        <DialogContent className="bg-brand-bg-secondary border-brand-text-muted/20 sm:max-w-md">
+        <DialogContent className="bg-brand-bg border-brand-text-muted/20 sm:max-w-md">
           <DialogHeader className="text-center space-y-4">
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
