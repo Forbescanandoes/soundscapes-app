@@ -46,8 +46,8 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-brand-bg border-brand-text-muted/20 sm:max-w-2xl">
-        <DialogHeader className="text-center space-y-4">
+      <DialogContent className="bg-brand-bg border-brand-text-muted/20 sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="text-center space-y-4 flex-shrink-0">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
