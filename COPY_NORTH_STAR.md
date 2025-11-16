@@ -128,7 +128,7 @@
 
 ### ✅ Positioning:
 - **Not wellness. Not self-care. Not productivity porn.**
-- **Reliefware — survival gear for the race.**
+- **donothingsounds.com — survival gear for the race.**
 - GitHub = code. Figma = design. Notion = docs. **Us = reset.**
 
 ---

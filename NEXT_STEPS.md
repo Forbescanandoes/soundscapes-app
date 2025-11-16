@@ -157,7 +157,7 @@ After testing, verify:
 - Gating not working? → Check Clerk metadata updated
 
 **Support:**
-Email yourself at support@reliefware.app when users need help!
+Email yourself at support@donothingsounds.com.app when users need help!
 
 ---
 

@@ -19,11 +19,11 @@ In your Supabase dashboard:
 
 #### Create Products:
 1. Log into **Stripe Dashboard** → **Products**
-2. Create product: **Reliefware Pro - Monthly**
+2. Create product: **donothingsounds.com Pro - Monthly**
    - Price: $5
    - Billing: Recurring monthly
    - Copy the **Price ID** (starts with `price_`)
-3. Create product: **Reliefware Pro - Yearly**
+3. Create product: **donothingsounds.com Pro - Yearly**
    - Price: $35
    - Billing: Recurring yearly
    - Copy the **Price ID** (starts with `price_`)

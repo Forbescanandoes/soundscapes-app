@@ -54,8 +54,8 @@ CREATE POLICY "Service role can manage subscriptions"
 
 ### In Stripe Dashboard:
 1. Go to **Products** → Create 2 products:
-   - **Reliefware Pro - Monthly** ($5/month)
-   - **Reliefware Pro - Yearly** ($35/year)
+   - **donothingsounds.com Pro - Monthly** ($5/month)
+   - **donothingsounds.com Pro - Yearly** ($35/year)
 
 2. Copy the **Price IDs** (start with `price_...`)
    - `price_xxxxxxxxxxxxx` (monthly)

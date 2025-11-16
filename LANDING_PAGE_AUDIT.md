@@ -1,11 +1,11 @@
-# RELIEFWARE LANDING PAGE AUDIT
+# DONOTHINGSOUNDS.COM LANDING PAGE AUDIT
 ## Comprehensive Site Structure & Conversion Analysis
 
 ---
 
 ## EXECUTIVE SUMMARY
 
-**Product:** ReliefWare - Neuroacoustic soundscapes for founder burnout/stress  
+**Product:** donothingsounds.com - Neuroacoustic soundscapes for founder burnout/stress  
 **Target Audience:** Early-stage founders, startup builders, entrepreneurs  
 **Value Proposition:** Science-backed 90-second sound resets to clear brain fog and restore focus  
 **Conversion Goal:** Sign up → Use soundscapes → Retain and build habit  
@@ -31,7 +31,7 @@
 ### **SECTION 0: NAVIGATION** ⚠️
 **Position:** Fixed top navigation  
 **Content:**
-- Logo: "ReliefWare" (bold, mixed case)
+- Logo: "donothingsounds.com" (bold, mixed case)
 - Right side: Sign In (ghost button) + Sign Up (accent blue) OR User Button if logged in
 
 **Intent:** Quick auth access, brand recognition  
