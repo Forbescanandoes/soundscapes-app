@@ -9,7 +9,6 @@ import { ComingSoonModal } from '@/components/soundscape/coming-soon-modal'
 import { useAudioPlayer, type PlaybackMode } from '@/hooks/use-audio-player'
 import { SignedIn, SignedOut, SignUpButton, useClerk, useUser } from '@clerk/nextjs'
 import Link from 'next/link'
-import Image from 'next/image'
 import { trackPlay, startSession, endSession } from '@/utils/analytics/track'
 import { motion } from 'framer-motion'
 import {
@@ -297,7 +296,7 @@ export default function SoundscapesPage() {
       
       play(itemId, audioUrl)
     }
-  }, [currentTrack, isPlaying, toggle, play, user?.id])
+  }, [currentTrack, isPlaying, toggle, play, user?.id, handleLockClick, fileMap])
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-text-primary flex flex-col">
@@ -365,7 +364,7 @@ export default function SoundscapesPage() {
       {/* Soundscapes List */}
       <div className="flex-1 overflow-y-auto pb-32">
         <div className="max-w-3xl mx-auto pt-8">
-          {categoriesWithAccess.map((category, categoryIndex) => (
+          {categoriesWithAccess.map((category) => (
             <div key={category.title}>
               <div className="mb-12">
               <h2 className="text-2xl font-light lowercase mb-6 px-4 sm:px-6 text-brand-text-primary tracking-tight">
@@ -497,7 +496,7 @@ export default function SoundscapesPage() {
                     {/* Row 1 - Horizontally scrollable */}
                     <div className="overflow-x-auto px-4 sm:px-6 pb-2 hide-scrollbar">
                       <div className="flex gap-3 min-w-max">
-                        {['Too Many Tabs in My Head', "Can't Tell What's Right Anymore", 'Brain Feels Like Static', 'Getting My Edge Back', 'Running Hot'].map((scenario, index) => (
+                        {['Too Many Tabs in My Head', "Can't Tell What's Right Anymore", 'Brain Feels Like Static', 'Getting My Edge Back', 'Running Hot'].map((scenario) => (
                           <button
                             key={scenario}
                             onClick={() => handlePremiumFeatureClick('scenarios')}
@@ -514,7 +513,7 @@ export default function SoundscapesPage() {
                     {/* Row 2 - Horizontally scrollable, offset on desktop for brick effect */}
                     <div className="overflow-x-auto px-4 sm:px-6 pb-2 hide-scrollbar">
                       <div className="flex gap-3 min-w-max sm:ml-12">
-                        {['I Just Need Clarity', "It's There, I Just Can't Reach It", 'Too Much Input, Not Enough Me', "Everything's On Fire, But I Still Have to Think", 'Trying to Power Down'].map((scenario, index) => (
+                        {['I Just Need Clarity', "It's There, I Just Can't Reach It", 'Too Much Input, Not Enough Me', "Everything's On Fire, But I Still Have to Think", 'Trying to Power Down'].map((scenario) => (
                           <button
                             key={scenario}
                             onClick={() => handlePremiumFeatureClick('scenarios')}
