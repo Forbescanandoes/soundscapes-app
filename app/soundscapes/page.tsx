@@ -228,7 +228,7 @@ export default function SoundscapesPage() {
     playbackModeRef.current = playbackMode
   }, [playbackMode])
 
-  const handleLockClick = () => {
+  const handleLockClick = useCallback(() => {
     // Show conversion modal for anonymous users
     // Show pricing modal for freemium users
     if (!isSignedIn) {
@@ -236,9 +236,9 @@ export default function SoundscapesPage() {
     } else {
       setShowPricingModal(true)
     }
-  }
+  }, [isSignedIn])
 
-  const handlePremiumFeatureClick = (featureName: string) => {
+  const handlePremiumFeatureClick = useCallback((featureName: string) => {
     // Anonymous: show conversion modal (sign up)
     // Freemium: show pricing modal (upgrade to pro)
     // Pro: show coming soon modal
@@ -250,7 +250,7 @@ export default function SoundscapesPage() {
       setComingSoonFeature(featureName)
       setShowComingSoonModal(true)
     }
-  }
+  }, [isSignedIn, isPro])
 
   const handlePlay = useCallback(async (itemId: string, itemName: string, categoryTitle: string, unlocked: boolean) => {
     if (!unlocked) {
