@@ -5,6 +5,7 @@ import { supabaseAdmin } from '@/utils/supabase/admin'
 import Stripe from 'stripe'
 import { clerkClient } from '@clerk/nextjs/server'
 
+// Stripe webhook handler - verifies signatures and syncs subscription data
 // Disable body parsing - Stripe needs raw body for signature verification
 export const runtime = 'nodejs'
 
