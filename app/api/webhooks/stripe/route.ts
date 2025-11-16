@@ -238,7 +238,7 @@ async function handlePaymentFailed(invoice: Stripe.Invoice) {
 // Update Clerk user metadata for gating
 async function updateClerkMetadata(clerkUserId: string, isPro: boolean) {
   try {
-    const client = clerkClient
+    const client = await clerkClient()
     await client.users.updateUserMetadata(clerkUserId, {
       publicMetadata: {
         isPro: isPro,
