@@ -157,7 +157,7 @@ export function useAudioPlayer(options?: UseAudioPlayerOptions) {
       audio.removeEventListener('loadstart', handleLoadStart)
       audioRef.current = null
     }
-  }, [clearTimer, playbackMode, startTimer])
+  }, [clearTimer, startTimer])
 
   // Load and play a track
   const play = useCallback((trackId: string, audioUrl: string) => {

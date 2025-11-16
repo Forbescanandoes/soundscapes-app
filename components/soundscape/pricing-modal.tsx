@@ -1,7 +1,8 @@
 "use client"
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Check, Sparkles } from 'lucide-react'
+import { Check, Sparkles, Loader2 } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -16,12 +17,17 @@ interface PricingModalProps {
 }
 
 export function PricingModal({ open, onOpenChange }: PricingModalProps) {
+  const [loading, setLoading] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
   const plans = [
     {
       name: 'monthly',
       price: '$5',
       period: '/month',
       description: 'billed monthly',
+      priceId: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID || '',
+      planType: 'monthly',
       features: [
         'unlimited access to all soundscapes',
         'no ads, ever',
@@ -35,6 +41,8 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
       period: '/year',
       description: 'save 42%',
       popular: true,
+      priceId: process.env.NEXT_PUBLIC_STRIPE_YEARLY_PRICE_ID || '',
+      planType: 'yearly',
       features: [
         'unlimited access to all soundscapes',
         'no ads, ever',
@@ -43,6 +51,40 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
       ]
     }
   ]
+
+  const handleCheckout = async (priceId: string, planType: string) => {
+    try {
+      setLoading(planType)
+      setError(null)
+
+      // Call our API to create a Stripe Checkout session
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          priceId, 
+          planType 
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create checkout session')
+      }
+
+      // Redirect to Stripe Checkout
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch (err) {
+      console.error('Checkout error:', err)
+      setError(err instanceof Error ? err.message : 'Something went wrong')
+      setLoading(null)
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -84,12 +126,12 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
                 </div>
               )}
               
-              <button
+              <div
                 className={`
-                  w-full p-6 rounded-2xl border-2 transition-all duration-300 text-left
+                  block w-full p-6 rounded-2xl border-2 transition-all duration-300 text-left
                   ${plan.popular 
-                    ? 'border-brand-accent bg-brand-accent/5 hover:bg-brand-accent/10' 
-                    : 'border-brand-text-muted/20 bg-brand-bg/50 hover:border-brand-accent/50'
+                    ? 'border-brand-accent bg-brand-accent/5' 
+                    : 'border-brand-text-muted/20 bg-brand-bg/50'
                   }
                 `}
               >
@@ -122,25 +164,46 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
 
                 {/* CTA */}
                 <div className="mt-6">
-                  <div className={`
-                    w-full py-3 rounded-xl text-center text-sm font-normal lowercase tracking-wide transition-all
-                    ${plan.popular
-                      ? 'bg-brand-accent text-white'
-                      : 'bg-brand-text-muted/10 text-brand-text-primary'
-                    }
-                  `}>
-                    upgrade to pro
-                  </div>
+                  <button
+                    onClick={() => handleCheckout(plan.priceId, plan.planType)}
+                    disabled={loading !== null}
+                    className={`
+                      w-full py-3 rounded-xl text-center text-sm font-normal lowercase tracking-wide transition-all
+                      flex items-center justify-center gap-2
+                      ${plan.popular
+                        ? 'bg-brand-accent hover:bg-brand-accent/80 text-white'
+                        : 'bg-brand-text-muted/10 hover:bg-brand-text-muted/20 text-brand-text-primary'
+                      }
+                      disabled:opacity-50 disabled:cursor-not-allowed
+                    `}
+                  >
+                    {loading === plan.planType ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>loading...</span>
+                      </>
+                    ) : (
+                      'upgrade to pro'
+                    )}
+                  </button>
                 </div>
-              </button>
+              </div>
             </motion.div>
           ))}
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm lowercase text-center">
+            {error}
+          </div>
+        )}
+
         {/* Footer */}
         <button
           onClick={() => onOpenChange(false)}
-          className="mt-4 text-sm text-brand-text-muted hover:text-brand-text-secondary lowercase tracking-wide transition-colors text-center w-full"
+          disabled={loading !== null}
+          className="mt-4 text-sm text-brand-text-muted hover:text-brand-text-secondary lowercase tracking-wide transition-colors text-center w-full disabled:opacity-50"
         >
           maybe later
         </button>

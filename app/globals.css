@@ -44,6 +44,16 @@
   ::-webkit-scrollbar-thumb:hover {
     background: #5094ed;
   }
+
+  /* Hide scrollbar for scenario buttons */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer base {

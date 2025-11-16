@@ -1,13 +1,15 @@
 "use client"
 
 import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
-import { Play, Lock, ChevronDown, Sparkles, Repeat, Shuffle } from 'lucide-react'
+import { Play, Lock, ChevronDown, Sparkles, Repeat, Shuffle, List } from 'lucide-react'
 import { Player } from '@/components/soundscape/player'
 import { RotatingMessage } from '@/components/soundscape/rotating-message'
 import { PricingModal } from '@/components/soundscape/pricing-modal'
+import { ComingSoonModal } from '@/components/soundscape/coming-soon-modal'
 import { useAudioPlayer, type PlaybackMode } from '@/hooks/use-audio-player'
 import { SignedIn, SignedOut, SignUpButton, useClerk, useUser } from '@clerk/nextjs'
 import Link from 'next/link'
+import Image from 'next/image'
 import { trackPlay, startSession, endSession } from '@/utils/analytics/track'
 import { motion } from 'framer-motion'
 import {
@@ -57,7 +59,7 @@ const soundCategories = [
     ],
   },
   {
-    title: 'ADHD',
+    title: 'Scattered',
     items: [
       { id: 'twelve-tabs-open', name: 'twelve tabs open' },
       { id: 'idea-avalanche', name: 'idea avalanche' },
@@ -80,7 +82,7 @@ function getUnlockedCount(tier: AccessTier): number {
     case 'anonymous':
       return 1 // First song only
     case 'freemium':
-      return 3 // Top 3 songs
+      return 2 // Top 2 songs
     case 'pro':
       return 999 // All songs
     default:
@@ -90,19 +92,36 @@ function getUnlockedCount(tier: AccessTier): number {
 
 // Map of track IDs to actual audio filenames
 const fileMap: Record<string, string> = {
+  // Burnout
   'shipping too fast': 'Shipping Too Fast.mp3',
   'slept at desk': 'Slept at Desk.wav',
   'forgot to eat': 'Forgot to Eat.wav',
+  'brain fog': 'Brain Fog.wav',
+  'running on fumes': 'Running on Fumes.wav',
+  
+  // Overload
   'one too many hats': 'One Too Many Hats.wav',
   "everything's on fire": "fire.wav",
   'ten tabs deep': 'Ten Tabs Deep.wav',
+  'drowning in pings': 'Drowning in Pings.wav',
+  'zero quiet': 'Zero Quiet.wav',
+  
+  // Anxious
   'the dread of marketing': 'the dread of marketing.wav',
   'runway math': 'Runway Math.wav',
   'waiting on replies': 'Waiting on Replies.wav',
   'imposter hour': 'Imposter Hour.wav',
+  'distributed my guts': 'Distributed My Guts.wav',
+  
+  // Scattered
+  'twelve tabs open': 'Twelve Tabs Open.wav',
   'idea avalanche': 'Idea Avalanche.wav',
   'forgot the point': 'Forgot the Point.wav',
-  'twelve tabs open': 'Twelve Tabs Open.wav',
+  'dopamine chase': 'Dopamine Chase.wav',
+  "can't start": "Can't Start.wav",
+  "can't stop": "Can't Stop.wav",
+  'half built everything': 'Half Built Everything.wav',
+  'scrolling instead': 'Scrolling Instead.wav',
 }
 
 export default function SoundscapesPage() {
@@ -115,10 +134,12 @@ export default function SoundscapesPage() {
   } | null>(null)
   const [showConversionModal, setShowConversionModal] = useState(false)
   const [showPricingModal, setShowPricingModal] = useState(false)
+  const [showComingSoonModal, setShowComingSoonModal] = useState(false)
+  const [comingSoonFeature, setComingSoonFeature] = useState<string>('')
 
-  // Determine access tier
-  // TODO: Check if user has pro subscription from Clerk metadata
-  const accessTier: AccessTier = !isSignedIn ? 'anonymous' : 'freemium'
+  // Determine access tier - check Clerk metadata for pro subscription
+  const isPro = user?.publicMetadata?.subscriptionTier === 'pro' || user?.publicMetadata?.isPro === true
+  const accessTier: AccessTier = !isSignedIn ? 'anonymous' : (isPro ? 'pro' : 'freemium')
   const unlockedCount = getUnlockedCount(accessTier)
 
   // Add unlocked status to each category's items
@@ -215,6 +236,20 @@ export default function SoundscapesPage() {
       setShowConversionModal(true)
     } else {
       setShowPricingModal(true)
+    }
+  }
+
+  const handlePremiumFeatureClick = (featureName: string) => {
+    // Anonymous: show conversion modal (sign up)
+    // Freemium: show pricing modal (upgrade to pro)
+    // Pro: show coming soon modal
+    if (!isSignedIn) {
+      setShowConversionModal(true)
+    } else if (!isPro) {
+      setShowPricingModal(true)
+    } else {
+      setComingSoonFeature(featureName)
+      setShowComingSoonModal(true)
     }
   }
 
@@ -330,8 +365,9 @@ export default function SoundscapesPage() {
       {/* Soundscapes List */}
       <div className="flex-1 overflow-y-auto pb-32">
         <div className="max-w-3xl mx-auto pt-8">
-          {categoriesWithAccess.map((category) => (
-            <div key={category.title} className="mb-12">
+          {categoriesWithAccess.map((category, categoryIndex) => (
+            <div key={category.title}>
+              <div className="mb-12">
               <h2 className="text-2xl font-light lowercase mb-6 px-4 sm:px-6 text-brand-text-primary tracking-tight">
                 {category.title}
               </h2>
@@ -346,7 +382,7 @@ export default function SoundscapesPage() {
                       className={`
                         w-full flex items-center justify-between px-4 sm:px-6 py-4 border-b border-brand-text-muted/10 transition-all
                         ${!item.unlocked
-                          ? 'opacity-50 cursor-pointer'
+                            ? 'opacity-50 cursor-pointer'
                           : 'hover:bg-brand-bg-secondary cursor-pointer'
                         }
                       `}
@@ -400,6 +436,101 @@ export default function SoundscapesPage() {
                   )
                 })}
               </div>
+              </div>
+
+              {/* Exercises Section - appears after Anxious */}
+              {category.title === 'Anxious' && (
+                <div className="mb-12">
+                  <h2 className="text-2xl font-light lowercase mb-6 px-4 sm:px-6 text-brand-text-primary tracking-tight">
+                    exercises
+                  </h2>
+                  <div className="overflow-x-auto px-4 sm:px-6 pb-2 hide-scrollbar">
+                    <div className="flex gap-6 min-w-max">
+                      {[
+                        { title: 'Lock In', subtitle: 'enter flow on command', image: '/exercises/lock-in.jpg' },
+                        { title: 'Wipe the Slate', subtitle: 'clear the mental fog fast', image: '/exercises/wipe-slate.jpg' },
+                        { title: 'Reboot Confidence', subtitle: 'reset belief before it slips', image: '/exercises/reboot-confidence.jpg' },
+                        { title: 'Calm Under Fire', subtitle: 'stay sharp under pressure', image: '/exercises/calm-under-fire.jpg' },
+                        { title: 'End of Cycle', subtitle: 'step out clean, not drained', image: '/exercises/end-of-cycle.jpg' },
+                      ].map((exercise) => (
+                        <button
+                          key={exercise.title}
+                          onClick={() => handlePremiumFeatureClick('exercises')}
+                          className="flex-shrink-0 w-48 group cursor-pointer"
+                        >
+                          {/* Square Image Box */}
+                          <div className="relative w-48 h-48 rounded-2xl overflow-hidden mb-4 bg-brand-bg-secondary border border-brand-text-muted/20 group-hover:border-brand-accent/60 transition-all duration-300">
+                            <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            {/* Placeholder for image */}
+                            <div className="w-full h-full flex items-center justify-center text-brand-text-muted/30">
+                              <span className="text-sm lowercase tracking-wide">image</span>
+                            </div>
+                            {/* Lock Icon Overlay for non-pro users */}
+                            {!isPro && (
+                              <div className="absolute inset-0 flex items-center justify-center bg-brand-bg/40 backdrop-blur-sm">
+                                <Lock className="w-8 h-8 text-brand-accent" />
+                              </div>
+                            )}
+                          </div>
+                          {/* Title */}
+                          <h3 className="text-base font-light lowercase text-brand-text-primary mb-2 tracking-tight group-hover:text-brand-accent transition-colors">
+                            {exercise.title}
+                          </h3>
+                          {/* Subtitle */}
+                          <p className="text-sm lowercase text-brand-text-secondary tracking-wide leading-relaxed">
+                            {exercise.subtitle}
+                          </p>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Scenarios Section - appears after Overload */}
+              {category.title === 'Overload' && (
+                <div className="mb-12">
+                  <h2 className="text-2xl font-light lowercase mb-6 px-4 sm:px-6 text-brand-text-primary tracking-tight">
+                    scenarios
+                  </h2>
+                  <div className="space-y-3">
+                    {/* Row 1 - Horizontally scrollable */}
+                    <div className="overflow-x-auto px-4 sm:px-6 pb-2 hide-scrollbar">
+                      <div className="flex gap-3 min-w-max">
+                        {['Too Many Tabs in My Head', "Can't Tell What's Right Anymore", 'Brain Feels Like Static', 'Getting My Edge Back', 'Running Hot'].map((scenario, index) => (
+                          <button
+                            key={scenario}
+                            onClick={() => handlePremiumFeatureClick('scenarios')}
+                            className="relative px-5 py-3.5 rounded-2xl bg-gradient-to-br from-brand-bg-secondary to-brand-bg border border-brand-text-muted/30 hover:border-brand-accent/60 text-brand-text-primary text-sm font-light lowercase tracking-wide transition-all duration-300 hover:bg-brand-accent/5 hover:shadow-lg hover:shadow-brand-accent/10 whitespace-nowrap flex items-center gap-2"
+                          >
+                            {!isPro && (
+                              <Lock className="w-3.5 h-3.5 text-brand-accent flex-shrink-0" />
+                            )}
+                            <span>{scenario}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Row 2 - Horizontally scrollable, offset on desktop for brick effect */}
+                    <div className="overflow-x-auto px-4 sm:px-6 pb-2 hide-scrollbar">
+                      <div className="flex gap-3 min-w-max sm:ml-12">
+                        {['I Just Need Clarity', "It's There, I Just Can't Reach It", 'Too Much Input, Not Enough Me', "Everything's On Fire, But I Still Have to Think", 'Trying to Power Down'].map((scenario, index) => (
+                          <button
+                            key={scenario}
+                            onClick={() => handlePremiumFeatureClick('scenarios')}
+                            className="relative px-5 py-3.5 rounded-2xl bg-gradient-to-br from-brand-bg-secondary to-brand-bg border border-brand-text-muted/30 hover:border-brand-accent/60 text-brand-text-primary text-sm font-light lowercase tracking-wide transition-all duration-300 hover:bg-brand-accent/5 hover:shadow-lg hover:shadow-brand-accent/10 whitespace-nowrap flex items-center gap-2"
+                          >
+                            {!isPro && (
+                              <Lock className="w-3.5 h-3.5 text-brand-accent flex-shrink-0" />
+                            )}
+                            <span>{scenario}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -408,46 +539,44 @@ export default function SoundscapesPage() {
       {/* Player with Playback Controls */}
       {currentTrack && (
         <>
-          <Player
-            trackName={currentTrack.name}
-            isPlaying={isPlaying}
-            isLoading={isLoading}
-            onTogglePlay={toggle}
-          />
+        <Player
+          trackName={currentTrack.name}
+          isPlaying={isPlaying}
+          isLoading={isLoading}
+          onTogglePlay={toggle}
+        />
           
           {/* Playback Mode Controls - positioned above player */}
-          <div className="fixed bottom-[88px] left-0 right-0 z-40 bg-brand-bg-secondary/95 backdrop-blur-xl border-t border-brand-text-muted/10 px-4 py-2 flex items-center justify-center gap-2">
+          <div className="fixed bottom-[88px] left-0 right-0 z-40 px-4 py-3 flex items-center justify-center gap-3">
             <button
               onClick={() => setPlaybackMode('sequential')}
-              className={`px-3 py-1.5 rounded-lg text-xs lowercase tracking-wide transition-all ${
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                 playbackMode === 'sequential'
-                  ? 'bg-brand-accent text-white'
-                  : 'bg-transparent text-brand-text-secondary hover:text-brand-text-primary border border-brand-text-muted/20'
+                  ? 'bg-brand-accent/20 text-brand-accent'
+                  : 'text-brand-text-muted hover:text-brand-text-primary'
               }`}
             >
-              sequential
+              <List className="w-5 h-5" />
             </button>
             <button
               onClick={() => setPlaybackMode('loop')}
-              className={`px-3 py-1.5 rounded-lg text-xs lowercase tracking-wide transition-all flex items-center gap-1.5 ${
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                 playbackMode === 'loop'
-                  ? 'bg-brand-accent text-white'
-                  : 'bg-transparent text-brand-text-secondary hover:text-brand-text-primary border border-brand-text-muted/20'
+                  ? 'bg-brand-accent/20 text-brand-accent'
+                  : 'text-brand-text-muted hover:text-brand-text-primary'
               }`}
             >
-              <Repeat className="w-3 h-3" />
-              loop
+              <Repeat className="w-5 h-5" />
             </button>
             <button
               onClick={() => setPlaybackMode('shuffle')}
-              className={`px-3 py-1.5 rounded-lg text-xs lowercase tracking-wide transition-all flex items-center gap-1.5 ${
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                 playbackMode === 'shuffle'
-                  ? 'bg-brand-accent text-white'
-                  : 'bg-transparent text-brand-text-secondary hover:text-brand-text-primary border border-brand-text-muted/20'
+                  ? 'bg-brand-accent/20 text-brand-accent'
+                  : 'text-brand-text-muted hover:text-brand-text-primary'
               }`}
             >
-              <Shuffle className="w-3 h-3" />
-              shuffle
+              <Shuffle className="w-5 h-5" />
             </button>
           </div>
         </>
@@ -507,6 +636,13 @@ export default function SoundscapesPage() {
       <PricingModal 
         open={showPricingModal} 
         onOpenChange={setShowPricingModal}
+      />
+
+      {/* Coming Soon Modal (for pro users clicking premium features) */}
+      <ComingSoonModal
+        open={showComingSoonModal}
+        onOpenChange={setShowComingSoonModal}
+        featureName={comingSoonFeature}
       />
     </div>
   )

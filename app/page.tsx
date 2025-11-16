@@ -55,8 +55,8 @@ export default function Home() {
       gradient: 'from-purple-500/20 to-pink-500/20'
     },
     {
-      id: 'adhd',
-      title: 'adhd',
+      id: 'scattered',
+      title: 'scattered',
       description: 'ideas avalanching. scrolling not shipping. can\'t start. can\'t stop. reset.',
       audioFile: `${storageUrl}/${encodeURIComponent('Twelve Tabs Open.wav')}`,
       icon: Sparkles,
@@ -161,22 +161,18 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.1] mb-8">
-              <span className="font-light text-brand-text-secondary lowercase">Your best work</span>
-              <br />
-              <span className="font-light text-brand-text-secondary lowercase">happens when</span>
-              <br />
-              <span className="font-medium text-brand-text-primary lowercase">your brain is clear</span>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight leading-[1.1] mb-8 text-brand-text-primary lowercase">
+              Your brain isn&apos;t tired. It&apos;s overloaded.
             </h1>
           </motion.div>
-
-          <motion.p
+          
+          <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg sm:text-xl text-brand-text-secondary lowercase max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            science backed soundscapes that reset your nervous system in minutes, so you can get back to shipping.
+            Here&apos;s the 5 minute reset that clears the pressure.
           </motion.p>
 
           <motion.div
@@ -406,7 +402,7 @@ export default function Home() {
             <div className="text-center mb-12">
               <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-8 text-brand-text-primary tracking-tight">
                 when to use it
-              </h2>
+            </h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -425,21 +421,21 @@ export default function Home() {
                   trigger: "when decisions feel impossible",
                   moment: "every option looks bad. analysis paralysis. you need clarity but you're running on fumes.",
                   gradient: "from-yellow-500/20 to-orange-500/20"
-                },
-                {
+              },
+              {
                   trigger: "when you feel the crash coming",
                   moment: "that moment before burnout fully hits. when you know you're about to lose hours or days if you don't stop now.",
                   gradient: "from-blue-500/20 to-cyan-500/20"
-                }
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
                   initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 + (index * 0.1) }}
-                  viewport={{ once: true }}
+                viewport={{ once: true }}
                   className="group relative"
-                >
+              >
                   <div className="relative h-full p-6 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/40 transition-all duration-300 overflow-hidden">
                     {/* Gradient overlay */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
@@ -450,19 +446,19 @@ export default function Home() {
                       </h4>
                       <p className="text-base text-brand-text-secondary lowercase leading-relaxed tracking-wide">
                         {item.moment}
-                      </p>
+                </p>
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
+              </motion.div>
+            ))}
+          </div>
 
             {/* Emphasis */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              viewport={{ once: true }}
+            viewport={{ once: true }}
               className="mt-12 text-center"
             >
               <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-secondary tracking-wide">
@@ -504,8 +500,8 @@ export default function Home() {
                   description: "not speakers. not airpods on low. actual headphones. this only works if the sound wraps around your brain.",
                   side: "left",
                   delay: 0.1
-                },
-                {
+                  },
+                  {
                   number: "02",
                   title: "stop everything.",
                   description: "you don't just turn it on and call it a day. you stop. desk, couch, floor. doesn't matter. but you stop.",
@@ -518,8 +514,8 @@ export default function Home() {
                   description: "screen off. phone face down. eyes closed. if you're still scrolling, you're not resetting. you're stalling.",
                   side: "left",
                   delay: 0.3
-                },
-                {
+                  },
+                  {
                   number: "04",
                   title: "let go.",
                   description: "try not to think. try not to solve. try not to plan. just breathe and let the sound do the work.",
@@ -529,17 +525,17 @@ export default function Home() {
                 {
                   number: "05",
                   title: "this is the reset.",
-                  description: "5 minutes. 10 if you can. this isn't a break. it's a biological reset. your nervous system clearing the static so you can think again.",
+                  description: "5 minutes. 10 if you can. this isn't a break. your nervous system finally stops screaming.",
                   side: "left",
                   delay: 0.5
-                }
+                  }
               ].map((step, index) => (
-                <motion.div
-                  key={index}
+                  <motion.div
+                    key={index}
                   initial={{ opacity: 0, x: step.side === 'left' ? -40 : 40 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: step.delay }}
-                  viewport={{ once: true }}
+                    viewport={{ once: true }}
                   className={`relative flex items-center ${
                     step.side === 'right' ? 'md:flex-row-reverse' : ''
                   }`}
@@ -581,10 +577,10 @@ export default function Home() {
                           <div className="relative z-10">
                             <h3 className="text-2xl sm:text-3xl font-light lowercase mb-4 text-brand-text-primary tracking-tight">
                               {step.title}
-                            </h3>
+                      </h3>
                             <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
                               {step.description}
-                            </p>
+                      </p>
                           </div>
                         </div>
                       </motion.div>
@@ -606,10 +602,10 @@ export default function Home() {
 
                     {/* Spacer for opposite side */}
                     <div className="w-full md:w-[calc(50%-2rem)]" />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
 
             {/* Final emphasis */}
             <motion.div
@@ -662,8 +658,8 @@ export default function Home() {
               </div>
               <div className="text-5xl sm:text-6xl md:text-7xl font-light lowercase leading-tight text-brand-text-primary tracking-tight">
                 productivity porn.
-              </div>
-            </motion.div>
+            </div>
+          </motion.div>
             
             <motion.div
               initial={{ opacity: 0, x: 20 }}
@@ -678,7 +674,7 @@ export default function Home() {
               <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-primary leading-relaxed tracking-wide">
                 it&apos;s the days you lose to brain fog and bad calls on fumes.
               </p>
-            </motion.div>
+          </motion.div>
           </div>
         </div>
       </section>
@@ -720,7 +716,7 @@ export default function Home() {
               },
               {
                 icon: Sparkles,
-                title: "adhd as hell",
+                title: "scattered as hell",
                 description: "ideas avalanching. scrolling not shipping. can't start. can't stop. reset.",
                 delay: 0.3
               }
@@ -767,36 +763,36 @@ export default function Home() {
             className="text-center mb-20"
           >
             <h2 className="text-4xl sm:text-5xl font-light lowercase mb-8 tracking-tight">
-              backed by neuroscience
+              why this works (without the woo-woo)
             </h2>
             <p className="text-lg sm:text-xl text-brand-text-secondary lowercase max-w-4xl mx-auto leading-relaxed">
-              our soundscapes aren&apos;t therapy. they&apos;re survival gear. resets that clear the static in your head, restore energy in minutes, and give you back momentum when the grind tries to take it away.
+              Your brain is a machine. When it overheats, you don&apos;t meditate you cool it.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
             {[
               {
-                stat: "90s",
-                description: "stress can biologically clear in as little as 90 seconds with the right reset",
+                stat: "90 seconds",
+                description: "Your stress response can drop off in ~90 seconds if you interrupt the spiral.",
                 superscript: "1",
                 delay: 0
               },
               {
-                stat: "2-5 min",
-                description: "micro breaks restore attention and reduce fatigue",
+                stat: "2–5 minutes",
+                description: "Short resets restore attention way more than long breaks (because long breaks kill momentum).",
                 superscript: "2",
                 delay: 0.1
               },
               {
                 stat: "70%",
-                description: "of entrepreneurs report higher stress than traditional workers",
+                description: "Founders report higher stress than everyone else. Shocker.",
                 superscript: "3",
                 delay: 0.2
               },
               {
                 stat: "2x",
-                description: "faster bounce back from stress spikes with sound based resets",
+                description: "Sound resets help you bounce back from spikes twice as fast.",
                 superscript: "4",
                 delay: 0.3
               }
@@ -820,8 +816,8 @@ export default function Home() {
                 </div>
                 <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide px-2">
                   {item.description}
-                </p>
-              </motion.div>
+            </p>
+          </motion.div>
             ))}
           </div>
 
@@ -917,11 +913,8 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center"
           >
-            <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase leading-tight text-brand-text-secondary mb-4 tracking-tight">
-              every founder crashes.
-            </p>
             <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase leading-tight text-brand-text-primary mb-12 tracking-tight">
-              the smart ones don&apos;t crash alone.
+              if you know a founder who&apos;s about to snap, send them this.
             </p>
 
             <motion.button
@@ -1009,13 +1002,9 @@ export default function Home() {
               fallbackRedirectUrl="/soundscapes"
               signInFallbackRedirectUrl="/soundscapes"
             >
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full rounded-xl border-2 border-brand-accent bg-transparent px-8 py-3 text-base font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]"
-              >
+              <button className="w-full rounded-xl border-2 border-brand-accent bg-transparent px-8 py-3 text-base font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)] hover:scale-[1.02] active:scale-[0.98]">
                 sign up free
-              </motion.button>
+              </button>
             </SignUpButton>
 
             <button
