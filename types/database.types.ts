@@ -134,65 +134,48 @@ export type Database = {
             }
             subscriptions: {
                 Row: {
-                    cancel_at: string | null
-                    cancel_at_period_end: boolean | null
-                    canceled_at: string | null
-                    created: string
-                    current_period_end: string
-                    current_period_start: string
-                    ended_at: string | null
                     id: string
-                    metadata: Json | null
-                    price_id: string | null
-                    quantity: number | null
-                    status: Database["public"]["Enums"]["subscription_status"] | null
-                    trial_end: string | null
-                    trial_start: string | null
                     user_id: string
+                    clerk_user_id: string
+                    stripe_customer_id: string | null
+                    stripe_subscription_id: string | null
+                    subscription_status: string
+                    plan_type: string
+                    current_period_start: string | null
+                    current_period_end: string | null
+                    cancel_at_period_end: boolean | null
+                    created_at: string
+                    updated_at: string
                 }
                 Insert: {
-                    cancel_at?: string | null
-                    cancel_at_period_end?: boolean | null
-                    canceled_at?: string | null
-                    created?: string
-                    current_period_end?: string
-                    current_period_start?: string
-                    ended_at?: string | null
-                    id: string
-                    metadata?: Json | null
-                    price_id?: string | null
-                    quantity?: number | null
-                    status?: Database["public"]["Enums"]["subscription_status"] | null
-                    trial_end?: string | null
-                    trial_start?: string | null
+                    id?: string
                     user_id: string
+                    clerk_user_id: string
+                    stripe_customer_id?: string | null
+                    stripe_subscription_id?: string | null
+                    subscription_status: string
+                    plan_type: string
+                    current_period_start?: string | null
+                    current_period_end?: string | null
+                    cancel_at_period_end?: boolean | null
+                    created_at?: string
+                    updated_at?: string
                 }
                 Update: {
-                    cancel_at?: string | null
-                    cancel_at_period_end?: boolean | null
-                    canceled_at?: string | null
-                    created?: string
-                    current_period_end?: string
-                    current_period_start?: string
-                    ended_at?: string | null
                     id?: string
-                    metadata?: Json | null
-                    price_id?: string | null
-                    quantity?: number | null
-                    status?: Database["public"]["Enums"]["subscription_status"] | null
-                    trial_end?: string | null
-                    trial_start?: string | null
                     user_id?: string
+                    clerk_user_id?: string
+                    stripe_customer_id?: string | null
+                    stripe_subscription_id?: string | null
+                    subscription_status?: string
+                    plan_type?: string
+                    current_period_start?: string | null
+                    current_period_end?: string | null
+                    cancel_at_period_end?: boolean | null
+                    created_at?: string
+                    updated_at?: string
                 }
-                Relationships: [
-                    {
-                        foreignKeyName: "subscriptions_price_id_fkey"
-                        columns: ["price_id"]
-                        isOneToOne: false
-                        referencedRelation: "prices"
-                        referencedColumns: ["id"]
-                    },
-                ]
+                Relationships: []
             }
         }
         Views: {
