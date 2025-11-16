@@ -296,7 +296,7 @@ export default function SoundscapesPage() {
       
       play(itemId, audioUrl)
     }
-  }, [currentTrack, isPlaying, toggle, play, user?.id, handleLockClick, fileMap])
+  }, [currentTrack, isPlaying, toggle, play, user?.id, handleLockClick])
 
   return (
     <div className="min-h-screen bg-brand-bg text-brand-text-primary flex flex-col">

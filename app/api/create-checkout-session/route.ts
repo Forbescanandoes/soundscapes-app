@@ -31,9 +31,9 @@ export async function POST(req: NextRequest) {
       .from('subscriptions')
       .select('stripe_customer_id')
       .eq('user_id', userId)
-      .single()
+      .maybeSingle()
 
-    let customerId = existingSubscription?.stripe_customer_id
+    let customerId = existingSubscription?.stripe_customer_id || null
 
     // Create Stripe customer if doesn't exist
     if (!customerId) {
