@@ -20,6 +20,12 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
   const [loading, setLoading] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
+  // Debug: Log environment variables
+  console.log('🔍 Env Check:', {
+    monthlyPriceId: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID,
+    yearlyPriceId: process.env.NEXT_PUBLIC_STRIPE_YEARLY_PRICE_ID
+  })
+
   const plans = [
     {
       name: 'monthly',
