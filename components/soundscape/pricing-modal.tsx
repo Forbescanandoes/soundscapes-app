@@ -26,7 +26,7 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
       price: '$5',
       period: '/month',
       description: 'billed monthly',
-      priceId: 'price_1SRwpPHFlxJzNXcKEtLns671',
+      priceId: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID || '',
       planType: 'monthly',
       features: [
         'unlimited access to all soundscapes',
@@ -41,7 +41,7 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
       period: '/year',
       description: 'save 42%',
       popular: true,
-      priceId: 'price_1SRwndHFlxJzNXcK21GnxrxJ',
+      priceId: process.env.NEXT_PUBLIC_STRIPE_YEARLY_PRICE_ID || '',
       planType: 'yearly',
       features: [
         'unlimited access to all soundscapes',
