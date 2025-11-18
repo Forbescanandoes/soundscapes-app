@@ -5,21 +5,11 @@ import { supabaseAdmin } from '@/utils/supabase/admin'
 import Stripe from 'stripe'
 import { clerkClient } from '@clerk/nextjs/server'
 
-// Force dynamic rendering and Node.js runtime for webhooks
-export const dynamic = 'force-dynamic'
+// Stripe webhook handler - verifies signatures and syncs subscription data
+// Disable body parsing - Stripe needs raw body for signature verification
 export const runtime = 'nodejs'
 
-// Test endpoint to verify route is accessible
-export async function GET() {
-  return NextResponse.json({ 
-    status: 'ok', 
-    message: 'Stripe webhook endpoint is ready',
-    methods: ['POST']
-  })
-}
-
-// Stripe webhook handler - verifies signatures and syncs subscription data
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export async function POST(req: NextRequest) {
   const body = await req.text()
   const headersList = await headers()
   const signature = headersList.get('stripe-signature')
