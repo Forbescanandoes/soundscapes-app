@@ -8,6 +8,7 @@ import { clerkClient } from '@clerk/nextjs/server'
 // Stripe webhook handler - verifies signatures and syncs subscription data
 // Disable body parsing - Stripe needs raw body for signature verification
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
