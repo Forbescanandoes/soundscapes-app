@@ -10,6 +10,24 @@ import { clerkClient } from '@clerk/nextjs/server'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
+// Test handler to verify route is accessible
+export async function GET() {
+  return NextResponse.json({ 
+    status: 'Stripe webhook endpoint is reachable',
+    methods: ['POST', 'OPTIONS', 'GET']
+  })
+}
+
+// Allow Stripe to send webhooks (even though they shouldn't need OPTIONS)
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Allow': 'POST, OPTIONS, GET',
+    },
+  })
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.text()
   const headersList = await headers()
