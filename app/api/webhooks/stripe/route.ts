@@ -47,7 +47,13 @@ export async function POST(req: NextRequest) {
         break
       }
 
-      case 'customer.subscription.created':
+      case 'customer.subscription.created': {
+        // Skip - we handle this in checkout.session.completed
+        // Subscription is created before checkout completes, so metadata isn't set yet
+        console.log('Subscription created - waiting for checkout completion')
+        break
+      }
+
       case 'customer.subscription.updated': {
         const subscription = event.data.object as Stripe.Subscription
         await handleSubscriptionUpdate(subscription)
@@ -126,33 +132,37 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 }
 
 async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
-  const clerkUserId = subscription.metadata?.clerkUserId
+  try {
+    const clerkUserId = subscription.metadata?.clerkUserId
 
-  if (!clerkUserId) {
-    console.error('No clerkUserId in subscription metadata')
-    return
+    if (!clerkUserId) {
+      console.log('Skipping subscription update - no clerkUserId in metadata')
+      return
+    }
+
+    console.log(`Subscription updated for user: ${clerkUserId}, status: ${subscription.status}`)
+
+    const { error } = await supabaseAdmin
+      .from('subscriptions')
+      .update({
+        subscription_status: subscription.status,
+        current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+        current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+        cancel_at_period_end: subscription.cancel_at_period_end,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('stripe_subscription_id', subscription.id)
+
+    if (error) {
+      console.error('Error updating subscription:', error)
+      return
+    }
+
+    const isActive = subscription.status === 'active' || subscription.status === 'trialing'
+    await updateClerkMetadata(clerkUserId, isActive)
+  } catch (error) {
+    console.error('Exception in handleSubscriptionUpdate:', error)
   }
-
-  console.log(`Subscription updated for user: ${clerkUserId}, status: ${subscription.status}`)
-
-  const { error } = await supabaseAdmin
-    .from('subscriptions')
-    .update({
-      subscription_status: subscription.status,
-      current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-      current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
-      cancel_at_period_end: subscription.cancel_at_period_end,
-      updated_at: new Date().toISOString(),
-    })
-    .eq('stripe_subscription_id', subscription.id)
-
-  if (error) {
-    console.error('Error updating subscription:', error)
-    return
-  }
-
-  const isActive = subscription.status === 'active' || subscription.status === 'trialing'
-  await updateClerkMetadata(clerkUserId, isActive)
 }
 
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
