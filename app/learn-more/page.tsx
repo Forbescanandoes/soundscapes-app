@@ -46,10 +46,10 @@ export default function LearnMorePage() {
               built like a product, not a playlist.
             </h2>
             <p className="text-xl sm:text-2xl font-light text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-              we don&apos;t make ambience, we engineer states.
+              we don&apos;t make ambience — we engineer states.
             </p>
             <p className="text-lg sm:text-xl font-light text-brand-text-muted lowercase leading-relaxed tracking-wide mt-4">
-              every sound is tested, modeled, and refined to pull founders out of overload fast.
+              every sound is modeled, tested, and refined to pull founders out of overload in minutes.
             </p>
           </motion.div>
         </div>
@@ -70,13 +70,19 @@ export default function LearnMorePage() {
           </div>
           <div className="space-y-4 text-lg text-brand-text-secondary leading-relaxed lowercase">
             <p>
-              a neuroacoustic system that gives overstimulated founders rapid decompression.
+              a neuroacoustic system designed for overstimulated founders who need rapid decompression.
             </p>
             <p>
-              not mindfulness. not mood management.
+              not mindfulness.
+            </p>
+            <p>
+              not meditation.
+            </p>
+            <p>
+              not mood management.
             </p>
             <p className="text-brand-text-primary">
-              pure physics, psychoacoustics, and emotional ergonomics, sound that resets your system so you can keep building.
+              just physics, psychoacoustics, and nervous-system ergonomics — sound that resets your cognitive bandwidth so you can get back to building.
             </p>
           </div>
         </motion.div>
@@ -99,35 +105,35 @@ export default function LearnMorePage() {
               {
                 number: "1",
                 title: "simulate the state",
-                description: "we start by modeling real founder stress, the body under overload, anxiety, or burnout.",
+                description: "model real founder overload: deadline panic, cognitive fog, burnout loops, physiological stress.",
                 icon: Activity,
                 delay: 0.3
               },
               {
                 number: "2",
                 title: "design the physiology",
-                description: "map heart rate, breath rhythm, neural patterns, translate them into sound parameters.",
+                description: "map the stress signature: breath rhythm, heart rate drift, neural activation patterns. translate them into acoustic rules.",
                 icon: TrendingUp,
                 delay: 0.35
               },
               {
                 number: "3",
                 title: "build the environment",
-                description: "layer frequencies, modulation, and silence windows until the system resets.",
+                description: "layer frequencies, modulation curves, and micro-silence windows until the nervous system unlocks.",
                 icon: Layers,
                 delay: 0.4
               },
               {
                 number: "4",
                 title: "test in the wild",
-                description: "each sound runs with real founders, mid build, mid burnout. tuned for results, not vibes.",
+                description: "run each sound with real founders mid-build, mid-panic, mid-burnout. optimize for regulation, not vibes.",
                 icon: TestTube,
                 delay: 0.45
               },
               {
                 number: "5",
                 title: "measure the effect",
-                description: "clarity up. heart rate down. brain back online.",
+                description: "clarity up. pressure down. brain back online. if it doesn't move the needle, it doesn't ship.",
                 icon: BarChart3,
                 delay: 0.5
               }
@@ -178,7 +184,7 @@ export default function LearnMorePage() {
             <h3 className="text-3xl sm:text-4xl font-light lowercase tracking-tight">real simulations</h3>
           </div>
           <p className="text-lg text-brand-text-secondary lowercase leading-relaxed mb-12 tracking-wide">
-            each sound starts from a real founder moment, the nervous system under pressure.
+            each sound begins with a real founder moment — the nervous system under load.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -186,8 +192,8 @@ export default function LearnMorePage() {
               {
                 emoji: "🎭",
                 title: "one too many hats",
-                situation: "for when every tab screams for attention. too many roles, not enough bandwidth.",
-                solution: "sound built to reorganize chaos into coherence.",
+                situation: "when every tab pulls attention and your brain fragments.",
+                solution: "sound designed to collapse chaos into a single stable thread.",
                 icon: BriefcaseBusiness,
                 gradient: "from-yellow-500/20 to-orange-500/20",
                 delay: 0.3
@@ -195,8 +201,8 @@ export default function LearnMorePage() {
               {
                 emoji: "😬",
                 title: "the dread of marketing",
-                situation: "for when visibility feels like threat.",
-                solution: "sound that meets anxiety, then opens space inside it.",
+                situation: "when visibility feels like exposure.",
+                solution: "sound built to calm the threat response and open cognitive space.",
                 icon: Frown,
                 gradient: "from-purple-500/20 to-pink-500/20",
                 delay: 0.35
@@ -204,8 +210,8 @@ export default function LearnMorePage() {
               {
                 emoji: "💤",
                 title: "slept at desk",
-                situation: "for when your body quits before your code does.",
-                solution: "sound that holds you long enough to stop fighting rest.",
+                situation: "when the body quits before the build does.",
+                solution: "sound that stabilizes you long enough to stop resisting recovery.",
                 icon: Moon,
                 gradient: "from-red-500/20 to-orange-500/20",
                 delay: 0.4
@@ -213,8 +219,8 @@ export default function LearnMorePage() {
               {
                 emoji: "🍽️",
                 title: "forgot to eat",
-                situation: "for when you're hollow and detached from your body.",
-                solution: "sound that brings you back into gravity.",
+                situation: "when you're hollow and disconnected from your body.",
+                solution: "sound that pulls you back into gravity and restores presence.",
                 icon: Sandwich,
                 gradient: "from-blue-500/20 to-cyan-500/20",
                 delay: 0.45
