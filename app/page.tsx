@@ -2,11 +2,12 @@
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs'
+import { SignInButton, SignUpButton, SignedOut, useUser } from '@clerk/nextjs'
 import { motion } from 'framer-motion'
 import { Brain, Zap, Target, Sparkles, Play, Pause, Check, Copy } from 'lucide-react'
 import { useAudioPlayer } from '@/hooks/use-audio-player'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import {
   Dialog,
   DialogContent,
@@ -17,6 +18,14 @@ import {
 
 export default function Home() {
   const { isSignedIn } = useUser()
+  const router = useRouter()
+  
+  // Redirect logged-in users to soundscapes
+  useEffect(() => {
+    if (isSignedIn) {
+      router.push('/soundscapes')
+    }
+  }, [isSignedIn, router])
   const [showConversionModal, setShowConversionModal] = useState(false)
   const [copied, setCopied] = useState(false)
   
@@ -110,16 +119,6 @@ export default function Home() {
                   </Button>
                 </SignUpButton>
               </SignedOut>
-              <SignedIn>
-                <UserButton 
-                  afterSignOutUrl="/"
-                  appearance={{
-                    elements: {
-                      avatarBox: "w-10 h-10"
-                    }
-                  }}
-                />
-              </SignedIn>
             </div>
           </div>
         </div>

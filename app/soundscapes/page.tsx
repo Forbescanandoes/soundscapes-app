@@ -319,10 +319,19 @@ export default function SoundscapesPage() {
           <SignedIn>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary hover:border-brand-accent/50 hover:text-brand-accent transition-colors focus:outline-none">
-                  freemium
-                  <ChevronDown className="w-3 h-3" />
-                </button>
+                {isPro ? (
+                  <button className="relative group flex items-center gap-2 text-xs lowercase tracking-wide border-2 border-brand-accent/50 bg-gradient-to-r from-brand-accent/10 to-brand-accent/5 px-4 py-1.5 rounded-full text-brand-accent hover:border-brand-accent hover:shadow-[0_0_20px_rgba(47,128,237,0.3)] transition-all duration-300 focus:outline-none">
+                    <Sparkles className="w-3 h-3" />
+                    premium
+                    <ChevronDown className="w-3 h-3" />
+                    <div className="absolute inset-0 rounded-full bg-brand-accent/0 group-hover:bg-brand-accent/5 transition-colors" />
+                  </button>
+                ) : (
+                  <button className="flex items-center gap-2 text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary hover:border-brand-accent/50 hover:text-brand-accent transition-colors focus:outline-none">
+                    freemium
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                )}
               </DropdownMenuTrigger>
               <DropdownMenuContent 
                 align="start" 
