@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Check, Sparkles, Loader2 } from 'lucide-react'
+import { Check, Loader2 } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -29,10 +29,13 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
       priceId: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID || '',
       planType: 'monthly',
       features: [
-        'unlimited access to all soundscapes',
-        'no ads, ever',
-        'new soundscapes added weekly',
-        'cancel anytime'
+        'full soundscape library',
+        'unlimited sessions',
+        'weekly new soundscapes',
+        'founder engineered audio',
+        'cancel anytime',
+        'works across all devices',
+        'instant access'
       ]
     },
     {
@@ -44,10 +47,8 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
       priceId: process.env.NEXT_PUBLIC_STRIPE_YEARLY_PRICE_ID || '',
       planType: 'yearly',
       features: [
-        'unlimited access to all soundscapes',
-        'no ads, ever',
-        'new soundscapes added weekly',
-        '2 months free'
+        'everything in the monthly plan',
+        '2 months free - save 42% for committing yearly'
       ]
     }
   ]
@@ -90,17 +91,8 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-brand-bg border-brand-text-muted/20 sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="text-center space-y-4 flex-shrink-0">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="mx-auto w-16 h-16 rounded-full bg-brand-accent/10 border-2 border-brand-accent flex items-center justify-center"
-          >
-            <Sparkles className="w-8 h-8 text-brand-accent" />
-          </motion.div>
-          
           <DialogTitle className="text-3xl sm:text-4xl font-light lowercase tracking-tight text-brand-text-primary">
-            unlock everything
+            join donothing<span className="text-brand-accent">sounds</span>
           </DialogTitle>
           
           <DialogDescription className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
@@ -151,7 +143,7 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
                 </div>
 
                 {/* Features */}
-                <div className="space-y-3">
+                <div className="space-y-3 min-h-[250px]">
                   {plan.features.map((feature, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <Check className="w-4 h-4 text-brand-accent flex-shrink-0 mt-0.5" />
@@ -198,15 +190,6 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
             {error}
           </div>
         )}
-
-        {/* Footer */}
-        <button
-          onClick={() => onOpenChange(false)}
-          disabled={loading !== null}
-          className="mt-4 text-sm text-brand-text-muted hover:text-brand-text-secondary lowercase tracking-wide transition-colors text-center w-full disabled:opacity-50"
-        >
-          maybe later
-        </button>
       </DialogContent>
     </Dialog>
   )

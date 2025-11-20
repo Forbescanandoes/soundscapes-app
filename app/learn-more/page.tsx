@@ -46,7 +46,7 @@ export default function LearnMorePage() {
               built like a product, not a playlist.
             </h2>
             <p className="text-xl sm:text-2xl font-light text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-              we don&apos;t make ambience — we engineer states.
+              we don&apos;t make ambience we engineer states.
             </p>
             <p className="text-lg sm:text-xl font-light text-brand-text-muted lowercase leading-relaxed tracking-wide mt-4">
               every sound is modeled, tested, and refined to pull founders out of overload in minutes.
@@ -82,7 +82,7 @@ export default function LearnMorePage() {
               not mood management.
             </p>
             <p className="text-brand-text-primary">
-              just physics, psychoacoustics, and nervous-system ergonomics — sound that resets your cognitive bandwidth so you can get back to building.
+              just physics, psychoacoustics, and nervous system ergonomics sound that resets your cognitive bandwidth so you can get back to building.
             </p>
           </div>
         </motion.div>
@@ -119,14 +119,14 @@ export default function LearnMorePage() {
               {
                 number: "3",
                 title: "build the environment",
-                description: "layer frequencies, modulation curves, and micro-silence windows until the nervous system unlocks.",
+                description: "layer frequencies, modulation curves, and micro silence windows until the nervous system unlocks.",
                 icon: Layers,
                 delay: 0.4
               },
               {
                 number: "4",
                 title: "test in the wild",
-                description: "run each sound with real founders mid-build, mid-panic, mid-burnout. optimize for regulation, not vibes.",
+                description: "run each sound with real founders mid build, mid panic, mid burnout. optimize for regulation, not vibes.",
                 icon: TestTube,
                 delay: 0.45
               },
@@ -184,7 +184,7 @@ export default function LearnMorePage() {
             <h3 className="text-3xl sm:text-4xl font-light lowercase tracking-tight">real simulations</h3>
           </div>
           <p className="text-lg text-brand-text-secondary lowercase leading-relaxed mb-12 tracking-wide">
-            each sound begins with a real founder moment — the nervous system under load.
+            each sound begins with a real founder moment the nervous system under load.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

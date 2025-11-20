@@ -27,6 +27,7 @@ export default function Home() {
     }
   }, [isSignedIn, router])
   const [showConversionModal, setShowConversionModal] = useState(false)
+  const [showHowItWorksModal, setShowHowItWorksModal] = useState(false)
   const [copied, setCopied] = useState(false)
   
   const { play, pause, isPlaying, currentTrackId } = useAudioPlayer({
@@ -95,17 +96,19 @@ export default function Home() {
     <div className="bg-brand-bg text-brand-text-primary overflow-hidden">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-brand-text-muted/10 bg-brand-bg/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="text-xl font-bold tracking-tight">donothingsounds.com</div>
-            <div className="flex items-center gap-3">
+            <div className="text-base sm:text-xl font-bold tracking-tight">
+              donothing<span className="text-brand-accent">sounds</span>
+            </div>
+            <div className="flex items-center gap-2 sm:gap-3">
               <SignedOut>
                 <SignInButton 
                   mode="modal"
                   fallbackRedirectUrl="/soundscapes"
                   signUpFallbackRedirectUrl="/soundscapes"
                 >
-                  <Button variant="ghost" className="rounded-full lowercase text-sm text-brand-text-secondary hover:text-brand-text-primary transition-colors">
+                  <Button variant="ghost" className="rounded-full lowercase text-xs sm:text-sm text-brand-text-secondary hover:text-brand-text-primary transition-colors focus:outline-none focus-visible:outline-none px-3 sm:px-4">
                     sign in
                   </Button>
                 </SignInButton>
@@ -114,7 +117,7 @@ export default function Home() {
                   fallbackRedirectUrl="/soundscapes"
                   signInFallbackRedirectUrl="/soundscapes"
                 >
-                  <Button className="rounded-full border-2 border-brand-accent bg-transparent hover:bg-brand-accent/10 text-brand-accent lowercase text-sm font-medium transition-all">
+                  <Button className="rounded-full border-2 border-brand-accent bg-transparent hover:bg-brand-accent/10 text-brand-accent lowercase text-xs sm:text-sm font-medium transition-all px-3 sm:px-4">
                     sign up
                   </Button>
                 </SignUpButton>
@@ -160,8 +163,9 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight leading-[1.1] mb-8 text-brand-text-primary lowercase">
-              Your brain isn&apos;t tired. It&apos;s overloaded.
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight leading-[1.15] mb-8 text-brand-text-primary lowercase">
+              Your <span className="text-brand-accent">brain</span>
+              <br className="sm:hidden" /> isn&apos;t tired.
             </h1>
           </motion.div>
           
@@ -171,7 +175,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg sm:text-xl text-brand-text-secondary lowercase max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            Here&apos;s the 5 minute reset that clears the pressure.
+            It&apos;s overloaded.
           </motion.p>
 
           <motion.div
@@ -179,15 +183,14 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Link href="/soundscapes">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative rounded-xl border-2 border-brand-accent bg-transparent px-12 py-4 text-lg font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]"
-              >
-                start your reset
-              </motion.button>
-            </Link>
+            <motion.button
+              onClick={() => setShowHowItWorksModal(true)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="relative rounded-xl border-2 border-brand-accent bg-transparent px-12 py-4 text-lg font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]"
+            >
+              start your reset
+            </motion.button>
           </motion.div>
         </div>
       </section>
@@ -471,14 +474,15 @@ export default function Home() {
 
           {/* How to Use It Header */}
           <motion.div
+            id="how-to-use"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-6 tracking-tight text-brand-text-primary">
-              how to actually use this
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-6 tracking-tight text-brand-text-primary leading-tight px-4">
+              how to actually<br className="sm:hidden" /> use this
             </h2>
             <p className="text-xl sm:text-2xl text-brand-accent lowercase tracking-wide font-light">
               this isn&apos;t background music.
@@ -614,8 +618,8 @@ export default function Home() {
               viewport={{ once: true }}
               className="mt-32 text-center"
             >
-              <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase text-brand-text-primary tracking-tight leading-tight">
-                do it right or don&apos;t do it at all.
+              <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase text-brand-text-primary tracking-tight leading-tight px-4">
+                do it right or don&apos;t<br className="sm:hidden" /> do it at all.
               </p>
             </motion.div>
 
@@ -761,8 +765,8 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl sm:text-5xl font-light lowercase mb-8 tracking-tight">
-              why this works (without the woo-woo)
+            <h2 className="text-3xl sm:text-5xl font-light lowercase mb-8 tracking-tight px-4">
+              why this works<br className="sm:hidden" /> (without the woo-woo)
             </h2>
             <p className="text-lg sm:text-xl text-brand-text-secondary lowercase max-w-4xl mx-auto leading-relaxed">
               Your brain is a machine. When it overheats, you don&apos;t meditate you cool it.
@@ -973,45 +977,72 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* How It Works Check Modal */}
+      <Dialog open={showHowItWorksModal} onOpenChange={setShowHowItWorksModal}>
+        <DialogContent className="bg-gradient-to-br from-brand-bg to-brand-bg-secondary border border-brand-text-muted/20 max-w-[calc(100%-2rem)] sm:max-w-md p-8 sm:p-10">
+          <DialogHeader className="space-y-6">
+            <DialogTitle className="text-3xl sm:text-4xl font-light lowercase tracking-tight text-brand-text-primary leading-tight text-center">
+              wait, do you know how this works?
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="flex flex-col gap-3 mt-8">
+            <button
+              onClick={() => {
+                setShowHowItWorksModal(false)
+                const element = document.getElementById('how-to-use')
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                }
+              }}
+              className="w-full rounded-lg bg-brand-accent px-8 py-4 text-base font-medium lowercase tracking-wide text-brand-bg transition-all duration-300 hover:shadow-[0_0_30px_rgba(47,128,237,0.4)] hover:scale-[1.01] active:scale-[0.99]"
+            >
+              no
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Conversion Modal */}
       <Dialog open={showConversionModal} onOpenChange={setShowConversionModal}>
-        <DialogContent className="bg-brand-bg border-brand-text-muted/20 sm:max-w-md">
-          <DialogHeader className="text-center space-y-4">
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="mx-auto w-16 h-16 rounded-full bg-brand-accent/10 border-2 border-brand-accent flex items-center justify-center"
-            >
-              <Sparkles className="w-8 h-8 text-brand-accent" />
-            </motion.div>
-            
-            <DialogTitle className="text-3xl sm:text-4xl font-light lowercase tracking-tight text-brand-text-primary">
-              ready for the full experience?
+        <DialogContent className="bg-gradient-to-br from-brand-bg to-brand-bg-secondary border border-brand-text-muted/20 max-w-[calc(100%-2rem)] sm:max-w-lg p-8 sm:p-10">
+          <DialogHeader className="space-y-6">
+            <DialogTitle className="text-3xl sm:text-4xl md:text-5xl font-light lowercase tracking-tight text-brand-text-primary leading-tight">
+              access the full system
             </DialogTitle>
             
-            <DialogDescription className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-              that was just a taste. sign up for unlimited access to all soundscapes and reset whenever you need.
+            <DialogDescription className="space-y-6 text-left">
+              <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed">
+                these soundscapes aren&apos;t music.
+              </p>
+              <p className="text-base sm:text-lg text-brand-text-primary lowercase leading-relaxed">
+                they&apos;re built to pull you out of cognitive overload so you can get back to work.
+              </p>
+              <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed">
+                sign up free to unlock more resets and keep using them for life.
+              </p>
             </DialogDescription>
           </DialogHeader>
 
-          <div className="flex flex-col gap-3 mt-6">
+          <div className="flex flex-col gap-4 mt-8">
             <SignUpButton 
               mode="modal"
               fallbackRedirectUrl="/soundscapes"
               signInFallbackRedirectUrl="/soundscapes"
             >
-              <button className="w-full rounded-xl border-2 border-brand-accent bg-transparent px-8 py-3 text-base font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)] hover:scale-[1.02] active:scale-[0.98]">
+              <button className="w-full rounded-lg bg-brand-accent px-8 py-4 text-base font-medium lowercase tracking-wide text-brand-bg transition-all duration-300 hover:shadow-[0_0_30px_rgba(47,128,237,0.4)] hover:scale-[1.01] active:scale-[0.99]">
                 sign up free
               </button>
             </SignUpButton>
 
-            <button
-              onClick={() => setShowConversionModal(false)}
-              className="text-sm text-brand-text-muted hover:text-brand-text-secondary lowercase tracking-wide transition-colors"
-            >
-              maybe later
-            </button>
+            <Link href="/learn-more" className="w-full">
+              <button
+                onClick={() => setShowConversionModal(false)}
+                className="w-full text-sm text-brand-text-muted hover:text-brand-accent lowercase tracking-wide transition-colors py-2"
+              >
+                see how they&apos;re built
+              </button>
+            </Link>
           </div>
         </DialogContent>
       </Dialog>

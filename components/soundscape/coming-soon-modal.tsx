@@ -35,12 +35,17 @@ export function ComingSoonModal({ open, onOpenChange, featureName }: ComingSoonM
             <p className="text-base leading-relaxed">
               want early access or have feedback?
             </p>
-            <a 
-              href="mailto:support@donothingsounds.com"
-              className="inline-block px-6 py-3 rounded-full bg-brand-accent hover:bg-brand-accent/80 text-brand-bg font-light lowercase tracking-wide transition-all duration-300 hover:scale-105 mt-2"
-            >
-              contact us
-            </a>
+            <div className="text-base leading-relaxed">
+              contact me on X{' '}
+              <a 
+                href="https://x.com/loganforbes2442"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-accent hover:text-brand-accent/80 underline underline-offset-4 font-medium transition-colors"
+              >
+                @loganforbes2442
+              </a>
+            </div>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

@@ -228,6 +228,22 @@ export default function SoundscapesPage() {
     playbackModeRef.current = playbackMode
   }, [playbackMode])
 
+  // Spacebar to play/pause
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Only trigger if spacebar and not typing in an input/textarea
+      if (e.code === 'Space' && 
+          e.target instanceof HTMLElement && 
+          !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+        e.preventDefault() // Prevent page scroll
+        toggle()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [toggle])
+
   const handleLockClick = useCallback(() => {
     // Show conversion modal for anonymous users
     // Show pricing modal for freemium users
@@ -304,16 +320,29 @@ export default function SoundscapesPage() {
       <div className="flex items-center justify-between p-4 sm:p-6 border-b border-brand-text-muted/10">
         {/* Left: Logo + Badge */}
         <div className="flex items-center gap-3">
-          {/* Logo - clickable to go home */}
-          <Link href="/" className="w-10 h-10 rounded-full bg-brand-text-primary flex items-center justify-center hover:opacity-80 transition-opacity">
-            <div className="w-6 h-6 rounded-full border-2 border-brand-bg" />
-          </Link>
-          
-          {/* Freemium badge - becomes dropdown when signed in */}
+          {/* Logo - back button when logged out, decorative when logged in */}
           <SignedOut>
-            <span className="text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary">
-              freemium
-            </span>
+            <Link href="/" className="w-10 h-10 rounded-full bg-brand-text-primary flex items-center justify-center hover:shadow-[0_0_20px_rgba(47,128,237,0.6)] transition-all duration-300">
+              <div className="w-6 h-6 rounded-full border-2 border-brand-bg" />
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <div className="w-10 h-10 rounded-full bg-brand-text-primary flex items-center justify-center hover:shadow-[0_0_20px_rgba(47,128,237,0.6)] transition-all duration-300 cursor-default">
+              <div className="w-6 h-6 rounded-full border-2 border-brand-bg" />
+            </div>
+          </SignedIn>
+          
+          {/* Try freemium button - becomes dropdown when signed in */}
+          <SignedOut>
+            <SignUpButton 
+              mode="modal"
+              fallbackRedirectUrl="/soundscapes"
+              signInFallbackRedirectUrl="/soundscapes"
+            >
+              <button className="text-xs lowercase tracking-wide border border-brand-accent/50 bg-brand-accent/5 hover:bg-brand-accent/10 px-4 py-1.5 rounded-full text-brand-accent hover:border-brand-accent transition-all duration-300">
+                try freemium
+              </button>
+            </SignUpButton>
           </SignedOut>
 
           <SignedIn>
@@ -342,14 +371,6 @@ export default function SoundscapesPage() {
                   className="lowercase cursor-pointer focus:bg-brand-text-muted/10 focus:text-brand-text-primary"
                 >
                   account settings
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  asChild
-                  className="lowercase cursor-pointer focus:bg-brand-text-muted/10 focus:text-brand-text-primary"
-                >
-                  <Link href="/">
-                    back to home
-                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="bg-brand-text-muted/10" />
                 <DropdownMenuItem 
@@ -595,47 +616,48 @@ export default function SoundscapesPage() {
 
       {/* Conversion Modal (for anonymous users) */}
       <Dialog open={showConversionModal} onOpenChange={setShowConversionModal}>
-        <DialogContent className="bg-brand-bg border-brand-text-muted/20 sm:max-w-md">
-          <DialogHeader className="text-center space-y-4">
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="mx-auto w-16 h-16 rounded-full bg-brand-accent/10 border-2 border-brand-accent flex items-center justify-center"
-            >
-              <Sparkles className="w-8 h-8 text-brand-accent" />
-            </motion.div>
-            
-            <DialogTitle className="text-3xl sm:text-4xl font-light lowercase tracking-tight text-brand-text-primary">
-              ready for the full experience?
+        <DialogContent className="bg-gradient-to-br from-brand-bg to-brand-bg-secondary border border-brand-text-muted/20 max-w-[calc(100%-2rem)] sm:max-w-lg p-8 sm:p-10">
+          <DialogHeader className="space-y-6">
+            <DialogTitle className="text-3xl sm:text-4xl md:text-5xl font-light lowercase tracking-tight text-brand-text-primary leading-tight">
+              access the full system
             </DialogTitle>
             
-            <DialogDescription className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-              that was just a taste. sign up for unlimited access to all soundscapes and reset whenever you need.
+            <DialogDescription className="space-y-6 text-left">
+              <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed">
+                these soundscapes aren&apos;t music.
+              </p>
+              <p className="text-base sm:text-lg text-brand-text-primary lowercase leading-relaxed">
+                they&apos;re built to pull you out of cognitive overload so you can get back to work.
+              </p>
+              <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed">
+                sign up free to unlock more resets and keep using them for life.
+              </p>
             </DialogDescription>
           </DialogHeader>
 
-          <div className="flex flex-col gap-3 mt-6">
+          <div className="flex flex-col gap-4 mt-8">
             <SignUpButton 
               mode="modal"
               fallbackRedirectUrl="/soundscapes"
               signInFallbackRedirectUrl="/soundscapes"
             >
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full rounded-xl border-2 border-brand-accent bg-transparent px-8 py-3 text-base font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className="w-full rounded-lg bg-brand-accent px-8 py-4 text-base font-medium lowercase tracking-wide text-brand-bg transition-all duration-300 hover:shadow-[0_0_30px_rgba(47,128,237,0.4)]"
               >
                 sign up free
               </motion.button>
             </SignUpButton>
 
-            <button
-              onClick={() => setShowConversionModal(false)}
-              className="text-sm text-brand-text-muted hover:text-brand-text-secondary lowercase tracking-wide transition-colors"
-            >
-              maybe later
-            </button>
+            <Link href="/learn-more" className="w-full">
+              <button
+                onClick={() => setShowConversionModal(false)}
+                className="w-full text-sm text-brand-text-muted hover:text-brand-accent lowercase tracking-wide transition-colors py-2"
+              >
+                see how they&apos;re built
+              </button>
+            </Link>
           </div>
         </DialogContent>
       </Dialog>
