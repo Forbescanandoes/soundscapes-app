@@ -165,7 +165,7 @@ export default function Home() {
           >
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight leading-[1.15] mb-8 text-brand-text-primary lowercase">
               Your <span className="text-brand-accent">brain</span>
-              <br className="sm:hidden" /> isn&apos;t tired.
+              <br className="sm:hidden" /> isn&apos;t tired
             </h1>
           </motion.div>
           
@@ -175,7 +175,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg sm:text-xl text-brand-text-secondary lowercase max-w-2xl mx-auto mb-12 leading-relaxed"
           >
-            It&apos;s overloaded.
+            It&apos;s overloaded
           </motion.p>
 
           <motion.div
