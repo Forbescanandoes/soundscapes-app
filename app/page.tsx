@@ -484,144 +484,95 @@ export default function Home() {
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-6 tracking-tight text-brand-text-primary leading-tight px-4">
               how to actually<br className="sm:hidden" /> use this
             </h2>
-            <p className="text-xl sm:text-2xl text-brand-accent lowercase tracking-wide font-light">
-              this isn&apos;t background music.
+            <p className="text-xl sm:text-2xl text-brand-text-secondary lowercase tracking-wide font-light">
+              use it your way. just use headphones.
             </p>
           </motion.div>
 
-          {/* Roadmap Timeline */}
-          <div className="relative max-w-4xl mx-auto">
-            {/* Connecting line */}
-            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-brand-accent/0 via-brand-accent/40 to-brand-accent/0 hidden sm:block" />
+          {/* Usage Cards */}
+          <div className="max-w-5xl mx-auto space-y-12">
+            {/* The One Rule */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="relative p-8 sm:p-10 rounded-2xl border-2 border-brand-accent/50 bg-brand-bg/50 backdrop-blur-sm"
+            >
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-accent/10 to-brand-accent/5" />
+              <div className="relative z-10 text-center">
+                <h3 className="text-3xl sm:text-4xl font-light lowercase mb-4 text-brand-accent tracking-tight">
+                  the one rule: headphones
+                </h3>
+                <p className="text-lg sm:text-xl text-brand-text-secondary lowercase leading-relaxed tracking-wide">
+                  not speakers. not airpods on low. actual headphones at a comfortable volume. the sound needs to surround you.
+                </p>
+              </div>
+            </motion.div>
 
-            {/* Steps */}
-            <div className="space-y-20">
+            {/* Ways to Use It */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  number: "01",
-                  title: "headphones on. 100%.",
-                  description: "not speakers. not airpods on low. actual headphones. this only works if the sound wraps around your brain.",
-                  side: "left",
+                  title: "full reset",
+                  description: "feeling overloaded? stop everything. eyes closed. let the sound do the work. 5-10 minutes.",
                   delay: 0.1
-                  },
-                  {
-                  number: "02",
-                  title: "stop everything.",
-                  description: "you don't just turn it on and call it a day. you stop. desk, couch, floor. doesn't matter. but you stop.",
-                  side: "right",
+                },
+                {
+                  title: "while you build",
+                  description: "working through a tough problem? keep it on. let it stabilize you while you code, write, or think.",
                   delay: 0.2
                 },
                 {
-                  number: "03",
-                  title: "eyes off. eyes shut.",
-                  description: "screen off. phone face down. eyes closed. if you're still scrolling, you're not resetting. you're stalling.",
-                  side: "left",
+                  title: "between meetings",
+                  description: "back to back calls? hit play between them. even 2 minutes helps you reset before the next one.",
                   delay: 0.3
-                  },
-                  {
-                  number: "04",
-                  title: "let go.",
-                  description: "try not to think. try not to solve. try not to plan. just breathe and let the sound do the work.",
-                  side: "right",
-                  delay: 0.4
                 },
                 {
-                  number: "05",
-                  title: "this is the reset.",
-                  description: "5 minutes. 10 if you can. this isn't a break. your nervous system finally stops screaming.",
-                  side: "left",
-                  delay: 0.5
-                  }
-              ].map((step, index) => (
-                  <motion.div
-                    key={index}
-                  initial={{ opacity: 0, x: step.side === 'left' ? -40 : 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: step.delay }}
-                    viewport={{ once: true }}
-                  className={`relative flex items-center ${
-                    step.side === 'right' ? 'md:flex-row-reverse' : ''
-                  }`}
+                  title: "when you're stuck",
+                  description: "can't think straight? pause. headphones on. let your brain decompress. then get back to it.",
+                  delay: 0.4
+                }
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: item.delay }}
+                  viewport={{ once: true }}
+                  className="group relative"
                 >
-                  {/* Mobile layout (stacked) */}
-                  <div className="flex items-start gap-6 md:hidden w-full">
-                    {/* Number badge */}
-                    <div className="flex-shrink-0 w-16 h-16 rounded-full bg-brand-accent/10 border-2 border-brand-accent flex items-center justify-center">
-                      <span className="text-brand-accent font-light text-lg tracking-tight">
-                        {step.number}
-                      </span>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 pt-2">
-                      <h3 className="text-2xl sm:text-3xl font-light lowercase mb-3 text-brand-text-primary tracking-tight">
-                        {step.title}
-                      </h3>
-                      <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-                        {step.description}
+                  <div className="relative h-full p-6 sm:p-8 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/40 transition-all duration-300">
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="relative z-10">
+                      <h4 className="text-xl sm:text-2xl font-light lowercase mb-3 text-brand-text-primary tracking-tight">
+                        {item.title}
+                      </h4>
+                      <p className="text-base text-brand-text-secondary lowercase leading-relaxed tracking-wide">
+                        {item.description}
                       </p>
                     </div>
                   </div>
+                </motion.div>
+              ))}
+            </div>
 
-                  {/* Desktop layout (alternating sides) */}
-                  <div className="hidden md:flex md:items-center md:w-full">
-                    {/* Left content */}
-                    <div className={`w-full md:w-[calc(50%-2rem)] ${
-                      step.side === 'left' ? 'pr-12 text-right' : 'pl-12 text-left order-2'
-                    }`}>
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                        className="group"
-                      >
-                        <div className="relative p-8 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/50 transition-all duration-300">
-                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-accent/0 to-brand-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          
-                          <div className="relative z-10">
-                            <h3 className="text-2xl sm:text-3xl font-light lowercase mb-4 text-brand-text-primary tracking-tight">
-                              {step.title}
-                      </h3>
-                            <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-                              {step.description}
-                      </p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </div>
-
-                    {/* Center node */}
-                    <div className="absolute left-1/2 -translate-x-1/2 flex-shrink-0 z-20">
-                      <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                        className="w-16 h-16 rounded-full bg-brand-bg border-2 border-brand-accent flex items-center justify-center relative"
-                      >
-                        <div className="absolute inset-0 rounded-full bg-brand-accent/20 blur-xl" />
-                        <span className="text-brand-accent font-light text-lg tracking-tight relative z-10">
-                          {step.number}
-                        </span>
-                      </motion.div>
-                    </div>
-
-                    {/* Spacer for opposite side */}
-                    <div className="w-full md:w-[calc(50%-2rem)]" />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-            {/* Final emphasis */}
+            {/* Bottom Message */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
               viewport={{ once: true }}
-              className="mt-32 text-center"
+              className="text-center pt-8"
             >
-              <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase text-brand-text-primary tracking-tight leading-tight px-4">
-                do it right or don&apos;t<br className="sm:hidden" /> do it at all.
+              <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-secondary leading-relaxed tracking-wide">
+                there&apos;s no perfect way to use this.
+              </p>
+              <p className="text-xl sm:text-2xl font-light lowercase text-brand-accent leading-relaxed tracking-wide mt-2">
+                just use it when you&apos;re feeling overloaded.
               </p>
             </motion.div>
+          </div>
 
             {/* CTA Button */}
             <motion.div
