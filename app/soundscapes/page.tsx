@@ -323,8 +323,8 @@ export default function SoundscapesPage() {
           {/* Logo - back button when logged out, decorative when logged in */}
           <SignedOut>
             <Link href="/" className="w-10 h-10 rounded-full bg-brand-text-primary flex items-center justify-center hover:shadow-[0_0_20px_rgba(47,128,237,0.6)] transition-all duration-300">
-              <div className="w-6 h-6 rounded-full border-2 border-brand-bg" />
-            </Link>
+            <div className="w-6 h-6 rounded-full border-2 border-brand-bg" />
+          </Link>
           </SignedOut>
           <SignedIn>
             <div className="w-10 h-10 rounded-full bg-brand-text-primary flex items-center justify-center hover:shadow-[0_0_20px_rgba(47,128,237,0.6)] transition-all duration-300 cursor-default">
@@ -356,10 +356,10 @@ export default function SoundscapesPage() {
                     <div className="absolute inset-0 rounded-full bg-brand-accent/0 group-hover:bg-brand-accent/5 transition-colors" />
                   </button>
                 ) : (
-                  <button className="flex items-center gap-2 text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary hover:border-brand-accent/50 hover:text-brand-accent transition-colors focus:outline-none">
-                    freemium
-                    <ChevronDown className="w-3 h-3" />
-                  </button>
+                <button className="flex items-center gap-2 text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary hover:border-brand-accent/50 hover:text-brand-accent transition-colors focus:outline-none">
+                  freemium
+                  <ChevronDown className="w-3 h-3" />
+                </button>
                 )}
               </DropdownMenuTrigger>
               <DropdownMenuContent 
