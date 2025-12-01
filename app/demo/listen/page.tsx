@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAudioPlayer } from '@/hooks/use-audio-player'
@@ -79,7 +79,6 @@ export default function Listen() {
   const wasPlayingRef = useRef(false)
   const prevTrackIdRef = useRef<string | null>(null)
   const currentTrack = demoSoundscapes[currentIndex]
-  const audioFile = `${storageUrl}/${encodeURIComponent(currentTrack.file)}`
   const categoryColor = categoryColors[currentTrack.category as keyof typeof categoryColors]
 
   const { play, pause, isPlaying, currentTrackId } = useAudioPlayer({
@@ -99,7 +98,7 @@ export default function Listen() {
     }
   }, [isPlaying, currentTrackId, currentTrack.id])
 
-  const handlePlayPause = () => {
+  const handlePlayPause = useCallback(() => {
     if (isPlaying && currentTrackId === currentTrack.id) {
       pause()
       wasPlayingRef.current = false
@@ -109,7 +108,7 @@ export default function Listen() {
       const freshAudioFile = `${storageUrl}/${encodeURIComponent(currentTrack.file)}`
       play(currentTrack.id, freshAudioFile)
     }
-  }
+  }, [isPlaying, currentTrackId, currentTrack.id, currentTrack.file, pause, play])
 
   const handlePrevious = () => {
     const wasPlaying = wasPlayingRef.current
@@ -163,7 +162,7 @@ export default function Listen() {
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isPlaying, currentTrackId, currentTrack.id])
+  }, [handlePlayPause])
 
   // Feedback button fade in/out every 10 seconds
   useEffect(() => {
