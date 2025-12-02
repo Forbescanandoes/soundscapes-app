@@ -378,17 +378,17 @@ export default function Listen() {
       </div>
 
       {/* Floating Feedback Button */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {showFeedbackButton && (
           <motion.a
             href="https://tally.so/r/vGXVpX"
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="fixed bottom-6 right-6 z-40 rounded-xl border border-brand-text-muted/30 bg-brand-bg/90 backdrop-blur-sm px-5 py-3 text-sm font-normal lowercase tracking-wide text-brand-text-secondary transition-all duration-300 hover:border-brand-accent hover:text-brand-accent hover:bg-brand-accent/10"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="fixed bottom-8 right-4 sm:bottom-6 sm:right-6 z-40 rounded-xl border border-brand-text-muted/30 bg-brand-bg/90 backdrop-blur-sm px-4 py-2.5 text-sm font-normal lowercase tracking-wide text-brand-text-secondary hover:border-brand-accent hover:text-brand-accent hover:bg-brand-accent/10"
           >
             leave feedback
           </motion.a>
