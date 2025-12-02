@@ -193,11 +193,11 @@ export default function Home() {
               start your reset
             </motion.button>
 
-            <Link href="/demo/state-gate">
+            <Link href="/demo/state-gate" className="w-full sm:w-auto">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="relative rounded-xl border-2 border-brand-text-primary bg-transparent px-8 sm:px-12 py-4 text-base sm:text-lg font-normal lowercase tracking-wide text-brand-text-primary transition-all duration-300 hover:bg-brand-text-primary/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] w-full sm:w-auto"
+                className="relative rounded-xl border-2 border-brand-text-primary bg-transparent px-8 sm:px-12 py-4 text-base sm:text-lg font-normal lowercase tracking-wide text-brand-text-primary transition-all duration-300 hover:bg-brand-text-primary/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] w-full"
               >
                 try demo
               </motion.button>
