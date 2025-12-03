@@ -93,35 +93,35 @@ export default function LearnMorePage() {
               {
                 number: "1",
                 title: "model the overload",
-                description: "we simulate real founder states: fog, pressure, panic loops, mental fragmentation.",
+                description: "we recreate the exact mental states founders hit when their brain jams: fog, pressure, panic loops, scattered focus.",
                 icon: Activity,
                 delay: 0.3
               },
               {
                 number: "2",
                 title: "design the physiology",
-                description: "we translate stress patterns into acoustic rules the nervous system responds to.",
+                description: "we map what the body does under stress and turn those patterns into sound rules the nervous system reacts to.",
                 icon: TrendingUp,
                 delay: 0.35
               },
               {
                 number: "3",
                 title: "build the environment",
-                description: "we layer frequencies, modulation curves, and micro silence until the jam breaks.",
+                description: "we craft a sound field that interrupts overload: frequencies, modulation, and micro silence that break the jam.",
                 icon: Layers,
                 delay: 0.4
               },
               {
                 number: "4",
                 title: "test with real founders",
-                description: "we run each sound mid build, mid panic, mid overload and tune for relief, not vibes.",
+                description: "we run each track during real pressure moments mid build, mid fog, mid spike and tune it until relief is repeatable.",
                 icon: TestTube,
                 delay: 0.45
               },
               {
                 number: "5",
                 title: "measure the shift",
-                description: "clarity up. pressure down. brain back online. if it doesn't move the needle, it doesn't ship.",
+                description: "if clarity rises and the jam drops, it stays. if not, it gets rebuilt. only the tracks that actually help make it through.",
                 icon: BarChart3,
                 delay: 0.5
               }
