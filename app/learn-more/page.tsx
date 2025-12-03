@@ -32,7 +32,7 @@ export default function LearnMorePage() {
         </motion.div>
       </div>
 
-      {/* Built Like a Product Section */}
+      {/* Intro Section */}
       <div className="bg-brand-bg-secondary py-16 sm:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -40,22 +40,19 @@ export default function LearnMorePage() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center"
           >
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase leading-tight mb-6 tracking-tight">
-              built like a product, not a playlist.
+              engineered sounds. not music.
             </h2>
             <p className="text-xl sm:text-2xl font-light text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-              we don&apos;t make ambience we engineer states.
-            </p>
-            <p className="text-lg sm:text-xl font-light text-brand-text-muted lowercase leading-relaxed tracking-wide mt-4">
-              every sound is modeled, tested, and refined to pull founders out of overload in minutes.
+              built to pull overloaded founders out of the jam fast.
             </p>
           </motion.div>
         </div>
       </div>
 
-      {/* Framework Section */}
+      {/* The System Section */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -66,23 +63,14 @@ export default function LearnMorePage() {
         >
           <div className="flex items-center gap-3 mb-8">
             <Brain className="w-8 h-8 text-brand-accent" />
-            <h3 className="text-3xl sm:text-4xl font-light lowercase tracking-tight">the framework</h3>
+            <h3 className="text-3xl sm:text-4xl font-light lowercase tracking-tight">the system</h3>
           </div>
           <div className="space-y-4 text-lg text-brand-text-secondary leading-relaxed lowercase">
             <p>
-              a neuroacoustic system designed for overstimulated founders who need rapid decompression.
-            </p>
-            <p>
-              not mindfulness.
-            </p>
-            <p>
-              not meditation.
-            </p>
-            <p>
-              not mood management.
+              a neuroacoustic reset designed for people who think hard for a living.
             </p>
             <p className="text-brand-text-primary">
-              just physics, psychoacoustics, and nervous system ergonomics sound that resets your cognitive bandwidth so you can get back to building.
+              just sound that interrupts overload and restores cognitive bandwidth.
             </p>
           </div>
         </motion.div>
@@ -104,35 +92,35 @@ export default function LearnMorePage() {
             {[
               {
                 number: "1",
-                title: "simulate the state",
-                description: "model real founder overload: deadline panic, cognitive fog, burnout loops, physiological stress.",
+                title: "model the overload",
+                description: "we simulate real founder states: fog, pressure, panic loops, mental fragmentation.",
                 icon: Activity,
                 delay: 0.3
               },
               {
                 number: "2",
                 title: "design the physiology",
-                description: "map the stress signature: breath rhythm, heart rate drift, neural activation patterns. translate them into acoustic rules.",
+                description: "we translate stress patterns into acoustic rules the nervous system responds to.",
                 icon: TrendingUp,
                 delay: 0.35
               },
               {
                 number: "3",
                 title: "build the environment",
-                description: "layer frequencies, modulation curves, and micro silence windows until the nervous system unlocks.",
+                description: "we layer frequencies, modulation curves, and micro silence until the jam breaks.",
                 icon: Layers,
                 delay: 0.4
               },
               {
                 number: "4",
-                title: "test in the wild",
-                description: "run each sound with real founders mid build, mid panic, mid burnout. optimize for regulation, not vibes.",
+                title: "test with real founders",
+                description: "we run each sound mid build, mid panic, mid overload and tune for relief, not vibes.",
                 icon: TestTube,
                 delay: 0.45
               },
               {
                 number: "5",
-                title: "measure the effect",
+                title: "measure the shift",
                 description: "clarity up. pressure down. brain back online. if it doesn't move the needle, it doesn't ship.",
                 icon: BarChart3,
                 delay: 0.5
@@ -172,37 +160,34 @@ export default function LearnMorePage() {
           </div>
         </motion.div>
 
-        {/* Real Simulations */}
+        {/* Real Founder States */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-12">
             <TestTube className="w-8 h-8 text-brand-accent" />
-            <h3 className="text-3xl sm:text-4xl font-light lowercase tracking-tight">real simulations</h3>
+            <h3 className="text-3xl sm:text-4xl font-light lowercase tracking-tight">real founder states</h3>
           </div>
-          <p className="text-lg text-brand-text-secondary lowercase leading-relaxed mb-12 tracking-wide">
-            each sound begins with a real founder moment the nervous system under load.
-          </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
                 emoji: "🎭",
                 title: "one too many hats",
-                situation: "when every tab pulls attention and your brain fragments.",
-                solution: "sound designed to collapse chaos into a single stable thread.",
+                situation: "when your attention is split across ten tabs.",
+                solution: "sound built to collapse chaos into one stable thread.",
                 icon: BriefcaseBusiness,
                 gradient: "from-yellow-500/20 to-orange-500/20",
                 delay: 0.3
               },
               {
                 emoji: "😬",
-                title: "the dread of marketing",
-                situation: "when visibility feels like exposure.",
-                solution: "sound built to calm the threat response and open cognitive space.",
+                title: "marketing dread",
+                situation: "when visibility feels like threat.",
+                solution: "sound designed to lower that spike so you can think again.",
                 icon: Frown,
                 gradient: "from-purple-500/20 to-pink-500/20",
                 delay: 0.35
@@ -210,8 +195,8 @@ export default function LearnMorePage() {
               {
                 emoji: "💤",
                 title: "slept at desk",
-                situation: "when the body quits before the build does.",
-                solution: "sound that stabilizes you long enough to stop resisting recovery.",
+                situation: "when your body quits before the build does.",
+                solution: "sound that stabilizes you long enough to reset properly.",
                 icon: Moon,
                 gradient: "from-red-500/20 to-orange-500/20",
                 delay: 0.4
@@ -219,8 +204,8 @@ export default function LearnMorePage() {
               {
                 emoji: "🍽️",
                 title: "forgot to eat",
-                situation: "when you're hollow and disconnected from your body.",
-                solution: "sound that pulls you back into gravity and restores presence.",
+                situation: "when you're hollow and unfocused.",
+                solution: "sound that pulls you back into your body so your brain can reconnect.",
                 icon: Sandwich,
                 gradient: "from-blue-500/20 to-cyan-500/20",
                 delay: 0.45
@@ -278,13 +263,13 @@ export default function LearnMorePage() {
           viewport={{ once: true }}
           className="mt-20 text-center"
         >
-          <Link href="/soundscapes">
+          <Link href="/demo/state-gate">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="relative rounded-xl border-2 border-brand-accent bg-transparent px-12 py-4 text-lg font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]"
             >
-              explore the states
+              try demo
             </motion.button>
           </Link>
         </motion.div>
@@ -292,4 +277,3 @@ export default function LearnMorePage() {
     </div>
   )
 }
-
