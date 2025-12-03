@@ -161,16 +161,6 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Link href="/soundscapes" className="w-full sm:w-auto">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative rounded-xl border-2 border-brand-accent bg-transparent px-8 sm:px-12 py-4 text-base sm:text-lg font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)] w-full"
-              >
-                start your reset
-              </motion.button>
-            </Link>
-
             <Link href="/demo/state-gate" className="w-full sm:w-auto">
               <motion.button
                 whileHover={{ scale: 1.02 }}
