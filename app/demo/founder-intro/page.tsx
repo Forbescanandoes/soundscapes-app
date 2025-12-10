@@ -44,24 +44,6 @@ export default function FounderIntro() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          {/* Main Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-light lowercase leading-tight mb-8 text-brand-text-primary tracking-tight"
-          >
-            hey i&apos;m logan.
-          </motion.h1>
-
-          {/* Divider */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="w-24 h-px bg-gradient-to-r from-transparent via-brand-accent to-transparent mx-auto mb-12"
-          />
-
           {/* Founder Image */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -110,21 +92,6 @@ export default function FounderIntro() {
             >
               continue →
             </motion.button>
-          </motion.div>
-
-          {/* Small Text */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-            className="space-y-3"
-          >
-            <p className="text-base sm:text-lg text-brand-text-primary lowercase tracking-wide">
-              it&apos;s a pressure release valve for overloaded founders.
-            </p>
-            <p className="text-base sm:text-lg text-brand-text-secondary lowercase tracking-wide">
-              this isn&apos;t wellness.
-            </p>
           </motion.div>
         </motion.div>
       </div>

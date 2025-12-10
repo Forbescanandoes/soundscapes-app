@@ -14,7 +14,7 @@ export default function Instructions() {
   }
 
   const handleContinue = () => {
-    router.push('/demo/player')
+    router.push('/demo/audio')
   }
 
   return (

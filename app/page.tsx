@@ -2,22 +2,21 @@
 
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { SignInButton, SignUpButton, SignedOut, useUser } from '@clerk/nextjs'
-import { motion } from 'framer-motion'
-import { Brain, Zap, Target, Sparkles, Check, Copy } from 'lucide-react'
+import { SignUpButton, SignedOut, useUser } from '@clerk/nextjs'
+import { Play, Zap, Brain, RefreshCw, Lightbulb, Shield, Rocket, Quote, Library, Waves, Clock, Gauge, Check, Radio, Headphones, MessageCircle, Target, Flame, AlertCircle, Layers } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog'
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export default function Home() {
   const { isSignedIn } = useUser()
   const router = useRouter()
+  const [activeState, setActiveState] = useState(0)
   
   // Redirect logged-in users to soundscapes
   useEffect(() => {
@@ -25,571 +24,874 @@ export default function Home() {
       router.push('/soundscapes')
     }
   }, [isSignedIn, router])
-  const [showConversionModal, setShowConversionModal] = useState(false)
-  const [copied, setCopied] = useState(false)
 
-  const soundscapeCategories = [
+  const painPoints = [
+    "can't think straight",
+    "pivots every 10 days",
+    "burns out your brain faster than you ship product",
+    "gets stuck in loops, doubt spikes, and fog"
+  ]
+
+  const solutions = [
     {
-      id: 'burnout',
-      title: 'burnt out',
-      description: 'completely fried.',
-      icon: Brain,
-      gradient: 'from-red-500/20 to-orange-500/20'
-    },
-    {
-      id: 'overload',
-      title: 'overloaded',
-      description: 'too much at once.',
       icon: Zap,
-      gradient: 'from-yellow-500/20 to-orange-500/20'
+      title: "Engineered sound that cools your mental load",
+      description: "Slows breath, stabilizes rhythm, breaks the spiral"
     },
     {
-      id: 'anxious',
-      title: 'anxious',
-      description: 'can\'t stop spiraling.',
-      icon: Target,
-      gradient: 'from-purple-500/20 to-pink-500/20'
+      icon: Brain,
+      title: 'Founder-specific Resets',
+      description: 'For moments like "I hate my product," "I can\'t think," and "I\'m about to quit"'
     },
     {
-      id: 'scattered',
-      title: 'scattered',
-      description: 'can\'t focus on anything.',
-      icon: Sparkles,
-      gradient: 'from-blue-500/20 to-cyan-500/20'
+      icon: RefreshCw,
+      title: "State switching that restores clarity",
+      description: "When panic or doubt hijack your decision-making"
     }
   ]
 
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText('https://workingonname.vercel.app')
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch (err) {
-      console.error('Failed to copy:', err)
+  const benefits = [
+    {
+      icon: Lightbulb,
+      title: "Think Clearly on Demand",
+      description: 'Feel your brain "click back on" within minutes regain access to logic, creativity, and calm decision making.'
+    },
+    {
+      icon: Shield,
+      title: "Stop Self-Sabotaging Good Ideas",
+      description: "Break the panic-driven urge to pivot, quit, or rebuild everything at 1AM."
+    },
+    {
+      icon: Rocket,
+      title: "Get Your Execution Back",
+      description: "When your mind is stable, your output becomes predictable. No more days lost to fog, loops, and mental noise."
     }
-  }
+  ]
+
+  const testimonials = [
+    {
+      quote: "I used a Reset before a launch and felt my head come back online. Saved my entire day.",
+      author: "Indie Hacker"
+    },
+    {
+      quote: "It's the first 'mental tool' that isn't bullshit. It just turns my brain back on.",
+      author: "Solo SaaS Founder"
+    },
+    {
+      quote: "Feels like someone pulled the pressure valve in my skull.",
+      author: "AI Builder"
+    }
+  ]
+
+  const features = [
+    {
+      icon: Library,
+      title: "Founder States Library",
+      description: "Instant resets for specific mental states",
+      states: [
+        'twelve tabs open',
+        'forgot the point',
+        'cant stop',
+        'ten tabs deep',
+        'waiting on replies'
+      ]
+    },
+    {
+      icon: Waves,
+      title: "Neuro-Acoustic Relief System",
+      description: "Sound designed using physics + nervous system principles. Not calming music. Not meditation. Functional nervous system regulation."
+    },
+    {
+      icon: Clock,
+      title: "2 Minute Mental Turnaround",
+      description: "Short enough to use mid build, mid meeting, or mid breakdown."
+    },
+    {
+      icon: Gauge,
+      title: "Pressure Release Protocols",
+      description: "Guided talk downs for when your brain is collapsing into doubt or overload."
+    }
+  ]
+
+  const useCases = [
+    {
+      emoji: "🧩",
+      title: "Solo Founders",
+      description: "Carrying everything in your head? This gives your brain breathing room."
+    },
+    {
+      emoji: "⚡",
+      title: "Dream Chasers & Early Builders",
+      description: "If you're overwhelmed by possibilities, loops, and pressure this gives you mental stability."
+    },
+    {
+      emoji: "💻",
+      title: "AI + SaaS Builders",
+      description: "When you're shipping fast, your mind burns even faster. These resets keep your thinking sharp."
+    },
+    {
+      emoji: "🔥",
+      title: "Creators & Indies",
+      description: "If your brain fries under volume, decisions, or comparison this keeps your execution steady."
+    }
+  ]
+
+  const pricingFeatures = [
+    "Full Founder Reset Library",
+    "unlimited Scenarios, States, and get your head back sessions",
+    "New drops every month",
+    "Early access to experimental soundscapes",
+    "Direct access to the founder (24/7 DM)"
+  ]
+
+  const faqs = [
+    {
+      question: "I don't like meditation or wellness bullshit.",
+      answer: "Good. This isn't that. No spirituality. No breathwork. No woo. Pure nervous system physics."
+    },
+    {
+      question: "Will this work if I have ADHD or can't focus?",
+      answer: "Yes it's designed specifically for overloaded brains with low cognitive bandwidth."
+    },
+    {
+      question: "How long before I feel something?",
+      answer: "Most founders feel a shift in 30 to 90 seconds. The rest within 2 to 3 minutes."
+    },
+    {
+      question: "Do I need headphones?",
+      answer: "Recommended. The effects are stronger in stereo."
+    },
+    {
+      question: "I've tried everything. Why is this different?",
+      answer: "Because it doesn't rely on discipline or calm. It fixes the state your brain is in so clarity naturally returns."
+    }
+  ]
+
+  const founderStates = [
+    {
+      category: "Scattered",
+      name: "Half Built Everything",
+      description: "When you have 12 projects at 40% and can't finish one",
+      icon: Layers,
+      color: "from-amber-500/20 to-amber-600/10",
+      borderColor: "border-amber-500/30",
+    },
+    {
+      category: "Overloaded",
+      name: "One Too Many Hats",
+      description: "CEO, dev, marketer, support your brain is fragmenting",
+      icon: Brain,
+      color: "from-purple-500/20 to-purple-600/10",
+      borderColor: "border-purple-500/30",
+    },
+    {
+      category: "Burnout",
+      name: "Shipping Too Fast",
+      description: "You've been sprinting for weeks and your mind is fried",
+      icon: Flame,
+      color: "from-red-500/20 to-red-600/10",
+      borderColor: "border-red-500/30",
+    },
+    {
+      category: "Anxious",
+      name: "The Dread of Marketing",
+      description: "The thought of putting yourself out there feels impossible",
+      icon: AlertCircle,
+      color: "from-blue-500/20 to-blue-600/10",
+      borderColor: "border-blue-500/30",
+    },
+  ]
+
+  const founderScenarios = [
+    {
+      name: "Stuck at 0 MRR Doubt Loop",
+      trigger: "When comparison + fear are killing your execution",
+      description: "Targeted reset for that specific moment when you're paralyzed by seeing others succeed while you're stuck.",
+      icon: Target,
+    },
+    {
+      name: "Can't Start the Day",
+      trigger: "When your brain feels blank and you can't begin work",
+      description: "Precision designed for mornings where opening your laptop feels impossible.",
+      icon: Zap,
+    },
+  ]
+
+  const talkDowns = [
+    {
+      name: "Regain Faith in Your Product",
+      subtitle: "Founder Reset #1",
+      trigger: "When you think your idea is trash",
+      description: "A direct, founder to founder voice session that walks you out of the 'my product sucks' spiral.",
+      icon: MessageCircle,
+    },
+    {
+      name: "Stop Rethinking Everything",
+      subtitle: "Founder Reset #2",
+      trigger: "When your brain tries to pivot you to death",
+      description: "Interrupts the endless 'maybe I should build something else' loop and gets you back to shipping.",
+      icon: Radio,
+    },
+  ]
 
   return (
-    <div className="bg-brand-bg text-brand-text-primary overflow-hidden">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-brand-text-muted/10 bg-brand-bg/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="text-base sm:text-xl font-bold tracking-tight">
-              donothing<span className="text-brand-accent">sounds</span>
-            </div>
-            <div className="flex items-center gap-2 sm:gap-3">
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 px-4 py-4">
+        <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 py-3 rounded-2xl glass border border-border/50">
+          <div className="flex items-center gap-2">
+            <span className="font-display font-semibold text-lg">DoNothing<span className="text-primary">Sounds</span></span>
+          </div>
+
+          <div className="hidden md:flex items-center gap-8">
+            <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Features
+            </a>
+            <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Pricing
+            </a>
+            <a href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              FAQ
+            </a>
+          </div>
+
               <SignedOut>
-                <SignInButton 
-                  mode="modal"
-                  fallbackRedirectUrl="/soundscapes"
-                  signUpFallbackRedirectUrl="/soundscapes"
-                >
-                  <Button variant="ghost" className="rounded-full lowercase text-xs sm:text-sm text-brand-text-secondary hover:text-brand-text-primary transition-colors focus:outline-none focus-visible:outline-none px-3 sm:px-4">
-                    sign in
-                  </Button>
-                </SignInButton>
                 <SignUpButton 
                   mode="modal"
                   fallbackRedirectUrl="/soundscapes"
                   signInFallbackRedirectUrl="/soundscapes"
                 >
-                  <Button className="rounded-full border-2 border-brand-accent bg-transparent hover:bg-brand-accent/10 text-brand-accent lowercase text-xs sm:text-sm font-medium transition-all px-3 sm:px-4">
-                    sign up
+              <Button variant="hero" size="sm">
+                Start Free
                   </Button>
                 </SignUpButton>
               </SignedOut>
-            </div>
-          </div>
-        </div>
       </nav>
+      </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-4 sm:px-6 lg:px-8">
-        {/* Animated gradient orbs */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 pt-32 pb-20">
+        {/* Background gradient orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div 
-            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-brand-accent/10 blur-[120px]"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <motion.div 
-            className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-brand-accent/5 blur-[140px]"
-            animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.2, 0.4, 0.2],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-slow" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
         </div>
 
-        <div className="max-w-6xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight leading-[1.15] mb-8 text-brand-text-primary lowercase">
-              When your <span className="text-brand-accent">brain</span> jams,
-              <br className="sm:hidden" /> press play
-            </h1>
-          </motion.div>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg sm:text-xl text-brand-text-secondary lowercase max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
-            a 5 minute reset that gets your brain back online
-          </motion.p>
+        {/* Grid pattern overlay */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: 'linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)',
+            backgroundSize: '60px 60px'
+          }}
+        />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <Link href="/demo/state-gate" className="w-full sm:w-auto">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative rounded-xl border-2 border-brand-text-primary bg-transparent px-8 sm:px-12 py-4 text-base sm:text-lg font-normal lowercase tracking-wide text-brand-text-primary transition-all duration-300 hover:bg-brand-text-primary/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] w-full"
-              >
-                try demo
-              </motion.button>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Soundscape Categories Section */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-bg via-brand-bg-secondary to-brand-bg" />
-        </div>
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl sm:text-5xl font-light lowercase mb-6 tracking-tight">
-              how does your <span className="text-brand-accent">brain</span> feel?
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {soundscapeCategories.map((category, index) => {
-              const Icon = category.icon
-              
-              return (
-                <motion.div
-                  key={category.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group relative"
-                >
-                  <div className="relative h-full bg-brand-bg-secondary rounded-2xl border border-brand-text-muted/20 hover:border-brand-accent/50 transition-all duration-300 overflow-hidden">
-                    {/* Gradient overlay */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-
-                    <div className="relative z-10 p-8 flex flex-col h-full">
-                      {/* Icon */}
-                      <div className="mb-6">
-                        <Icon className="w-10 h-10 text-brand-text-secondary group-hover:text-brand-accent transition-all duration-300" />
-                      </div>
-
-                      {/* Content */}
-                      <h3 className="text-2xl font-light lowercase mb-2 text-brand-text-primary tracking-tight">
-                        {category.title}
-                      </h3>
-                      <p className="text-sm text-brand-text-secondary lowercase tracking-wide mb-6 flex-1">
-                        {category.description}
-                      </p>
-
-                      {/* Learn More Link */}
-                      <Link 
-                        href="/learn-more"
-                        className="text-sm text-brand-text-secondary hover:text-brand-accent transition-colors lowercase tracking-wide inline-flex items-center gap-2 group/link"
-                      >
-                        learn more
-                        <span className="transform group-hover/link:translate-x-1 transition-transform">→</span>
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* How To Roadmap Section */}
-      <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 bg-brand-bg-secondary relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-bg via-brand-bg-secondary to-brand-bg" />
-        </div>
-        
-        <div className="max-w-6xl mx-auto relative z-10">
-          {/* When to Use It */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="max-w-5xl mx-auto mb-[32rem]"
-          >
-            <div className="text-center mb-12">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-8 text-brand-text-primary tracking-tight">
-                when to use it
-            </h2>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4 sm:gap-6">
-              {[
-                {
-                  trigger: "can't think straight",
-                  gradient: "from-red-500/20 to-orange-500/20"
-                },
-                {
-                  trigger: "stuck in a thinking loop",
-                  gradient: "from-purple-500/20 to-pink-500/20"
-                },
-                {
-                  trigger: "decisions feel impossible",
-                  gradient: "from-yellow-500/20 to-orange-500/20"
-                },
-                {
-                  trigger: "the crash is coming",
-                  gradient: "from-blue-500/20 to-cyan-500/20"
-                }
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 + (index * 0.1) }}
-                  viewport={{ once: true }}
-                  className="group relative"
-                >
-                  <div className="relative h-full py-10 sm:py-14 px-4 sm:px-8 rounded-2xl border border-brand-text-muted/20 bg-brand-bg/50 backdrop-blur-sm hover:border-brand-accent/40 transition-all duration-300 overflow-hidden flex items-center justify-center text-center">
-                    {/* Gradient overlay */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                    
-                    <div className="relative z-10">
-                      <h4 className="text-lg sm:text-2xl md:text-3xl font-light lowercase text-brand-text-primary tracking-tight leading-tight">
-                        {item.trigger}
-                      </h4>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Emphasis */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            viewport={{ once: true }}
-              className="mt-12 text-center"
-            >
-              <Link href="/soundscapes">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="relative rounded-xl border-2 border-brand-accent bg-transparent px-8 sm:px-12 py-4 text-base sm:text-lg font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]"
-                >
-                  reset now
-                </motion.button>
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          {/* How to Use It */}
-          <motion.div
-            id="how-to-use"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-8 tracking-tight text-brand-text-primary">
-              how to use this
-            </h2>
-            <p className="text-2xl sm:text-3xl md:text-4xl font-light lowercase text-brand-accent tracking-tight mb-4">
-              headphones on. press play.
-            </p>
-            <p className="text-lg sm:text-xl text-brand-text-secondary lowercase tracking-wide">
-              that&apos;s it.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Philosophy Section */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 border-t border-brand-text-muted/10 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-bg-secondary/50 to-transparent" />
-        <div className="max-w-5xl mx-auto relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase leading-tight text-brand-text-secondary mb-4 tracking-tight">
-              the threat isn&apos;t distractions.
-            </p>
-            <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase leading-tight text-brand-text-primary tracking-tight">
-              it&apos;s a jammed <span className="text-brand-accent">brain</span>.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-
-      {/* Why This Works Section */}
-      <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 bg-brand-bg relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-accent/5 via-transparent to-transparent" />
-        </div>
-        
-        <div className="max-w-4xl mx-auto relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light lowercase mb-12 tracking-tight">
-              why this works
-            </h2>
-            <div className="space-y-6">
-              <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-secondary leading-relaxed tracking-wide">
-                when your brain gets jammed, working through it doesn&apos;t fix it.
-              </p>
-              <p className="text-xl sm:text-2xl font-light lowercase text-brand-text-primary leading-relaxed tracking-wide">
-                sound hits your nervous system before your thoughts do.
-              </p>
-              <p className="text-xl sm:text-2xl font-light lowercase text-brand-accent leading-relaxed tracking-wide">
-                it breaks the jam fast, so you get your brain back.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Advantage Section */}
-      <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 relative">
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-full h-px bg-gradient-to-r from-transparent via-brand-accent/30 to-transparent" />
-        </div>
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light lowercase leading-tight text-brand-text-secondary tracking-tight">
-              every founder hits empty.
-            </p>
-            <p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light lowercase leading-tight text-brand-text-primary tracking-tight mt-4">
-              here&apos;s how you get your <span className="text-brand-accent">brain</span> back.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Truth Section */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 bg-brand-bg-secondary border-y border-brand-text-muted/10">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <div className="flex items-start gap-4">
-              <div className="w-1 h-full bg-gradient-to-b from-brand-accent to-transparent rounded-full" />
-              <div className="space-y-6">
-                <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase leading-tight text-brand-text-secondary tracking-tight">
-                  forget wellness.
-                </p>
-                <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase leading-tight text-brand-accent tracking-tight">
-                  this is endurance tech.
-                </p>
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/80 border border-border mb-8 animate-fade-up">
+            <Zap className="w-4 h-4 text-primary" />
+            <span className="text-sm text-muted-foreground">The mental OS for solo founders</span>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Final CTA Section */}
-      <section className="py-32 sm:py-40 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        {/* Dramatic gradient background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-bg via-brand-bg-secondary to-brand-bg" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-accent/10 via-transparent to-transparent" />
-        </div>
+          {/* Main headline */}
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-up" style={{ animationDelay: '0.1s' }}>
+            Your mind is not the problem.{" "}
+            <span className="text-gradient">Your state is.</span>
+            </h1>
 
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light lowercase leading-tight text-brand-text-primary mb-20 tracking-tight">
-              stop losing days to fog.
-            </h2>
-
-            <Link href="/soundscapes">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative rounded-xl border-2 border-brand-accent bg-transparent px-12 py-4 text-lg font-normal lowercase tracking-wide text-brand-accent transition-all duration-300 hover:bg-brand-accent/10 hover:shadow-[0_0_40px_rgba(47,128,237,0.3)]"
-              >
-                see how fast it works
-              </motion.button>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Share Section */}
-      <section className="py-24 sm:py-32 px-4 sm:px-6 lg:px-8 border-t border-brand-text-muted/10">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <p className="text-3xl sm:text-4xl md:text-5xl font-light lowercase leading-tight text-brand-text-primary mb-12 tracking-tight">
-              know a founder who&apos;s cooked? send them a reset.
-            </p>
-
-            <motion.button
-              onClick={handleCopyLink}
-              className="group relative inline-flex items-center gap-3 px-10 py-5 rounded-full border border-brand-text-muted/30 hover:border-brand-accent/50 bg-brand-bg-secondary/50 backdrop-blur-sm hover:bg-brand-bg-secondary transition-all duration-300"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span className="text-base sm:text-lg font-light lowercase text-brand-text-primary tracking-wide">
-                send them a reset
-              </span>
-              {copied ? (
-                <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ type: "spring", stiffness: 200 }}
-                >
-                  <Check className="w-5 h-5 text-brand-accent" />
-                </motion.div>
-              ) : (
-                <Copy className="w-5 h-5 text-brand-text-secondary group-hover:text-brand-accent transition-colors" />
-              )}
-
-              {/* Glow effect on hover */}
-              <div className="absolute inset-0 rounded-full bg-brand-accent/0 group-hover:bg-brand-accent/5 transition-all duration-300" />
-            </motion.button>
-
-            {copied && (
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                className="mt-4 text-sm text-brand-accent lowercase tracking-wide"
-              >
-                link copied
-              </motion.p>
-            )}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-brand-text-muted/10">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-brand-text-muted lowercase tracking-wide">
-            brain fog kills more startups than bad code.
+          {/* Subheadline */}
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 animate-fade-up" style={{ animationDelay: '0.2s' }}>
+            Reset it in minutes.
           </p>
-          <div className="flex items-center gap-6 text-sm text-brand-text-muted lowercase">
-            <Link href="/soundscapes" className="hover:text-brand-accent transition-colors tracking-wide">
-              soundscapes
-            </Link>
-            <span className="opacity-50">•</span>
-            <a href="#" className="hover:text-brand-accent transition-colors tracking-wide">
-              twitter
-            </a>
-          </div>
-        </div>
-      </footer>
 
+          {/* Description */}
+          <p className="text-base sm:text-lg text-muted-foreground/80 max-w-2xl mx-auto mb-10 animate-fade-up" style={{ animationDelay: '0.3s' }}>
+            DoNothingSounds clears mental fog, breaks overthinking loops, and stabilizes the founder brain without meditation, wellness clichés, or long routines.
+          </p>
 
-      {/* Conversion Modal */}
-      <Dialog open={showConversionModal} onOpenChange={setShowConversionModal}>
-        <DialogContent className="bg-gradient-to-br from-brand-bg to-brand-bg-secondary border border-brand-text-muted/20 max-w-[calc(100%-2rem)] sm:max-w-lg p-8 sm:p-10">
-          <DialogHeader className="space-y-6">
-            <DialogTitle className="text-3xl sm:text-4xl md:text-5xl font-light lowercase tracking-tight text-brand-text-primary leading-tight">
-              access the full system
-            </DialogTitle>
-            
-            <DialogDescription className="space-y-6 text-left">
-              <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed">
-                these soundscapes aren&apos;t music.
-              </p>
-              <p className="text-base sm:text-lg text-brand-text-primary lowercase leading-relaxed">
-                they&apos;re built to pull you out of cognitive overload so you can get back to work.
-              </p>
-              <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed">
-                sign up free to unlock more resets and keep using them for life.
-              </p>
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="flex flex-col gap-4 mt-8">
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" style={{ animationDelay: '0.4s' }}>
             <SignUpButton 
               mode="modal"
               fallbackRedirectUrl="/soundscapes"
               signInFallbackRedirectUrl="/soundscapes"
             >
-              <button className="w-full rounded-lg bg-brand-accent px-8 py-4 text-base font-medium lowercase tracking-wide text-brand-bg transition-all duration-300 hover:shadow-[0_0_30px_rgba(47,128,237,0.4)] hover:scale-[1.01] active:scale-[0.99]">
-                sign up free
-              </button>
+              <Button variant="hero" size="xl">
+                Start Free
+              </Button>
             </SignUpButton>
-
-            <Link href="/learn-more" className="w-full">
-              <button
-                onClick={() => setShowConversionModal(false)}
-                className="w-full text-sm text-brand-text-muted hover:text-brand-accent lowercase tracking-wide transition-colors py-2"
-              >
-                see how they&apos;re built
-              </button>
-            </Link>
+            <button
+              onClick={() => {
+                const demoSection = document.getElementById('demo-section')
+                if (demoSection) {
+                  demoSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                }
+              }}
+              className="w-full sm:w-auto rounded-xl border-2 border-primary/40 bg-transparent text-foreground hover:border-primary hover:bg-primary/10 font-semibold px-10 py-4 text-base sm:text-lg transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <Play className="w-5 h-5" />
+              Hear a Reset
+            </button>
           </div>
-        </DialogContent>
-      </Dialog>
+
+          {/* Trust line */}
+          <p className="mt-12 text-sm text-muted-foreground/60 animate-fade-up" style={{ animationDelay: '0.5s' }}>
+            Build from a clear, steady mind again.
+          </p>
+        </div>
+      </section>
+
+      {/* Problem Section */}
+      <section className="py-24 px-4 relative">
+        <div className="max-w-6xl mx-auto">
+          {/* Problem statement */}
+          <div className="max-w-3xl mb-20">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-8">
+              If you're a founder who:
+            </h2>
+            <ul className="space-y-3 mb-8">
+              {painPoints.map((point, index) => (
+                <li 
+                  key={index}
+                  className="flex items-start gap-3 text-lg text-muted-foreground"
+                >
+                  <span className="text-primary mt-1">×</span>
+                  {point}
+                </li>
+              ))}
+            </ul>
+            <p className="text-xl text-foreground font-medium">
+              …your problem isn't motivation it's <span className="text-gradient">nervous system overload</span>.
+            </p>
+              </div>
+
+          {/* Solution cards */}
+          <div className="mb-12">
+            <h3 className="font-display text-2xl sm:text-3xl font-bold mb-10">
+              Here's how DoNothingSounds fixes that instantly:
+            </h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              {solutions.map((solution, index) => (
+                <div 
+                  key={index}
+                  className="group p-6 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:glow-primary"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
+                    <solution.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h4 className="font-display text-lg font-semibold mb-2">
+                    {solution.title}
+                  </h4>
+                  <p className="text-muted-foreground text-sm">
+                    {solution.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Differentiator */}
+          <div className="text-center py-12 border-t border-border">
+            <p className="text-xl text-muted-foreground">
+              This isn't meditation.
+            </p>
+            <p className="font-display text-2xl font-bold text-gradient mt-2">
+              This is mental performance engineering.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-24 px-4 bg-secondary/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
+              What You Get
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+              Outcome oriented mental resets designed for founders
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {benefits.map((benefit, index) => (
+              <div 
+                key={index}
+                className="relative group"
+              >
+                {/* Glow effect on hover */}
+                <div className="absolute inset-0 bg-primary/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative p-8 rounded-3xl bg-card border border-border h-full">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center mb-6">
+                    <benefit.icon className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="font-display text-xl font-semibold mb-3">
+                    {benefit.title}
+                    </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {benefit.description}
+                    </p>
+                  </div>
+                </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
+              Proof It Works
+            </h2>
+            <p className="text-muted-foreground">
+              Real founders, real results
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <div 
+                key={index}
+                className="relative p-6 rounded-2xl bg-card border border-border hover:border-primary/20 transition-all duration-300"
+              >
+                <Quote className="w-8 h-8 text-primary/30 mb-4" />
+                <blockquote className="text-foreground text-lg mb-6 leading-relaxed">
+                  &quot;{testimonial.quote}&quot;
+                </blockquote>
+                <cite className="text-sm text-muted-foreground not-italic">
+                  {testimonial.author}
+                </cite>
+              </div>
+                  ))}
+                </div>
+
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-24 px-4 bg-secondary/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
+              Built for the Founder Brain
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+              Every feature engineered for cognitive overload
+            </p>
+                  </div>
+
+          <div className="grid lg:grid-cols-2 gap-6">
+            {features.map((feature, index) => (
+              <div 
+                key={index}
+                className="group p-8 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300"
+              >
+                <div className="flex items-start gap-5">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                    <feature.icon className="w-6 h-6 text-primary" />
+                      </div>
+                  <div>
+                    <h3 className="font-display text-xl font-semibold mb-2">
+                      {feature.title}
+                      </h3>
+                    <p className="text-muted-foreground mb-4">
+                      {feature.description}
+                    </p>
+                    {feature.states && (
+                      <ul className="space-y-2">
+                        {feature.states.map((state, idx) => (
+                          <li 
+                            key={idx}
+                            className="text-sm text-muted-foreground/80 pl-4 border-l-2 border-primary/30"
+                          >
+                            {state}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    </div>
+                  </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Use Cases Section */}
+      <section className="py-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
+              Built For
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {useCases.map((useCase, index) => (
+              <div 
+                    key={index}
+                className="group p-8 rounded-2xl bg-card border border-border hover:border-primary/30 transition-all duration-300 hover:glow-soft"
+              >
+                <div className="text-4xl mb-6">{useCase.emoji}</div>
+                <h3 className="font-display text-2xl font-semibold mb-4">
+                  {useCase.title}
+                      </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  {useCase.description}
+                      </p>
+                    </div>
+                ))}
+              </div>
+        </div>
+      </section>
+
+      {/* Demo Section - See What's Inside */}
+      <section id="demo-section" className="py-24 px-4 bg-gradient-to-b from-background via-secondary/20 to-background">
+            <div className="max-w-6xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+              The System
+            </span>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+              See What&apos;s Inside
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Three components. One system. Your brain back online.
+            </p>
+                    </div>
+                    
+          {/* Component 1: Founder States */}
+          <div className="mb-20">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                <Headphones className="w-5 h-5 text-primary" />
+              </div>
+              <h3 className="font-display text-2xl font-bold">Founder States</h3>
+            </div>
+            <p className="text-muted-foreground mb-8 max-w-xl">
+              Engineered audio environments that shift your brain into a functional, clear execution mode. Not relaxation. <span className="text-foreground font-medium">Function.</span>
+            </p>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {founderStates.map((state, index) => {
+                const StateIcon = state.icon
+                return (
+                  <button
+                    key={state.name}
+                    onClick={() => setActiveState(index)}
+                    className={`group relative p-5 rounded-2xl border text-left transition-all duration-300 ${
+                      activeState === index
+                        ? `bg-gradient-to-br ${state.color} ${state.borderColor} scale-[1.02]`
+                        : "bg-card/50 border-border hover:border-primary/20"
+                    }`}
+                  >
+                    <span className={`text-xs font-medium uppercase tracking-wider ${
+                      activeState === index ? "text-primary" : "text-muted-foreground"
+                    }`}>
+                      {state.category}
+                    </span>
+                    <h4 className="font-display font-semibold mt-2 mb-1">{state.name}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {state.description}
+                    </p>
+                    <div className={`absolute top-4 right-4 w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
+                      activeState === index 
+                        ? "bg-primary/20" 
+                        : "bg-secondary group-hover:bg-primary/10"
+                    }`}>
+                      <StateIcon className={`w-4 h-4 ${activeState === index ? "text-primary" : "text-muted-foreground"}`} />
+                  </div>
+                    {activeState === index && (
+                      <div className="mt-4 pt-4 border-t border-border/50">
+                        <Button size="sm" variant="heroOutline" className="w-full text-xs">
+                          <Play className="w-3 h-3" />
+                          Preview State
+                        </Button>
+                </div>
+                    )}
+                  </button>
+                )
+              })}
+          </div>
+            <p className="text-xs text-muted-foreground/60 mt-4 text-center">
+              States for the day shift your baseline mental mode
+            </p>
+        </div>
+
+          {/* Component 2: Founder Scenarios */}
+          <div className="mb-20">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                <Target className="w-5 h-5 text-primary" />
+        </div>
+              <h3 className="font-display text-2xl font-bold">Founder Scenarios</h3>
+            </div>
+            <p className="text-muted-foreground mb-8 max-w-xl">
+              Precision designed resets for the exact mental breakdown moments solo founders face. Not moods. <span className="text-foreground font-medium">Exact situations.</span>
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {founderScenarios.map((scenario) => {
+                const ScenarioIcon = scenario.icon
+                return (
+                  <div
+                    key={scenario.name}
+                    className="group relative p-6 rounded-2xl bg-gradient-to-br from-card to-card/50 border border-border hover:border-primary/30 transition-all duration-300"
+                  >
+                    <div className="absolute inset-0 bg-primary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="relative">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                          <ScenarioIcon className="w-6 h-6 text-primary" />
+                    </div>
+                        <span className="px-3 py-1 rounded-full bg-destructive/10 text-destructive text-xs font-medium">
+                          Scenario
+                        </span>
+                      </div>
+                      <h4 className="font-display text-xl font-semibold mb-2">{scenario.name}</h4>
+                      <p className="text-primary/80 text-sm font-medium mb-3">{scenario.trigger}</p>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                        {scenario.description}
+                      </p>
+                      <Button variant="heroOutline" size="sm" className="w-full">
+                        <Play className="w-4 h-4" />
+                        Try This Scenario
+                      </Button>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            <p className="text-xs text-muted-foreground/60 mt-4 text-center">
+              Scenarios for the moment targeted fixes for specific breakdowns
+                    </p>
+        </div>
+
+          {/* Component 3: Talk-Downs / Get-Your-Head-Back Sessions */}
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                <MessageCircle className="w-5 h-5 text-primary" />
+        </div>
+              <h3 className="font-display text-2xl font-bold">Get Your Head Back Sessions</h3>
+        </div>
+            <p className="text-muted-foreground mb-8 max-w-xl">
+              Short voice-guided resets that pull you out of spirals and get your head working again. Founder to founder. <span className="text-foreground font-medium">No guru energy.</span>
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {talkDowns.map((session) => {
+                const SessionIcon = session.icon
+                return (
+                  <div
+                    key={session.name}
+                    className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-secondary/80 to-secondary/40 border border-border hover:border-primary/30 transition-all duration-300"
+                  >
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl" />
+                    <div className="relative p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <span className="text-xs font-medium text-primary/70 uppercase tracking-wider">
+                            {session.subtitle}
+                          </span>
+                          <h4 className="font-display text-xl font-semibold mt-1">{session.name}</h4>
+                </div>
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                          <SessionIcon className="w-5 h-5 text-primary" />
+          </div>
+        </div>
+                      <p className="text-primary/80 text-sm font-medium mb-2">&quot;{session.trigger}&quot;</p>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-5">
+                        {session.description}
+                      </p>
+                      <div className="flex items-center gap-3">
+                        <Button variant="hero" size="sm" className="flex-1">
+                          <Play className="w-4 h-4" />
+                          Listen Now
+                        </Button>
+                        <span className="text-xs text-muted-foreground">~3 min</span>
+        </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+            <p className="text-xs text-muted-foreground/60 mt-4 text-center">
+              Sessions for the spiral — voice-guided clarity injections
+                </p>
+              </div>
+
+          {/* System Summary */}
+          <div className="mt-20 p-8 rounded-3xl bg-gradient-to-br from-primary/5 via-secondary/50 to-primary/5 border border-primary/10 text-center">
+            <h4 className="font-display text-xl font-semibold mb-3">The Complete System</h4>
+            <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+              <span className="px-4 py-2 rounded-full bg-card border border-border">
+                <strong className="text-foreground">States</strong> <span className="text-muted-foreground">for the day</span>
+              </span>
+              <span className="text-muted-foreground">+</span>
+              <span className="px-4 py-2 rounded-full bg-card border border-border">
+                <strong className="text-foreground">Scenarios</strong> <span className="text-muted-foreground">for the moment</span>
+              </span>
+              <span className="text-muted-foreground">+</span>
+              <span className="px-4 py-2 rounded-full bg-card border border-border">
+                <strong className="text-foreground">Sessions</strong> <span className="text-muted-foreground">for the spiral</span>
+              </span>
+            </div>
+            <p className="text-muted-foreground mt-4 max-w-lg mx-auto">
+              Three tools. Every mental situation covered. Your brain stays online.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-24 px-4">
+        <div className="max-w-lg mx-auto text-center">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
+            Simple Pricing
+            </h2>
+          <p className="text-muted-foreground mb-12">
+            Costs less than losing one hour to mental fog
+          </p>
+
+          <div className="relative">
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-primary/10 rounded-3xl blur-2xl" />
+            
+            <div className="relative p-8 rounded-3xl bg-card border-2 border-primary/30 glow-primary">
+              <div className="mb-6">
+                <span className="font-display text-5xl font-bold">$15</span>
+                <span className="text-muted-foreground">/ month</span>
+                  </div>
+
+              <p className="text-foreground font-medium mb-8">
+                Reset your mind anytime
+              </p>
+
+              <ul className="space-y-4 text-left mb-8">
+                {pricingFeatures.map((feature, index) => (
+                  <li key={index} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 text-primary" />
+                      </div>
+                    <span className="text-muted-foreground">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <SignUpButton 
+                mode="modal"
+                fallbackRedirectUrl="/soundscapes"
+                signInFallbackRedirectUrl="/soundscapes"
+              >
+                <Button variant="hero" size="xl" className="w-full">
+                  Start Free
+                </Button>
+              </SignUpButton>
+
+              <p className="text-sm text-muted-foreground mt-4">
+                No commitment. Cancel anytime.
+              </p>
+                      </div>
+                    </div>
+                  </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="py-24 px-4 bg-secondary/30">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
+              Real Questions, Real Answers
+            </h2>
+                </div>
+
+          <Accordion type="single" collapsible className="space-y-4">
+            {faqs.map((faq, index) => (
+              <AccordionItem 
+                key={index} 
+                value={`item-${index}`}
+                className="bg-card border border-border rounded-xl px-6 data-[state=open]:border-primary/30"
+              >
+                <AccordionTrigger className="text-left font-display font-semibold hover:no-underline py-5">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground pb-5">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-32 px-4 relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
+            Stop letting mental overload{" "}
+            <span className="text-gradient">sabotage your progress.</span>
+            </h2>
+
+          <p className="text-xl text-muted-foreground mb-10">
+            Get your mind back in minutes.
+          </p>
+
+          <SignUpButton 
+            mode="modal"
+            fallbackRedirectUrl="/soundscapes"
+            signInFallbackRedirectUrl="/soundscapes"
+          >
+            <Button variant="hero" size="xl">
+              Start Free
+            </Button>
+          </SignUpButton>
+
+          <p className="mt-6 text-muted-foreground">
+            Begin building from a clear, steady mind again.
+          </p>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-4 border-t border-border">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                <Waves className="w-5 h-5 text-primary" />
+              </div>
+              <span className="font-display font-semibold">DoNothing<span className="text-primary">Sounds</span></span>
+            </div>
+
+            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <a href="#" className="hover:text-foreground transition-colors">
+                Privacy
+              </a>
+              <a href="#" className="hover:text-foreground transition-colors">
+                Terms
+              </a>
+              <Link href="/learn-more" className="hover:text-foreground transition-colors">
+                How it works
+              </Link>
+            </div>
+
+            <p className="text-sm text-muted-foreground">
+              © 2024 DoNothingSounds. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

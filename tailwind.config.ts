@@ -9,7 +9,15 @@ const config: Config = {
 	],
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ["Inter", "system-ui", "sans-serif"],
+				display: ["Space Grotesk", "system-ui", "sans-serif"],
+			},
 			colors: {
+				surface: {
+					elevated: "hsl(var(--surface-elevated))",
+					hover: "hsl(var(--surface-hover))",
+				},
 				// Brand palette
 				brand: {
 					bg: '#0E0E0E',

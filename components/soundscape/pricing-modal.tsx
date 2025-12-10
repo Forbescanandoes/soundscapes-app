@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Check, Loader2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -20,42 +20,17 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
   const [loading, setLoading] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
-  const plans = [
-    {
-      name: 'monthly',
-      price: '$5',
-      period: '/month',
-      description: 'billed monthly',
-      priceId: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID || '',
-      planType: 'monthly',
-      features: [
-        'full soundscape library',
-        'unlimited sessions',
-        'weekly new soundscapes',
-        'founder engineered audio',
-        'cancel anytime',
-        'works across all devices',
-        'instant access'
-      ]
-    },
-    {
-      name: 'yearly',
-      price: '$35',
-      period: '/year',
-      description: 'save 42%',
-      popular: true,
-      priceId: process.env.NEXT_PUBLIC_STRIPE_YEARLY_PRICE_ID || '',
-      planType: 'yearly',
-      features: [
-        'everything in the monthly plan',
-        '2 months free - save 42% for committing yearly'
-      ]
-    }
+  const pricingFeatures = [
+    "Full Founder Reset Library",
+    "unlimited Scenarios, States, and get your head back sessions",
+    "New drops every month",
+    "Early access to experimental soundscapes",
+    "Direct access to the founder (24/7 DM)"
   ]
 
-  const handleCheckout = async (priceId: string, planType: string) => {
+  const handleCheckout = async () => {
     try {
-      setLoading(planType)
+      setLoading('checkout')
       setError(null)
 
       // Call our API to create a Stripe Checkout session
@@ -65,8 +40,8 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          priceId, 
-          planType 
+          priceId: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID || '',
+          planType: 'monthly'
         }),
       })
 
@@ -89,104 +64,69 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-brand-bg border-brand-text-muted/20 sm:max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="text-center space-y-4 flex-shrink-0">
-          <DialogTitle className="text-3xl sm:text-4xl font-light lowercase tracking-tight text-brand-text-primary">
-            join donothing<span className="text-brand-accent">sounds</span>
+      <DialogContent className="bg-card border border-border sm:max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="text-center space-y-4">
+          <DialogTitle className="font-display text-3xl sm:text-4xl font-bold">
+            Simple Pricing
           </DialogTitle>
-          
-          <DialogDescription className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-            get unlimited access to every soundscape. reset anytime, anywhere.
+          <DialogDescription className="text-muted-foreground">
+            Costs less than losing one hour to mental fog
           </DialogDescription>
         </DialogHeader>
 
-        {/* Pricing Options */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-          {plans.map((plan, index) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="relative"
-            >
-              {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                  <span className="text-xs lowercase tracking-wide bg-brand-accent text-white px-3 py-1 rounded-full">
-                    most popular
-                  </span>
-                </div>
-              )}
-              
-              <div
-                className={`
-                  block w-full p-6 rounded-2xl border-2 transition-all duration-300 text-left
-                  ${plan.popular 
-                    ? 'border-brand-accent bg-brand-accent/5' 
-                    : 'border-brand-text-muted/20 bg-brand-bg/50'
-                  }
-                `}
-              >
-                {/* Price */}
-                <div className="mb-4">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-light text-brand-text-primary">
-                      {plan.price}
-                    </span>
-                    <span className="text-lg text-brand-text-secondary lowercase">
-                      {plan.period}
-                    </span>
-                  </div>
-                  <p className="text-sm text-brand-accent lowercase tracking-wide mt-1">
-                    {plan.description}
-                  </p>
-                </div>
-
-                {/* Features */}
-                <div className="space-y-3 min-h-[250px]">
-                  {plan.features.map((feature, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <Check className="w-4 h-4 text-brand-accent flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-                        {feature}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <div className="mt-6">
-                  <button
-                    onClick={() => handleCheckout(plan.priceId, plan.planType)}
-                    disabled={loading !== null}
-                    className={`
-                      w-full py-3 rounded-xl text-center text-sm font-normal lowercase tracking-wide transition-all
-                      flex items-center justify-center gap-2
-                      ${plan.popular
-                        ? 'bg-brand-accent hover:bg-brand-accent/80 text-white'
-                        : 'bg-brand-text-muted/10 hover:bg-brand-text-muted/20 text-brand-text-primary'
-                      }
-                      disabled:opacity-50 disabled:cursor-not-allowed
-                    `}
-                  >
-                    {loading === plan.planType ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span>loading...</span>
-                      </>
-                    ) : (
-                      'upgrade to pro'
-                    )}
-                  </button>
-                </div>
+        <div className="mt-6">
+          <div className="relative">
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-primary/10 rounded-3xl blur-2xl" />
+            
+            <div className="relative p-8 rounded-3xl bg-card border-2 border-primary/30 glow-primary">
+              <div className="mb-6">
+                <span className="font-display text-5xl font-bold">$15</span>
+                <span className="text-muted-foreground">/ month</span>
               </div>
-            </motion.div>
-          ))}
+              
+              <p className="text-foreground font-medium mb-8">
+                Reset your mind anytime
+              </p>
+
+              <ul className="space-y-4 text-left mb-8">
+                {pricingFeatures.map((feature, index) => (
+                  <li key={index} className="flex items-center gap-3">
+                    <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 text-primary" />
+                    </div>
+                    <span className="text-muted-foreground">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button 
+                variant="hero" 
+                size="xl" 
+                className="w-full"
+                onClick={handleCheckout}
+                disabled={loading !== null}
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Loading...
+                  </>
+                ) : (
+                  'Start Free'
+                )}
+              </Button>
+
+              <p className="text-sm text-muted-foreground mt-4 text-center">
+                No commitment. Cancel anytime.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm lowercase text-center">
+          <div className="mt-4 p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm text-center">
             {error}
           </div>
         )}
@@ -194,4 +134,3 @@ export function PricingModal({ open, onOpenChange }: PricingModalProps) {
     </Dialog>
   )
 }
-

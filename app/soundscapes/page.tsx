@@ -1,16 +1,17 @@
 "use client"
 
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
-import { Play, Lock, ChevronDown, Sparkles, Repeat, Shuffle, List } from 'lucide-react'
-import { Player } from '@/components/soundscape/player'
-import { RotatingMessage } from '@/components/soundscape/rotating-message'
-import { PricingModal } from '@/components/soundscape/pricing-modal'
-import { ComingSoonModal } from '@/components/soundscape/coming-soon-modal'
-import { useAudioPlayer, type PlaybackMode } from '@/hooks/use-audio-player'
-import { SignedIn, SignedOut, SignUpButton, useClerk, useUser } from '@clerk/nextjs'
-import Link from 'next/link'
-import { trackPlay, startSession, endSession } from '@/utils/analytics/track'
-import { motion } from 'framer-motion'
+import { useState } from "react";
+import { 
+  Headphones, Target, MessageCircle, Play, Pause, Lock,
+  Layers, Brain, Flame, AlertCircle, Zap, Radio, 
+  Battery, Cloud, Coffee, Compass, Clock, Eye, Focus, 
+  Heart, Lightbulb, Moon, RefreshCw, Shield, Sparkles, 
+  Sun, Timer, Star, TrendingUp, Anchor, ChevronDown
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { useUser, useClerk } from "@clerk/nextjs";
+import { PricingModal } from "@/components/soundscape/pricing-modal";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,662 +19,495 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog'
 
-const soundCategories = [
-  {
-    title: 'Burnout',
-    items: [
-      { id: 'shipping-too-fast', name: 'shipping too fast' },
-      { id: 'slept-at-desk', name: 'slept at desk' },
-      { id: 'forgot-to-eat', name: 'forgot to eat' },
-      { id: 'brain-fog', name: 'brain fog' },
-      { id: 'running-on-fumes', name: 'running on fumes' },
-    ],
-  },
-  {
-    title: 'Overload',
-    items: [
-      { id: 'one-too-many-hats', name: 'one too many hats' },
-      { id: 'everything-on-fire', name: "everything's on fire" },
-      { id: 'ten-tabs-deep', name: 'ten tabs deep' },
-      { id: 'drowning-in-pings', name: 'drowning in pings' },
-      { id: 'zero-quiet', name: 'zero quiet' },
-    ],
-  },
-  {
-    title: 'Anxious',
-    items: [
-      { id: 'dread-of-marketing', name: 'the dread of marketing' },
-      { id: 'runway-math', name: 'runway math' },
-      { id: 'waiting-on-replies', name: 'waiting on replies' },
-      { id: 'imposter-hour', name: 'imposter hour' },
-      { id: 'distributed-my-guts', name: 'distributed my guts' },
-    ],
-  },
-  {
-    title: 'Scattered',
-    items: [
-      { id: 'twelve-tabs-open', name: 'twelve tabs open' },
-      { id: 'idea-avalanche', name: 'idea avalanche' },
-      { id: 'forgot-the-point', name: 'forgot the point' },
-      { id: 'dopamine-chase', name: 'dopamine chase' },
-      { id: 'cant-start', name: "can't start" },
-      { id: 'cant-stop', name: "can't stop" },
-      { id: 'half-built-everything', name: 'half built everything' },
-      { id: 'scrolling-instead', name: 'scrolling instead' },
-    ],
-  },
-]
+// 32 Founder States - 8 per category
+const founderStates = {
+  scattered: [
+    { name: "Half Built Everything", description: "When you have 12 projects at 40% and can't finish one", icon: Layers, free: true },
+    { name: "Shiny Object Syndrome", description: "Every new idea feels more exciting than your current one", icon: Sparkles },
+    { name: "Context Switching Hell", description: "Your brain is jumping between 10 different tasks", icon: RefreshCw },
+    { name: "Decision Paralysis", description: "Too many options, can't pick a direction", icon: Compass },
+    { name: "Fragmented Focus", description: "Your attention is split across too many things", icon: Focus },
+    { name: "Idea Overflow", description: "New ideas keep coming but nothing gets done", icon: Lightbulb },
+    { name: "Priority Confusion", description: "Everything feels equally important and urgent", icon: Star },
+    { name: "Tab Explosion Mode", description: "30 browser tabs open, zero clarity on what's next", icon: Layers },
+  ],
+  overloaded: [
+    { name: "One Too Many Hats", description: "CEO, dev, marketer, support your brain is fragmenting", icon: Brain, free: true },
+    { name: "Information Overload", description: "Too much input, can't process anything new", icon: Cloud },
+    { name: "Meeting Recovery", description: "Back-to-back calls have fried your thinking capacity", icon: Clock },
+    { name: "Inbox Avalanche", description: "Messages, emails, notifications drowning in input", icon: Radio },
+    { name: "Responsibility Crush", description: "Everything depends on you and it's too much", icon: Shield },
+    { name: "Learning Overload", description: "Trying to learn too many new things at once", icon: Eye },
+    { name: "Customer Chaos", description: "Support tickets, feedback, feature requests overwhelming", icon: MessageCircle },
+    { name: "Tech Stack Overwhelm", description: "Too many tools, integrations, and systems to manage", icon: Zap },
+  ],
+  burnout: [
+    { name: "Shipping Too Fast", description: "You've been sprinting for weeks and your mind is fried", icon: Flame, free: true },
+    { name: "Empty Tank", description: "No energy left, running on fumes", icon: Battery },
+    { name: "Creative Exhaustion", description: "The well is dry, nothing feels fresh anymore", icon: Sun },
+    { name: "Weekend? What Weekend?", description: "Haven't taken a real break in months", icon: Moon },
+    { name: "Output Obsession Crash", description: "Pushed too hard on metrics, now can't function", icon: TrendingUp },
+    { name: "Launch Hangover", description: "Post-launch exhaustion hitting hard", icon: Timer },
+    { name: "Hustle Culture Victim", description: "Bought into grind culture, now paying the price", icon: Coffee },
+    { name: "Solo Founder Fatigue", description: "Carrying everything alone has worn you down", icon: Anchor },
+  ],
+  anxious: [
+    { name: "The Dread of Marketing", description: "The thought of putting yourself out there feels impossible", icon: AlertCircle, free: true },
+    { name: "Comparison Spiral", description: "Everyone else seems to be winning except you", icon: Eye },
+    { name: "Imposter Syndrome Attack", description: "Feeling like a fraud who's about to be exposed", icon: Shield },
+    { name: "Launch Anxiety", description: "The fear of shipping and being judged", icon: Zap },
+    { name: "Revenue Panic", description: "Money fears are hijacking your thinking", icon: TrendingUp },
+    { name: "Failure Dread", description: "Constant fear that everything will collapse", icon: Cloud },
+    { name: "Public Speaking Terror", description: "Demo day, podcast, or call anxiety is spiking", icon: Radio },
+    { name: "Rejection Sensitivity", description: "Every 'no' feels like a personal attack", icon: Heart },
+  ],
+};
 
-// Access tier type
-type AccessTier = 'anonymous' | 'freemium' | 'pro'
+// 10 Founder Scenarios
+const founderScenarios = [
+  { name: "Stuck at 0 MRR Doubt Loop", trigger: "When comparison + fear are killing your execution", description: "Targeted reset for that specific moment when you're paralyzed by seeing others succeed while you're stuck at zero.", icon: Target, free: true },
+  { name: "Can't Start the Day", trigger: "When your brain feels blank and you can't begin work", description: "Precision designed for mornings where opening your laptop feels impossible.", icon: Sun, free: true },
+  { name: "Post-Rejection Spiral", trigger: "When a 'no' has sent you into doubt about everything", description: "Reset for the moment when rejection makes you question your entire direction.", icon: Heart },
+  { name: "The 3AM Pivot Urge", trigger: "When your brain wants to rebuild everything at 1AM", description: "Stops the late-night impulse to throw away months of work.", icon: Moon },
+  { name: "Demo Day Meltdown", trigger: "When you're about to present and can't think straight", description: "Emergency reset for high-stakes moments where anxiety is winning.", icon: Zap },
+  { name: "Competitor Panic", trigger: "When you see a competitor and lose all confidence", description: "Clears the spiral that starts with 'they're doing it better'.", icon: Eye },
+  { name: "Customer Complaint Crash", trigger: "When negative feedback sends you spiraling", description: "Reset for when one complaint makes you question everything.", icon: MessageCircle },
+  { name: "Funding Rejection Recovery", trigger: "When VCs pass and you feel like giving up", description: "Rebuilds conviction after investor rejection.", icon: TrendingUp },
+  { name: "Co-founder Tension Fog", trigger: "When relationship stress is blocking your work", description: "Clears the mental static from interpersonal conflict.", icon: Anchor },
+  { name: "The 'Nobody Cares' Spiral", trigger: "When zero engagement makes you want to quit", description: "Reset for the silence that makes you doubt if anyone will ever care.", icon: Radio },
+];
 
-// Determine how many songs are unlocked per tier
-function getUnlockedCount(tier: AccessTier): number {
-  switch (tier) {
-    case 'anonymous':
-      return 1 // First song only
-    case 'freemium':
-      return 2 // Top 2 songs
-    case 'pro':
-      return 999 // All songs
-    default:
-      return 1
-  }
-}
+// 5 Get-Your-Head-Back Sessions
+const headBackSessions = [
+  { name: "Regain Faith in Your Product", subtitle: "Founder Reset #1", trigger: "When you think your idea is trash", description: "A direct, founder to founder voice session that walks you out of the 'my product sucks' spiral.", duration: "4 min", icon: Heart, free: true },
+  { name: "Stop Rethinking Everything", subtitle: "Founder Reset #2", trigger: "When your brain tries to pivot you to death", description: "Interrupts the endless 'maybe I should build something else' loop and gets you back to shipping.", duration: "3 min", icon: RefreshCw, free: true },
+  { name: "Overthinking Shutdown", subtitle: "Founder Reset #3", trigger: "When your head is spinning and you can't act", description: "Breaks the analysis paralysis loop and gets you moving again.", duration: "5 min", icon: Brain },
+  { name: "Undo the Morning Spiral", subtitle: "Founder Reset #4", trigger: "When you wake up mentally cooked", description: "Clears the fog that hits before you even start working.", duration: "3 min", icon: Sun },
+  { name: "Get Back Into Execution Mode", subtitle: "Founder Reset #5", trigger: "When doubt has paralyzed you", description: "Shifts you from overthinking back to doing.", duration: "4 min", icon: Zap },
+];
 
-// Map of track IDs to actual audio filenames
-const fileMap: Record<string, string> = {
-  // Burnout
-  'shipping too fast': 'Shipping Too Fast.mp3',
-  'slept at desk': 'Slept at Desk.wav',
-  'forgot to eat': 'Forgot to Eat.wav',
-  'brain fog': 'Brain Fog.wav',
-  'running on fumes': 'Running on Fumes.wav',
-  
-  // Overload
-  'one too many hats': 'One Too Many Hats.wav',
-  "everything's on fire": "fire.wav",
-  'ten tabs deep': 'Ten Tabs Deep.wav',
-  'drowning in pings': 'Drowning in Pings.wav',
-  'zero quiet': 'Zero Quiet.wav',
-  
-  // Anxious
-  'the dread of marketing': 'the dread of marketing.wav',
-  'runway math': 'Runway Math.wav',
-  'waiting on replies': 'Waiting on Replies.wav',
-  'imposter hour': 'Imposter Hour.wav',
-  'distributed my guts': 'Distributed My Guts.wav',
-  
-  // Scattered
-  'twelve tabs open': 'Twelve Tabs Open.wav',
-  'idea avalanche': 'Idea Avalanche.wav',
-  'forgot the point': 'Forgot the Point.wav',
-  'dopamine chase': 'Dopamine Chase.wav',
-  "can't start": "Can't Start.wav",
-  "can't stop": "Can't Stop.wav",
-  'half built everything': 'Half Built Everything.wav',
-  'scrolling instead': 'Scrolling Instead.wav',
-}
+type TabType = "states" | "scenarios" | "sessions";
+type CategoryType = "scattered" | "overloaded" | "burnout" | "anxious";
+
+const categoryMeta: Record<CategoryType, { label: string; color: string; borderColor: string; bgColor: string }> = {
+  scattered: { label: "Scattered", color: "text-amber-400", borderColor: "border-amber-500/30", bgColor: "bg-amber-500/10" },
+  overloaded: { label: "Overloaded", color: "text-purple-400", borderColor: "border-purple-500/30", bgColor: "bg-purple-500/10" },
+  burnout: { label: "Burnout", color: "text-red-400", borderColor: "border-red-500/30", bgColor: "bg-red-500/10" },
+  anxious: { label: "Anxious", color: "text-blue-400", borderColor: "border-blue-500/30", bgColor: "bg-blue-500/10" },
+};
 
 export default function SoundscapesPage() {
-  const { signOut, openUserProfile } = useClerk()
-  const { user, isSignedIn } = useUser()
-  const [currentTrack, setCurrentTrack] = useState<{
-    id: string
-    name: string
-    category: string
-  } | null>(null)
-  const [showConversionModal, setShowConversionModal] = useState(false)
-  const [showPricingModal, setShowPricingModal] = useState(false)
-  const [showComingSoonModal, setShowComingSoonModal] = useState(false)
-  const [comingSoonFeature, setComingSoonFeature] = useState<string>('')
+  const { user } = useUser();
+  const { signOut, openUserProfile } = useClerk();
+  const [activeTab, setActiveTab] = useState<TabType>("states");
+  const [activeCategory, setActiveCategory] = useState<CategoryType>("scattered");
+  const [playingItem, setPlayingItem] = useState<string | null>(null);
+  const [showPricingModal, setShowPricingModal] = useState(false);
 
-  // Determine access tier - check Clerk metadata for pro subscription
-  const isPro = user?.publicMetadata?.subscriptionTier === 'pro' || user?.publicMetadata?.isPro === true
-  const accessTier: AccessTier = !isSignedIn ? 'anonymous' : (isPro ? 'pro' : 'freemium')
-  const unlockedCount = getUnlockedCount(accessTier)
+  // Determine if user is pro
+  const isPro = user?.publicMetadata?.subscriptionTier === 'pro' || user?.publicMetadata?.isPro === true;
 
-  // Add unlocked status to each category's items
-  const categoriesWithAccess = useMemo(() => {
-    return soundCategories.map(category => ({
-      ...category,
-      items: category.items.map((item, index) => ({
-        ...item,
-        unlocked: index < unlockedCount
-      }))
-    }))
-  }, [unlockedCount])
-
-  // Flatten all items for sequential/shuffle playback
-  const allUnlockedItems = useMemo(() => {
-    return categoriesWithAccess.flatMap(category =>
-      category.items
-        .filter(item => item.unlocked)
-        .map(item => ({
-          ...item,
-          category: category.title
-        }))
-    )
-  }, [categoriesWithAccess])
-
-  // Get next track based on playback mode
-  const getNextTrack = useCallback((currentId: string, mode: PlaybackMode) => {
-    if (mode === 'loop') return null // Loop mode doesn't need next track
-
-    const currentIndex = allUnlockedItems.findIndex(item => item.id === currentId)
-    if (currentIndex === -1) return allUnlockedItems[0] // Fallback to first track
-
-    if (mode === 'shuffle') {
-      // Random track (but not the same one)
-      const availableItems = allUnlockedItems.filter((_, idx) => idx !== currentIndex)
-      if (availableItems.length === 0) return allUnlockedItems[0]
-      return availableItems[Math.floor(Math.random() * availableItems.length)]
+  const handlePlay = (itemName: string, isLocked: boolean) => {
+    if (isLocked) {
+      setShowPricingModal(true);
+      return;
     }
+    setPlayingItem(playingItem === itemName ? null : itemName);
+  };
 
-    // Sequential mode: next in list, wrap to top
-    const nextIndex = (currentIndex + 1) % allUnlockedItems.length
-    return allUnlockedItems[nextIndex]
-  }, [allUnlockedItems])
-
-  // Callback for when track ends - play next track
-  const handlePlayNext = useCallback(() => {
-    if (!currentTrack) return
-    
-    const nextTrack = getNextTrack(currentTrack.id, playbackModeRef.current)
-    if (!nextTrack) return
-    
-    // End current session and start tracking new track
-    endSession()
-    trackPlay(nextTrack.id, nextTrack.name, nextTrack.category, user?.id)
-    startSession(nextTrack.id, nextTrack.name, nextTrack.category, user?.id)
-    
-    // Update current track
-    setCurrentTrack({ id: nextTrack.id, name: nextTrack.name, category: nextTrack.category })
-    
-    // Get filename and play
-    const filename = fileMap[nextTrack.name]
-    if (!filename) {
-      console.error(`No filename found for: ${nextTrack.name}`)
-      return
-    }
-    
-    const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
-    const audioUrl = `${storageUrl}/${encodeURIComponent(filename)}`
-    
-    playRef.current(nextTrack.id, audioUrl)
-  }, [currentTrack, getNextTrack, user?.id])
-
-  // Initialize audio player with onPlayNext callback
-  const { play, toggle, isPlaying, isLoading, playbackMode, setPlaybackMode } = useAudioPlayer({
-    onPlayNext: handlePlayNext
-  })
-
-  // Store refs for callbacks to avoid stale closures
-  const playRef = useRef(play)
-  const playbackModeRef = useRef(playbackMode)
-  
-  useEffect(() => {
-    playRef.current = play
-  }, [play])
-  
-  useEffect(() => {
-    playbackModeRef.current = playbackMode
-  }, [playbackMode])
-
-  // Spacebar to play/pause
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      // Only trigger if spacebar and not typing in an input/textarea
-      if (e.code === 'Space' && 
-          e.target instanceof HTMLElement && 
-          !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
-        e.preventDefault() // Prevent page scroll
-        toggle()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyPress)
-    return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [toggle])
-
-  const handleLockClick = useCallback(() => {
-    // Show conversion modal for anonymous users
-    // Show pricing modal for freemium users
-    if (!isSignedIn) {
-      setShowConversionModal(true)
-    } else {
-      setShowPricingModal(true)
-    }
-  }, [isSignedIn])
-
-  const handlePremiumFeatureClick = useCallback((featureName: string) => {
-    // Anonymous: show conversion modal (sign up)
-    // Freemium: show pricing modal (upgrade to pro)
-    // Pro: show coming soon modal
-    if (!isSignedIn) {
-      setShowConversionModal(true)
-    } else if (!isPro) {
-      setShowPricingModal(true)
-    } else {
-      setComingSoonFeature(featureName)
-      setShowComingSoonModal(true)
-    }
-  }, [isSignedIn, isPro])
-
-  const handlePlay = useCallback(async (itemId: string, itemName: string, categoryTitle: string, unlocked: boolean) => {
-    if (!unlocked) {
-      handleLockClick()
-      return
-    }
-    
-    // If clicking same track, toggle play/pause
-    if (currentTrack?.id === itemId) {
-      if (isPlaying) {
-        // Pausing - end the session
-        endSession()
-      } else {
-        // Resuming - start new session
-        startSession(itemId, itemName, categoryTitle, user?.id)
-      }
-      toggle()
-    } else {
-      // Switching tracks - end previous session
-      if (currentTrack && isPlaying) {
-        endSession()
-      }
-      
-      // Track the play
-      trackPlay(itemId, itemName, categoryTitle, user?.id)
-      
-      // Start new session
-      startSession(itemId, itemName, categoryTitle, user?.id)
-      
-      // Set as current track and play
-      setCurrentTrack({ id: itemId, name: itemName, category: categoryTitle })
-      
-      // Get filename from map
-      const filename = fileMap[itemName]
-      if (!filename) {
-        console.error(`No filename found for: ${itemName}`)
-        return
-      }
-      
-      // Use Supabase Storage URL
-      const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
-      const audioUrl = `${storageUrl}/${encodeURIComponent(filename)}`
-      
-      play(itemId, audioUrl)
-    }
-  }, [currentTrack, isPlaying, toggle, play, user?.id, handleLockClick])
+  const handleUpgradeClick = () => {
+    setShowPricingModal(true);
+  };
 
   return (
-    <div className="min-h-screen bg-brand-bg text-brand-text-primary flex flex-col">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 sm:p-6 border-b border-brand-text-muted/10">
-        {/* Left: Logo + Badge */}
-        <div className="flex items-center gap-3">
-          {/* Logo - back button when logged out, decorative when logged in */}
-          <SignedOut>
-            <Link href="/" className="w-10 h-10 rounded-full bg-brand-text-primary flex items-center justify-center hover:shadow-[0_0_20px_rgba(47,128,237,0.6)] transition-all duration-300">
-            <div className="w-6 h-6 rounded-full border-2 border-brand-bg" />
-          </Link>
-          </SignedOut>
-          <SignedIn>
-            <div className="w-10 h-10 rounded-full bg-brand-text-primary flex items-center justify-center hover:shadow-[0_0_20px_rgba(47,128,237,0.6)] transition-all duration-300 cursor-default">
-              <div className="w-6 h-6 rounded-full border-2 border-brand-bg" />
-            </div>
-          </SignedIn>
-          
-          {/* Try freemium button - becomes dropdown when signed in */}
-          <SignedOut>
-            <SignUpButton 
-              mode="modal"
-              fallbackRedirectUrl="/soundscapes"
-              signInFallbackRedirectUrl="/soundscapes"
-            >
-              <button className="text-xs lowercase tracking-wide border border-brand-accent/50 bg-brand-accent/5 hover:bg-brand-accent/10 px-4 py-1.5 rounded-full text-brand-accent hover:border-brand-accent transition-all duration-300">
-                try freemium
-              </button>
-            </SignUpButton>
-          </SignedOut>
-
-          <SignedIn>
+      <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <h1 className="font-display text-xl font-bold">DoNothing<span className="text-primary">Sounds</span></h1>
+          </div>
+          <div className="flex items-center gap-2">
+            {isPro ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                {isPro ? (
-                  <button className="relative group flex items-center gap-2 text-xs lowercase tracking-wide border-2 border-brand-accent/50 bg-gradient-to-r from-brand-accent/10 to-brand-accent/5 px-4 py-1.5 rounded-full text-brand-accent hover:border-brand-accent hover:shadow-[0_0_20px_rgba(47,128,237,0.3)] transition-all duration-300 focus:outline-none">
+                  <button className="relative group flex items-center gap-2 text-xs lowercase tracking-wide border-2 border-primary/50 bg-gradient-to-r from-primary/10 to-primary/5 px-4 py-1.5 rounded-full text-primary hover:border-primary hover:shadow-[0_0_20px_rgba(47,128,237,0.3)] transition-all duration-300 focus:outline-none">
                     <Sparkles className="w-3 h-3" />
                     premium
-                    <ChevronDown className="w-3 h-3" />
-                    <div className="absolute inset-0 rounded-full bg-brand-accent/0 group-hover:bg-brand-accent/5 transition-colors" />
-                  </button>
-                ) : (
-                <button className="flex items-center gap-2 text-xs lowercase tracking-wide border border-brand-text-muted/30 px-3 py-1 rounded-full text-brand-text-secondary hover:border-brand-accent/50 hover:text-brand-accent transition-colors focus:outline-none">
-                  freemium
                   <ChevronDown className="w-3 h-3" />
                 </button>
-                )}
               </DropdownMenuTrigger>
               <DropdownMenuContent 
-                align="start" 
-                className="w-48 bg-brand-bg-secondary border-brand-text-muted/20 text-brand-text-primary"
+                  align="end" 
+                  className="w-48 bg-card border-border text-foreground"
               >
                 <DropdownMenuItem 
                   onClick={() => openUserProfile()}
-                  className="lowercase cursor-pointer focus:bg-brand-text-muted/10 focus:text-brand-text-primary"
+                    className="lowercase cursor-pointer focus:bg-muted focus:text-foreground"
                 >
                   account settings
                 </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-brand-text-muted/10" />
+                  <DropdownMenuSeparator className="bg-border" />
+                <DropdownMenuItem 
+                    onClick={async () => {
+                      await signOut()
+                      window.location.href = '/'
+                    }}
+                    className="lowercase cursor-pointer text-destructive focus:bg-destructive/10 focus:text-destructive"
+                  >
+                    sign out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button 
+                    className="flex items-center gap-2 text-xs lowercase tracking-wide border border-muted-foreground/30 px-3 py-1 rounded-full text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors focus:outline-none"
+                  >
+                    freemium
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent 
+                  align="end" 
+                  className="w-48 bg-card border-border text-foreground"
+                >
+                  <DropdownMenuItem 
+                    onClick={handleUpgradeClick}
+                    className="lowercase cursor-pointer focus:bg-primary/10 focus:text-primary"
+                  >
+                    upgrade to premium
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-border" />
+                  <DropdownMenuItem 
+                    onClick={() => openUserProfile()}
+                    className="lowercase cursor-pointer focus:bg-muted focus:text-foreground"
+                  >
+                    account settings
+                </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-border" />
                 <DropdownMenuItem 
                   onClick={async () => {
                     await signOut()
                     window.location.href = '/'
                   }}
-                  className="lowercase cursor-pointer text-brand-error focus:bg-brand-error/10 focus:text-brand-error"
+                    className="lowercase cursor-pointer text-destructive focus:bg-destructive/10 focus:text-destructive"
                 >
                   sign out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </SignedIn>
+            )}
+          </div>
         </div>
-        
-        {/* Right: Empty for now, sign out is in dropdown */}
-        <div />
+      </header>
+
+      {/* Main Navigation Tabs */}
+      <nav className="border-b border-border bg-secondary/30">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex gap-1">
+            {[
+              { id: "states" as TabType, label: "Founder States", icon: Headphones, count: 32 },
+              { id: "scenarios" as TabType, label: "Founder Scenarios", icon: Target, count: 10 },
+              { id: "sessions" as TabType, label: "Get-Your-Head-Back", icon: MessageCircle, count: 5 },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={cn(
+                  "flex items-center gap-2 px-5 py-4 text-sm font-medium border-b-2 transition-all",
+                  activeTab === tab.id
+                    ? "border-primary text-foreground"
+                    : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                )}
+              >
+                <tab.icon className="w-4 h-4" />
+                <span className="hidden sm:inline">{tab.label}</span>
+                <span className="px-2 py-0.5 rounded-full bg-secondary text-xs">{tab.count}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* Content Area */}
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Founder States Tab */}
+        {activeTab === "states" && (
+          <div>
+            {/* Category Pills */}
+            <div className="flex flex-wrap gap-2 mb-8">
+              {(Object.keys(categoryMeta) as CategoryType[]).map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={cn(
+                    "px-4 py-2 rounded-full text-sm font-medium border transition-all",
+                    activeCategory === cat
+                      ? `${categoryMeta[cat].bgColor} ${categoryMeta[cat].borderColor} ${categoryMeta[cat].color}`
+                      : "bg-card border-border text-muted-foreground hover:border-primary/30"
+                  )}
+                >
+                  {categoryMeta[cat].label}
+                  <span className="ml-2 opacity-60">8</span>
+                </button>
+              ))}
       </div>
 
-      {/* Soundscapes List */}
-      <div className="flex-1 overflow-y-auto pb-32">
-        <div className="max-w-3xl mx-auto pt-8">
-          {categoriesWithAccess.map((category) => (
-            <div key={category.title}>
-              <div className="mb-12">
-              <h2 className="text-2xl font-light lowercase mb-6 px-4 sm:px-6 text-brand-text-primary tracking-tight">
-                {category.title}
+            {/* Section Description */}
+            <div className="mb-8">
+              <h2 className="font-display text-2xl font-bold mb-2">
+                {categoryMeta[activeCategory].label} States
               </h2>
-              <div className="space-y-0">
-                {category.items.map((item) => {
-                  const isActive = currentTrack?.id === item.id && isPlaying
+              <p className="text-muted-foreground">
+                Engineered audio environments that shift your brain out of {activeCategory} mode and into functional clarity.
+              </p>
+            </div>
 
+            {/* States Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {founderStates[activeCategory].map((state) => {
+                const isLocked = !isPro && !state.free;
+                return (
+                  <div
+                    key={state.name}
+                    onClick={() => isLocked && handlePlay(state.name, isLocked)}
+                    className={cn(
+                      "group relative p-5 rounded-2xl border transition-all duration-300",
+                      isLocked 
+                        ? "bg-card/30 border-border/50 opacity-50 cursor-pointer hover:opacity-60 hover:border-primary/30" 
+                        : "bg-card/50 border-border hover:border-primary/30 hover:scale-[1.02]",
+                      playingItem === state.name && !isLocked && `${categoryMeta[activeCategory].bgColor} ${categoryMeta[activeCategory].borderColor}`
+                    )}
+                  >
+                    {isLocked && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-card/60 backdrop-blur-sm rounded-2xl z-10 pointer-events-none">
+                        <Lock className="w-8 h-8 text-primary" />
+                      </div>
+                    )}
+                    <div className={cn(
+                      "w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-colors",
+                      playingItem === state.name && !isLocked ? "bg-primary/20" : "bg-secondary"
+                    )}>
+                      <state.icon className={cn(
+                        "w-5 h-5",
+                        playingItem === state.name && !isLocked ? "text-primary" : "text-muted-foreground"
+                      )} />
+                    </div>
+                    <h3 className="font-display font-semibold mb-1">
+                      {isLocked ? "••••••" : state.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                      {isLocked ? "Unlock to access" : state.description}
+                    </p>
+                    {!isLocked && (
+                      <Button
+                        variant="heroOutline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => handlePlay(state.name, isLocked)}
+                      >
+                        {playingItem === state.name ? (
+                          <><Pause className="w-4 h-4" /> Playing...</>
+                        ) : (
+                          <><Play className="w-4 h-4" /> Play State</>
+                        )}
+                      </Button>
+                    )}
+                    {isLocked && (
+                      <div className="w-full px-4 py-2 rounded-lg border border-border bg-secondary/50 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+                        <Lock className="w-4 h-4" /> Locked
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Founder Scenarios Tab */}
+        {activeTab === "scenarios" && (
+          <div>
+            <div className="mb-8">
+              <h2 className="font-display text-2xl font-bold mb-2">Founder Scenarios</h2>
+              <p className="text-muted-foreground max-w-2xl">
+                Precision designed resets for the exact mental breakdown moments solo founders face. Not moods <span className="text-foreground">exact situations.</span>
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6">
+              {founderScenarios.map((scenario) => {
+                const isLocked = !isPro && !scenario.free;
                   return (
-                    <button
-                      key={item.id}
-                      onClick={() => handlePlay(item.id, item.name, category.title, item.unlocked)}
-                      className={`
-                        w-full flex items-center justify-between px-4 sm:px-6 py-4 border-b border-brand-text-muted/10 transition-all
-                        ${!item.unlocked
-                            ? 'opacity-50 cursor-pointer'
-                          : 'hover:bg-brand-bg-secondary cursor-pointer'
-                        }
-                      `}
-                    >
-                      {/* Left: Icon + Name */}
-                      <div className="flex items-center gap-4 flex-1 min-w-0">
-                        {/* Circular Icon */}
-                        <div className={`
-                          flex-shrink-0 w-12 h-12 rounded-full border flex items-center justify-center transition-all
-                          ${!item.unlocked
-                            ? 'border-brand-text-muted/30 bg-brand-bg-secondary'
-                            : isActive
-                            ? 'border-brand-accent bg-brand-accent/10'
-                            : 'border-brand-text-muted/30 bg-brand-bg-secondary'
-                          }
-                        `}>
-                          {!item.unlocked ? (
-                            <Lock className="w-5 h-5 text-brand-text-muted" />
-                          ) : (
-                            <div className="w-6 h-6 rounded-full border-2 border-current" />
-                          )}
+                  <div
+                    key={scenario.name}
+                    onClick={() => isLocked && handlePlay(scenario.name, isLocked)}
+                    className={cn(
+                      "group relative p-6 rounded-2xl bg-gradient-to-br from-card to-card/50 border transition-all duration-300",
+                      isLocked 
+                        ? "opacity-50 border-border/50 cursor-pointer hover:opacity-60 hover:border-primary/30" 
+                        : playingItem === scenario.name ? "border-primary/50" : "border-border hover:border-primary/30"
+                    )}
+                  >
+                    {isLocked && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-card/60 backdrop-blur-sm rounded-2xl z-10 pointer-events-none">
+                        <Lock className="w-8 h-8 text-primary" />
+                      </div>
+                    )}
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center">
+                        <scenario.icon className="w-6 h-6 text-primary" />
+                      </div>
+                      <span className="px-3 py-1 rounded-full bg-destructive/10 text-destructive text-xs font-medium">
+                        Scenario
+                      </span>
+                    </div>
+                    <h3 className="font-display text-lg font-semibold mb-2">
+                      {isLocked ? "••••••" : scenario.name}
+                    </h3>
+                    <p className="text-primary/80 text-sm font-medium mb-2">
+                      {isLocked ? "Unlock to access" : scenario.trigger}
+                    </p>
+                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                      {isLocked ? "Premium feature" : scenario.description}
+                    </p>
+                    {!isLocked && (
+                      <Button
+                        variant="heroOutline"
+                        size="sm"
+                        className="w-full"
+                        onClick={() => handlePlay(scenario.name, isLocked)}
+                      >
+                        {playingItem === scenario.name ? (
+                          <><Pause className="w-4 h-4" /> Playing...</>
+                        ) : (
+                          <><Play className="w-4 h-4" /> Try Scenario</>
+                        )}
+                      </Button>
+                    )}
+                    {isLocked && (
+                      <div className="w-full px-4 py-2 rounded-lg border border-border bg-secondary/50 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+                        <Lock className="w-4 h-4" /> Locked
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Get-Your-Head-Back Sessions Tab */}
+        {activeTab === "sessions" && (
+          <div>
+            <div className="mb-8">
+              <h2 className="font-display text-2xl font-bold mb-2">Get-Your-Head-Back Sessions</h2>
+              <p className="text-muted-foreground max-w-2xl">
+                Short voice-guided resets that pull you out of spirals. Founder-to-founder. <span className="text-foreground">No guru energy.</span>
+              </p>
                         </div>
 
-                        {/* Track name */}
-                        <div className={`
-                          text-left text-lg font-light lowercase truncate
-                          ${!item.unlocked
-                            ? 'text-brand-text-muted'
-                            : isActive
-                            ? 'text-brand-accent'
-                            : 'text-brand-text-primary'
-                          }
-                        `}>
-                          {item.name}
+            <div className="grid gap-6">
+              {headBackSessions.map((session) => {
+                const isLocked = !isPro && !session.free;
+                return (
+                  <div
+                    key={session.name}
+                    onClick={() => isLocked && handlePlay(session.name, isLocked)}
+                    className={cn(
+                      "group relative overflow-hidden rounded-2xl bg-gradient-to-br from-secondary/80 to-secondary/40 border transition-all duration-300",
+                      isLocked 
+                        ? "opacity-50 border-border/50 cursor-pointer hover:opacity-60 hover:border-primary/30" 
+                        : playingItem === session.name ? "border-primary/50" : "border-border hover:border-primary/30"
+                    )}
+                  >
+                    {isLocked && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-card/60 backdrop-blur-sm rounded-2xl z-10 pointer-events-none">
+                        <Lock className="w-8 h-8 text-primary" />
+                      </div>
+                    )}
+                    <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
+                    <div className="relative p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center gap-6">
+                      <div className="flex-shrink-0">
+                        <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+                          <session.icon className="w-8 h-8 text-primary" />
                         </div>
                       </div>
-
-                      {/* Right: Play button */}
-                      {item.unlocked && (
-                        <div className={`
-                          flex-shrink-0 ml-4
-                          ${isActive ? 'text-brand-accent' : 'text-brand-text-secondary'}
-                        `}>
-                          <Play 
-                            className="w-5 h-5" 
-                            fill={isActive ? 'currentColor' : 'none'}
-                          />
+                      <div className="flex-1">
+                        <span className="text-xs font-medium text-primary/70 uppercase tracking-wider">
+                          {session.subtitle}
+                        </span>
+                        <h3 className="font-display text-xl font-semibold mt-1 mb-2">
+                          {isLocked ? "••••••" : session.name}
+                        </h3>
+                        <p className="text-primary/80 text-sm font-medium mb-1">
+                          {isLocked ? "Unlock to access" : `"${session.trigger}"`}
+                        </p>
+                        <p className="text-muted-foreground text-sm leading-relaxed">
+                          {isLocked ? "Premium voice session" : session.description}
+                        </p>
+                        </div>
+                      <div className="flex sm:flex-col items-center gap-4">
+                        <span className="text-sm text-muted-foreground">{session.duration}</span>
+                        {!isLocked && (
+                          <Button
+                            variant="hero"
+                            onClick={() => handlePlay(session.name, isLocked)}
+                          >
+                            {playingItem === session.name ? (
+                              <><Pause className="w-4 h-4" /> Pause</>
+                            ) : (
+                              <><Play className="w-4 h-4" /> Listen</>
+                            )}
+                          </Button>
+                        )}
+                        {isLocked && (
+                          <div className="px-4 py-2 rounded-lg border border-border bg-secondary/50 text-center text-sm text-muted-foreground flex items-center justify-center gap-2">
+                            <Lock className="w-4 h-4" /> Locked
                         </div>
                       )}
-                    </button>
-                  )
+                      </div>
+                    </div>
+                  </div>
+                );
                 })}
               </div>
-              </div>
+          </div>
+        )}
 
-              {/* Exercises Section - appears after Anxious */}
-              {category.title === 'Anxious' && (
-                <div className="mb-12">
-                  <h2 className="text-2xl font-light lowercase mb-6 px-4 sm:px-6 text-brand-text-primary tracking-tight">
-                    exercises
-                  </h2>
-                  <div className="overflow-x-auto px-4 sm:px-6 pb-2 hide-scrollbar">
-                    <div className="flex gap-6 min-w-max">
-                      {[
-                        { title: 'Lock In', subtitle: 'enter flow on command', image: '/exercises/lock-in.jpg' },
-                        { title: 'Wipe the Slate', subtitle: 'clear the mental fog fast', image: '/exercises/wipe-slate.jpg' },
-                        { title: 'Reboot Confidence', subtitle: 'reset belief before it slips', image: '/exercises/reboot-confidence.jpg' },
-                        { title: 'Calm Under Fire', subtitle: 'stay sharp under pressure', image: '/exercises/calm-under-fire.jpg' },
-                        { title: 'End of Cycle', subtitle: 'step out clean, not drained', image: '/exercises/end-of-cycle.jpg' },
-                      ].map((exercise) => (
-                        <button
-                          key={exercise.title}
-                          onClick={() => handlePremiumFeatureClick('exercises')}
-                          className="flex-shrink-0 w-48 group cursor-pointer"
-                        >
-                          {/* Square Image Box */}
-                          <div className="relative w-48 h-48 rounded-2xl overflow-hidden mb-4 bg-brand-bg-secondary border border-brand-text-muted/20 group-hover:border-brand-accent/60 transition-all duration-300">
-                            <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                            {/* Placeholder for image */}
-                            <div className="w-full h-full flex items-center justify-center text-brand-text-muted/30">
-                              <span className="text-sm lowercase tracking-wide">image</span>
-                            </div>
-                            {/* Lock Icon Overlay for non-pro users */}
-                            {!isPro && (
-                              <div className="absolute inset-0 flex items-center justify-center bg-brand-bg/40 backdrop-blur-sm">
-                                <Lock className="w-8 h-8 text-brand-accent" />
-                              </div>
-                            )}
-                          </div>
-                          {/* Title */}
-                          <h3 className="text-base font-light lowercase text-brand-text-primary mb-2 tracking-tight group-hover:text-brand-accent transition-colors">
-                            {exercise.title}
-                          </h3>
-                          {/* Subtitle */}
-                          <p className="text-sm lowercase text-brand-text-secondary tracking-wide leading-relaxed">
-                            {exercise.subtitle}
-                          </p>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Scenarios Section - appears after Overload */}
-              {category.title === 'Overload' && (
-                <div className="mb-12">
-                  <h2 className="text-2xl font-light lowercase mb-6 px-4 sm:px-6 text-brand-text-primary tracking-tight">
-                    scenarios
-                  </h2>
-                  <div className="space-y-3">
-                    {/* Row 1 - Horizontally scrollable */}
-                    <div className="overflow-x-auto px-4 sm:px-6 pb-2 hide-scrollbar">
-                      <div className="flex gap-3 min-w-max">
-                        {['Too Many Tabs in My Head', "Can't Tell What's Right Anymore", 'Brain Feels Like Static', 'Getting My Edge Back', 'Running Hot'].map((scenario) => (
-                          <button
-                            key={scenario}
-                            onClick={() => handlePremiumFeatureClick('scenarios')}
-                            className="relative px-5 py-3.5 rounded-2xl bg-gradient-to-br from-brand-bg-secondary to-brand-bg border border-brand-text-muted/30 hover:border-brand-accent/60 text-brand-text-primary text-sm font-light lowercase tracking-wide transition-all duration-300 hover:bg-brand-accent/5 hover:shadow-lg hover:shadow-brand-accent/10 whitespace-nowrap flex items-center gap-2"
-                          >
-                            {!isPro && (
-                              <Lock className="w-3.5 h-3.5 text-brand-accent flex-shrink-0" />
-                            )}
-                            <span>{scenario}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    {/* Row 2 - Horizontally scrollable, offset on desktop for brick effect */}
-                    <div className="overflow-x-auto px-4 sm:px-6 pb-2 hide-scrollbar">
-                      <div className="flex gap-3 min-w-max sm:ml-12">
-                        {['I Just Need Clarity', "It's There, I Just Can't Reach It", 'Too Much Input, Not Enough Me', "Everything's On Fire, But I Still Have to Think", 'Trying to Power Down'].map((scenario) => (
-                          <button
-                            key={scenario}
-                            onClick={() => handlePremiumFeatureClick('scenarios')}
-                            className="relative px-5 py-3.5 rounded-2xl bg-gradient-to-br from-brand-bg-secondary to-brand-bg border border-brand-text-muted/30 hover:border-brand-accent/60 text-brand-text-primary text-sm font-light lowercase tracking-wide transition-all duration-300 hover:bg-brand-accent/5 hover:shadow-lg hover:shadow-brand-accent/10 whitespace-nowrap flex items-center gap-2"
-                          >
-                            {!isPro && (
-                              <Lock className="w-3.5 h-3.5 text-brand-accent flex-shrink-0" />
-                            )}
-                            <span>{scenario}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+        {/* Quick Stats Footer */}
+        <div className="mt-16 p-6 rounded-2xl bg-secondary/30 border border-border">
+          <div className="flex flex-wrap items-center justify-center gap-8 text-center">
+            <div>
+              <div className="font-display text-3xl font-bold text-primary">32</div>
+              <div className="text-sm text-muted-foreground">Founder States</div>
             </div>
-          ))}
+            <div className="h-8 w-px bg-border" />
+            <div>
+              <div className="font-display text-3xl font-bold text-primary">10</div>
+              <div className="text-sm text-muted-foreground">Scenarios</div>
+            </div>
+            <div className="h-8 w-px bg-border" />
+            <div>
+              <div className="font-display text-3xl font-bold text-primary">5</div>
+              <div className="text-sm text-muted-foreground">Voice Sessions</div>
+            </div>
+            <div className="h-8 w-px bg-border hidden sm:block" />
+            <div className="hidden sm:block text-sm text-muted-foreground max-w-xs">
+              Everything you need to keep your founder brain online.
+            </div>
+          </div>
         </div>
-      </div>
+      </main>
 
-      {/* Player with Playback Controls */}
-      {currentTrack && (
-        <>
-        <Player
-          trackName={currentTrack.name}
-          isPlaying={isPlaying}
-          isLoading={isLoading}
-          onTogglePlay={toggle}
-        />
-          
-          {/* Playback Mode Controls - positioned above player */}
-          <div className="fixed bottom-[88px] left-0 right-0 z-40 px-4 py-3 flex items-center justify-center gap-3">
-            <button
-              onClick={() => setPlaybackMode('sequential')}
-              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                playbackMode === 'sequential'
-                  ? 'bg-brand-accent/20 text-brand-accent'
-                  : 'text-brand-text-muted hover:text-brand-text-primary'
-              }`}
-            >
-              <List className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setPlaybackMode('loop')}
-              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                playbackMode === 'loop'
-                  ? 'bg-brand-accent/20 text-brand-accent'
-                  : 'text-brand-text-muted hover:text-brand-text-primary'
-              }`}
-            >
-              <Repeat className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setPlaybackMode('shuffle')}
-              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-                playbackMode === 'shuffle'
-                  ? 'bg-brand-accent/20 text-brand-accent'
-                  : 'text-brand-text-muted hover:text-brand-text-primary'
-              }`}
-            >
-              <Shuffle className="w-5 h-5" />
-            </button>
-          </div>
-        </>
-      )}
-
-      {/* Rotating Message */}
-      <RotatingMessage />
-
-      {/* Conversion Modal (for anonymous users) */}
-      <Dialog open={showConversionModal} onOpenChange={setShowConversionModal}>
-        <DialogContent className="bg-gradient-to-br from-brand-bg to-brand-bg-secondary border border-brand-text-muted/20 max-w-[calc(100%-2rem)] sm:max-w-lg p-8 sm:p-10">
-          <DialogHeader className="space-y-6">
-            <DialogTitle className="text-3xl sm:text-4xl md:text-5xl font-light lowercase tracking-tight text-brand-text-primary leading-tight">
-              access the full system
-            </DialogTitle>
-            
-            <DialogDescription className="space-y-6 text-left">
-              <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed">
-                these soundscapes aren&apos;t music.
-              </p>
-              <p className="text-base sm:text-lg text-brand-text-primary lowercase leading-relaxed">
-                they&apos;re built to pull you out of cognitive overload so you can get back to work.
-              </p>
-              <p className="text-base sm:text-lg text-brand-text-secondary lowercase leading-relaxed">
-                sign up free to unlock more resets and keep using them for life.
-              </p>
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="flex flex-col gap-4 mt-8">
-            <SignUpButton 
-              mode="modal"
-              fallbackRedirectUrl="/soundscapes"
-              signInFallbackRedirectUrl="/soundscapes"
-            >
-              <motion.button
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                className="w-full rounded-lg bg-brand-accent px-8 py-4 text-base font-medium lowercase tracking-wide text-brand-bg transition-all duration-300 hover:shadow-[0_0_30px_rgba(47,128,237,0.4)]"
-              >
-                sign up free
-              </motion.button>
-            </SignUpButton>
-
-            <Link href="/learn-more" className="w-full">
-              <button
-                onClick={() => setShowConversionModal(false)}
-                className="w-full text-sm text-brand-text-muted hover:text-brand-accent lowercase tracking-wide transition-colors py-2"
-              >
-                see how they&apos;re built
-              </button>
-            </Link>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Pricing Modal (for freemium users) */}
+      {/* Pricing Modal */}
       <PricingModal 
         open={showPricingModal} 
         onOpenChange={setShowPricingModal}
       />
-
-      {/* Coming Soon Modal (for pro users clicking premium features) */}
-      <ComingSoonModal
-        open={showComingSoonModal}
-        onOpenChange={setShowComingSoonModal}
-        featureName={comingSoonFeature}
-      />
     </div>
-  )
+  );
 }

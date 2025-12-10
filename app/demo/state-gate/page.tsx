@@ -90,23 +90,8 @@ export default function StateGate() {
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="w-24 h-px bg-gradient-to-r from-transparent via-brand-accent to-transparent mx-auto mb-8"
+            className="w-24 h-px bg-gradient-to-r from-transparent via-brand-accent to-transparent mx-auto mb-16"
           />
-
-          {/* Description */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="space-y-6 mb-16"
-          >
-            <p className="text-xl sm:text-2xl text-brand-text-secondary lowercase leading-relaxed tracking-wide">
-              don&apos;t use this out of curiosity.
-            </p>
-            <p className="text-xl sm:text-2xl text-brand-text-primary lowercase leading-relaxed tracking-wide">
-              use it when your head feels jammed, foggy, or you&apos;re on the edge of burning out.
-            </p>
-          </motion.div>
 
           {/* Buttons */}
           <motion.div
@@ -132,18 +117,6 @@ export default function StateGate() {
             >
               not right now
             </motion.button>
-          </motion.div>
-
-          {/* Bottom emphasis */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1 }}
-            className="mt-16"
-          >
-            <p className="text-base sm:text-lg text-brand-text-muted lowercase tracking-wide">
-              designed for founders in the middle of it.
-            </p>
           </motion.div>
         </motion.div>
       </div>
