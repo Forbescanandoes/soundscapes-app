@@ -3,9 +3,10 @@
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { SignUpButton, SignedOut, useUser } from '@clerk/nextjs'
-import { Play, Zap, Brain, RefreshCw, Lightbulb, Shield, Rocket, Quote, Library, Waves, Clock, Gauge, Check, Radio, Headphones, MessageCircle, Target, Flame, AlertCircle, Layers } from 'lucide-react'
+import { Play, Pause, Zap, Brain, RefreshCw, Lightbulb, Shield, Rocket, Quote, Library, Waves, Clock, Gauge, Check, Radio, Headphones, MessageCircle, Target, Flame, AlertCircle, Layers } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useAudioPlayer } from '@/hooks/use-audio-player'
 import {
   Accordion,
   AccordionContent,
@@ -13,10 +14,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
+const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
+
 export default function Home() {
   const { isSignedIn } = useUser()
   const router = useRouter()
   const [activeState, setActiveState] = useState(0)
+  const { play, pause, isPlaying, currentTrackId } = useAudioPlayer()
   
   // Redirect logged-in users to soundscapes
   useEffect(() => {
@@ -175,6 +179,8 @@ export default function Home() {
       icon: Layers,
       color: "from-amber-500/20 to-amber-600/10",
       borderColor: "border-amber-500/30",
+      id: "half-built-everything",
+      file: "Half-Built Everything.mp3",
     },
     {
       category: "Overloaded",
@@ -183,6 +189,8 @@ export default function Home() {
       icon: Brain,
       color: "from-purple-500/20 to-purple-600/10",
       borderColor: "border-purple-500/30",
+      id: "one-too-many-hats",
+      file: "One Too Many Hats.wav",
     },
     {
       category: "Burnout",
@@ -191,6 +199,8 @@ export default function Home() {
       icon: Flame,
       color: "from-red-500/20 to-red-600/10",
       borderColor: "border-red-500/30",
+      id: "shipping-too-fast",
+      file: "Shipping Too Fast.mp3",
     },
     {
       category: "Anxious",
@@ -199,8 +209,19 @@ export default function Home() {
       icon: AlertCircle,
       color: "from-blue-500/20 to-blue-600/10",
       borderColor: "border-blue-500/30",
+      id: "dread-of-marketing",
+      file: "the dread of marketing.wav",
     },
   ]
+
+  const handlePreviewState = (state: typeof founderStates[0]) => {
+    const audioUrl = `${storageUrl}/${encodeURIComponent(state.file)}`
+    if (isPlaying && currentTrackId === state.id) {
+      pause()
+    } else {
+      play(state.id, audioUrl)
+    }
+  }
 
   const founderScenarios = [
     {
@@ -581,10 +602,10 @@ export default function Home() {
               {founderStates.map((state, index) => {
                 const StateIcon = state.icon
                 return (
-                  <button
+                  <div
                     key={state.name}
                     onClick={() => setActiveState(index)}
-                    className={`group relative p-5 rounded-2xl border text-left transition-all duration-300 ${
+                    className={`group relative p-5 rounded-2xl border text-left transition-all duration-300 cursor-pointer ${
                       activeState === index
                         ? `bg-gradient-to-br ${state.color} ${state.borderColor} scale-[1.02]`
                         : "bg-card/50 border-border hover:border-primary/20"
@@ -608,16 +629,33 @@ export default function Home() {
                   </div>
                     {activeState === index && (
                       <div className="mt-4 pt-4 border-t border-border/50">
-                        <Button size="sm" variant="heroOutline" className="w-full text-xs">
-                          <Play className="w-3 h-3" />
-                          Preview State
+                        <Button 
+                          size="sm" 
+                          variant="heroOutline" 
+                          className="w-full text-xs"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handlePreviewState(state)
+                          }}
+                        >
+                          {isPlaying && currentTrackId === state.id ? (
+                            <>
+                              <Pause className="w-3 h-3" />
+                              Playing...
+                            </>
+                          ) : (
+                            <>
+                              <Play className="w-3 h-3" />
+                              Preview State
+                            </>
+                          )}
                         </Button>
                 </div>
                     )}
-                  </button>
+          </div>
                 )
               })}
-          </div>
+        </div>
             <p className="text-xs text-muted-foreground/60 mt-4 text-center">
               States for the day shift your baseline mental mode
             </p>
