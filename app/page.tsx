@@ -241,7 +241,7 @@ export default function Home() {
       description: "Too many ideas, none feel 'right,' terrified of choosing wrong. They don't need clarity — they need state stability so they can CHOOSE.",
       internalVoice: "What if I waste months on the wrong thing?",
       icon: Target,
-      file: "i-dont-know-what-to-build.mp3",
+      file: "idk what to build COACH.mp3",
     },
     {
       id: "scenario-2",
@@ -250,7 +250,7 @@ export default function Home() {
       description: "They like their idea… until they don't… then they do again 6 hours later. They confuse mood with market signal.",
       internalVoice: "I can't tell if this is genius or trash.",
       icon: Zap,
-      file: "is-my-idea-even-good.mp3",
+      file: "Is My Idea Even Good? COACH.mp3",
     },
   ]
 
