@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/accordion"
 
 const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
-const scenariosStorageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/scenerios'
+const scenariosStorageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/Scenerios'
 
 export default function Home() {
   const { isSignedIn } = useUser()
