@@ -226,6 +226,8 @@ export default function Home() {
 
   const handlePreviewScenario = (scenario: typeof founderScenarios[0]) => {
     const audioUrl = `${scenariosStorageUrl}/${encodeURIComponent(scenario.file)}`
+    console.log('Playing scenario:', scenario.name)
+    console.log('Audio URL:', audioUrl)
     if (isPlaying && currentTrackId === scenario.id) {
       pause()
     } else {
