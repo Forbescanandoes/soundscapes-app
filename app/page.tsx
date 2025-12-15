@@ -913,15 +913,23 @@ export default function Home() {
             </div>
 
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <a href="#" className="hover:text-foreground transition-colors">
-                Privacy
-              </a>
-              <a href="#" className="hover:text-foreground transition-colors">
-                Terms
-              </a>
               <Link href="/learn-more" className="hover:text-foreground transition-colors">
                 How it works
               </Link>
+              <Link href="/privacy" className="hover:text-foreground transition-colors">
+                Privacy
+              </Link>
+              <Link href="/terms" className="hover:text-foreground transition-colors">
+                Terms
+              </Link>
+              <a 
+                href="https://x.com/loganforbes2442" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-foreground transition-colors"
+              >
+                Contact
+              </a>
             </div>
 
             <p className="text-sm text-muted-foreground">
