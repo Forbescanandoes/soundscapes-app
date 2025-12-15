@@ -16,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Soundscapes - Relief for Builders",
+  title: "DoNothingSounds – Get your head back and ship",
   description: "When you hit the wall, hit play.",
   icons: {
     icon: '/favcon.png',
@@ -30,6 +30,10 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
+      afterSignInUrl="/soundscapes"
+      afterSignUpUrl="/soundscapes"
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
       appearance={{
         baseTheme: undefined,
         variables: {
