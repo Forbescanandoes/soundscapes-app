@@ -21,7 +21,7 @@ const Privacy = () => {
       <main className="py-16 px-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-display font-bold mb-2">Privacy Policy</h1>
-          <p className="text-muted-foreground mb-12">Last updated: December 2024</p>
+          <p className="text-muted-foreground mb-12">Last updated: December 15, 2025</p>
 
           <div className="prose prose-invert max-w-none space-y-8">
             <p className="text-lg text-muted-foreground">

@@ -933,7 +933,7 @@ export default function Home() {
             </div>
 
             <p className="text-sm text-muted-foreground">
-              © 2024 DoNothingSounds. All rights reserved.
+              © 2025 DoNothingSounds. All rights reserved.
             </p>
           </div>
         </div>
