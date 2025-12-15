@@ -225,15 +225,17 @@ export default function Home() {
 
   const founderScenarios = [
     {
-      name: "Stuck at 0 MRR Doubt Loop",
+      name: "The 'I Don't Know What to Build' Loop",
       trigger: "When comparison + fear are killing your execution",
-      description: "Targeted reset for that specific moment when you're paralyzed by seeing others succeed while you're stuck.",
+      description: "Too many ideas, none feel 'right,' terrified of choosing wrong. They don't need clarity — they need state stability so they can CHOOSE.",
+      internalVoice: "What if I waste months on the wrong thing?",
       icon: Target,
     },
     {
-      name: "Can't Start the Day",
+      name: "The 'Is My Idea Even Good?' Spiral",
       trigger: "When your brain feels blank and you can't begin work",
-      description: "Precision designed for mornings where opening your laptop feels impossible.",
+      description: "They like their idea… until they don't… then they do again 6 hours later. They confuse mood with market signal.",
+      internalVoice: "I can't tell if this is genius or trash.",
       icon: Zap,
     },
   ]
@@ -692,10 +694,17 @@ export default function Home() {
                         </span>
                       </div>
                       <h4 className="font-display text-xl font-semibold mb-2">{scenario.name}</h4>
-                      <p className="text-primary/80 text-sm font-medium mb-3">{scenario.trigger}</p>
+                      <p className="text-primary text-sm font-medium mb-3">{scenario.trigger}</p>
                       <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                         {scenario.description}
                       </p>
+                      {scenario.internalVoice && (
+                        <div className="mb-4 p-3 rounded-lg bg-muted/30 border-l-2 border-primary/50">
+                          <p className="text-foreground/80 text-sm italic">
+                            &quot;{scenario.internalVoice}&quot;
+                          </p>
+                        </div>
+                      )}
                       <Button variant="heroOutline" size="sm" className="w-full">
                         <Play className="w-4 h-4" />
                         Try This Scenario

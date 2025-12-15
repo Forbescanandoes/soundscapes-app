@@ -64,18 +64,10 @@ const founderStates = {
   ],
 };
 
-// 10 Founder Scenarios
+// 2 Founder Scenarios
 const founderScenarios = [
-  { name: "Stuck at 0 MRR Doubt Loop", trigger: "When comparison + fear are killing your execution", description: "Targeted reset for that specific moment when you're paralyzed by seeing others succeed while you're stuck at zero.", icon: Target, free: true },
-  { name: "Can't Start the Day", trigger: "When your brain feels blank and you can't begin work", description: "Precision designed for mornings where opening your laptop feels impossible.", icon: Sun, free: true },
-  { name: "Post-Rejection Spiral", trigger: "When a 'no' has sent you into doubt about everything", description: "Reset for the moment when rejection makes you question your entire direction.", icon: Heart },
-  { name: "The 3AM Pivot Urge", trigger: "When your brain wants to rebuild everything at 1AM", description: "Stops the late-night impulse to throw away months of work.", icon: Moon },
-  { name: "Demo Day Meltdown", trigger: "When you're about to present and can't think straight", description: "Emergency reset for high-stakes moments where anxiety is winning.", icon: Zap },
-  { name: "Competitor Panic", trigger: "When you see a competitor and lose all confidence", description: "Clears the spiral that starts with 'they're doing it better'.", icon: Eye },
-  { name: "Customer Complaint Crash", trigger: "When negative feedback sends you spiraling", description: "Reset for when one complaint makes you question everything.", icon: MessageCircle },
-  { name: "Funding Rejection Recovery", trigger: "When VCs pass and you feel like giving up", description: "Rebuilds conviction after investor rejection.", icon: TrendingUp },
-  { name: "Co-founder Tension Fog", trigger: "When relationship stress is blocking your work", description: "Clears the mental static from interpersonal conflict.", icon: Anchor },
-  { name: "The 'Nobody Cares' Spiral", trigger: "When zero engagement makes you want to quit", description: "Reset for the silence that makes you doubt if anyone will ever care.", icon: Radio },
+  { name: "The 'I Don't Know What to Build' Loop", trigger: "Too many ideas, none feel 'right,' terrified of choosing wrong", description: "They don't need clarity — they need state stability so they can CHOOSE.", internalVoice: "What if I waste months on the wrong thing?", icon: Target, free: true },
+  { name: "The 'Is My Idea Even Good?' Spiral", trigger: "They like their idea… until they don't… then they do again 6 hours later", description: "They confuse mood with market signal.", internalVoice: "I can't tell if this is genius or trash.", icon: Zap, free: true },
 ];
 
 // 5 Get-Your-Head-Back Sessions
@@ -210,7 +202,7 @@ export default function SoundscapesPage() {
           <div className="flex gap-1">
             {[
               { id: "states" as TabType, label: "Founder States", icon: Headphones, count: 32 },
-              { id: "scenarios" as TabType, label: "Founder Scenarios", icon: Target, count: 10 },
+              { id: "scenarios" as TabType, label: "Founder Scenarios", icon: Target, count: 2 },
               { id: "sessions" as TabType, label: "Get-Your-Head-Back", icon: MessageCircle, count: 5 },
             ].map((tab) => (
               <button
@@ -368,12 +360,19 @@ export default function SoundscapesPage() {
                     <h3 className="font-display text-lg font-semibold mb-2">
                       {isLocked ? "••••••" : scenario.name}
                     </h3>
-                    <p className="text-primary/80 text-sm font-medium mb-2">
+                    <p className="text-primary text-sm font-medium mb-2">
                       {isLocked ? "Unlock to access" : scenario.trigger}
                     </p>
                     <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                       {isLocked ? "Premium feature" : scenario.description}
                     </p>
+                    {!isLocked && 'internalVoice' in scenario && scenario.internalVoice && (
+                      <div className="mb-4 p-3 rounded-lg bg-muted/30 border-l-2 border-primary/50">
+                        <p className="text-foreground/80 text-sm italic">
+                          &quot;{scenario.internalVoice}&quot;
+                        </p>
+                      </div>
+                    )}
                     {!isLocked && (
                       <Button
                         variant="heroOutline"
