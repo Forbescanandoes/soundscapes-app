@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/accordion"
 
 const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
+const scenariosStorageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/scenerios'
 
 export default function Home() {
   const { isSignedIn } = useUser()
@@ -223,20 +224,33 @@ export default function Home() {
     }
   }
 
+  const handlePreviewScenario = (scenario: typeof founderScenarios[0]) => {
+    const audioUrl = `${scenariosStorageUrl}/${encodeURIComponent(scenario.file)}`
+    if (isPlaying && currentTrackId === scenario.id) {
+      pause()
+    } else {
+      play(scenario.id, audioUrl)
+    }
+  }
+
   const founderScenarios = [
     {
+      id: "scenario-1",
       name: "The 'I Don't Know What to Build' Loop",
       trigger: "When comparison + fear are killing your execution",
       description: "Too many ideas, none feel 'right,' terrified of choosing wrong. They don't need clarity — they need state stability so they can CHOOSE.",
       internalVoice: "What if I waste months on the wrong thing?",
       icon: Target,
+      file: "i-dont-know-what-to-build.mp3",
     },
     {
+      id: "scenario-2",
       name: "The 'Is My Idea Even Good?' Spiral",
       trigger: "When your brain feels blank and you can't begin work",
       description: "They like their idea… until they don't… then they do again 6 hours later. They confuse mood with market signal.",
       internalVoice: "I can't tell if this is genius or trash.",
       icon: Zap,
+      file: "is-my-idea-even-good.mp3",
     },
   ]
 
@@ -705,9 +719,23 @@ export default function Home() {
                           </p>
                         </div>
                       )}
-                      <Button variant="heroOutline" size="sm" className="w-full">
-                        <Play className="w-4 h-4" />
-                        Try This Scenario
+                      <Button 
+                        variant="heroOutline" 
+                        size="sm" 
+                        className="w-full"
+                        onClick={() => handlePreviewScenario(scenario)}
+                      >
+                        {isPlaying && currentTrackId === scenario.id ? (
+                          <>
+                            <Pause className="w-4 h-4" />
+                            Playing...
+                          </>
+                        ) : (
+                          <>
+                            <Play className="w-4 h-4" />
+                            Try This Scenario
+                          </>
+                        )}
                       </Button>
                     </div>
                   </div>

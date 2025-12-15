@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useUser, useClerk } from "@clerk/nextjs";
 import { PricingModal } from "@/components/soundscape/pricing-modal";
+import { useAudioPlayer } from "@/hooks/use-audio-player";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +20,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+
+const storageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/soundscapes'
+const scenariosStorageUrl = 'https://gbyvackgdmzrfawmeuhd.supabase.co/storage/v1/object/public/scenerios'
 
 // 32 Founder States - 8 per category
 const founderStates = {
@@ -66,8 +70,8 @@ const founderStates = {
 
 // 2 Founder Scenarios
 const founderScenarios = [
-  { name: "The 'I Don't Know What to Build' Loop", trigger: "Too many ideas, none feel 'right,' terrified of choosing wrong", description: "They don't need clarity — they need state stability so they can CHOOSE.", internalVoice: "What if I waste months on the wrong thing?", icon: Target, free: true },
-  { name: "The 'Is My Idea Even Good?' Spiral", trigger: "They like their idea… until they don't… then they do again 6 hours later", description: "They confuse mood with market signal.", internalVoice: "I can't tell if this is genius or trash.", icon: Zap, free: true },
+  { id: "scenario-1", name: "The 'I Don't Know What to Build' Loop", trigger: "Too many ideas, none feel 'right,' terrified of choosing wrong", description: "They don't need clarity — they need state stability so they can CHOOSE.", internalVoice: "What if I waste months on the wrong thing?", icon: Target, file: "i-dont-know-what-to-build.mp3", free: true },
+  { id: "scenario-2", name: "The 'Is My Idea Even Good?' Spiral", trigger: "They like their idea… until they don't… then they do again 6 hours later", description: "They confuse mood with market signal.", internalVoice: "I can't tell if this is genius or trash.", icon: Zap, file: "is-my-idea-even-good.mp3", free: true },
 ];
 
 // 5 Get-Your-Head-Back Sessions
@@ -96,6 +100,7 @@ export default function SoundscapesPage() {
   const [activeCategory, setActiveCategory] = useState<CategoryType>("scattered");
   const [playingItem, setPlayingItem] = useState<string | null>(null);
   const [showPricingModal, setShowPricingModal] = useState(false);
+  const { play, pause, isPlaying, currentTrackId } = useAudioPlayer();
 
   // Determine if user is pro
   const isPro = user?.publicMetadata?.subscriptionTier === 'pro' || user?.publicMetadata?.isPro === true;
@@ -106,6 +111,19 @@ export default function SoundscapesPage() {
       return;
     }
     setPlayingItem(playingItem === itemName ? null : itemName);
+  };
+
+  const handlePlayScenario = (scenario: typeof founderScenarios[0], isLocked: boolean) => {
+    if (isLocked) {
+      setShowPricingModal(true);
+      return;
+    }
+    const audioUrl = `${scenariosStorageUrl}/${encodeURIComponent(scenario.file)}`;
+    if (isPlaying && currentTrackId === scenario.id) {
+      pause();
+    } else {
+      play(scenario.id, audioUrl);
+    }
   };
 
   const handleUpgradeClick = () => {
@@ -336,12 +354,12 @@ export default function SoundscapesPage() {
                   return (
                   <div
                     key={scenario.name}
-                    onClick={() => isLocked && handlePlay(scenario.name, isLocked)}
+                    onClick={() => isLocked && handlePlayScenario(scenario, isLocked)}
                     className={cn(
                       "group relative p-6 rounded-2xl bg-gradient-to-br from-card to-card/50 border transition-all duration-300",
                       isLocked 
                         ? "opacity-50 border-border/50 cursor-pointer hover:opacity-60 hover:border-primary/30" 
-                        : playingItem === scenario.name ? "border-primary/50" : "border-border hover:border-primary/30"
+                        : (isPlaying && currentTrackId === scenario.id) ? "border-primary/50" : "border-border hover:border-primary/30"
                     )}
                   >
                     {isLocked && (
@@ -378,9 +396,9 @@ export default function SoundscapesPage() {
                         variant="heroOutline"
                         size="sm"
                         className="w-full"
-                        onClick={() => handlePlay(scenario.name, isLocked)}
+                        onClick={() => handlePlayScenario(scenario, isLocked)}
                       >
-                        {playingItem === scenario.name ? (
+                        {isPlaying && currentTrackId === scenario.id ? (
                           <><Pause className="w-4 h-4" /> Playing...</>
                         ) : (
                           <><Play className="w-4 h-4" /> Try Scenario</>
