@@ -10,7 +10,7 @@ const testimonials = [
     author: "SaaS Builder",
   },
   {
-    quote: "Finally something that isn't wellness fluff. It just improves the vibe.",
+    quote: "Makes work feel lighter without trying to fix me.",
     author: "AI Founder",
   },
 ];
