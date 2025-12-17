@@ -5,7 +5,7 @@ const differentiators = [
   { text: "Not productivity hacks", isNot: true },
   { text: "No breathwork, no woo", isNot: true },
   { text: "Actually made for builders", isNot: false },
-  { text: "Vibe-first, not discipline-first", isNot: false },
+  { text: "Vibe first, not discipline first", isNot: false },
   { text: "Works in 30–90 seconds", isNot: false },
   { text: "Designed around real creative flow", isNot: false },
 ];
