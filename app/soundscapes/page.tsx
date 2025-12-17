@@ -35,7 +35,7 @@ const founderStates = {
     { name: "Idea Overflow", description: "New ideas keep coming but nothing gets done", icon: Lightbulb },
     { name: "Priority Confusion", description: "Everything feels equally important and urgent", icon: Star },
     { name: "Tab Explosion Mode", description: "30 browser tabs open, zero clarity on what's next", icon: Layers },
-  ],
+    ],
   overloaded: [
     { name: "One Too Many Hats", description: "CEO, dev, marketer, support your brain is fragmenting", icon: Brain, free: true },
     { name: "Information Overload", description: "Too much input, can't process anything new", icon: Cloud },
@@ -175,7 +175,7 @@ export default function SoundscapesPage() {
                 <DropdownMenuTrigger asChild>
                   <button 
                     className="flex items-center gap-2 text-xs lowercase tracking-wide border border-muted-foreground/30 px-3 py-1 rounded-full text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors focus:outline-none"
-                  >
+                >
                     freemium
                     <ChevronDown className="w-3 h-3" />
                   </button>
@@ -361,7 +361,7 @@ export default function SoundscapesPage() {
                         ? "opacity-50 border-border/50 cursor-pointer hover:opacity-60 hover:border-primary/30" 
                         : (isPlaying && currentTrackId === scenario.id) ? "border-primary/50" : "border-border hover:border-primary/30"
                     )}
-                  >
+                    >
                     {isLocked && (
                       <div className="absolute inset-0 flex items-center justify-center bg-card/60 backdrop-blur-sm rounded-2xl z-10 pointer-events-none">
                         <Lock className="w-8 h-8 text-primary" />

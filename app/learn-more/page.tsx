@@ -32,7 +32,7 @@ const HowItWorks = () => {
           <div className="mb-16">
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">
               How DoNothingSounds Works
-            </h1>
+          </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
               DoNothingSounds helps you get out of your own head when it matters most — not by motivating you, but by <span className="text-foreground font-medium">stabilizing your mental state</span> so you can think and act again.
             </p>
@@ -50,9 +50,9 @@ const HowItWorks = () => {
               <div>
                 <span className="text-sm text-muted-foreground font-medium">01</span>
                 <h2 className="text-2xl font-display font-bold">Soundscapes — Lower the pressure first</h2>
-              </div>
-            </div>
-            
+        </div>
+      </div>
+
             <div className="space-y-4 text-muted-foreground">
               <p className="text-lg">
                 When your brain is overloaded, reasoning doesn&apos;t work.<br />
@@ -80,14 +80,14 @@ const HowItWorks = () => {
                 You don&apos;t focus on them.<br />
                 You don&apos;t meditate.<br />
                 You just let them run while you work or sit.
-              </p>
+            </p>
               
               <div className="p-4 rounded-lg bg-primary/5 border border-primary/10">
                 <p className="text-foreground font-medium">
                   This is the foundation.<br />
                   No clarity happens without lowering the pressure first.
-                </p>
-              </div>
+            </p>
+          </div>
             </div>
           </section>
 
@@ -101,8 +101,8 @@ const HowItWorks = () => {
                 <span className="text-sm text-muted-foreground font-medium">02</span>
                 <h2 className="text-2xl font-display font-bold">Scenarios — Match the moment you&apos;re in</h2>
               </div>
-            </div>
-            
+          </div>
+          
             <div className="space-y-4 text-muted-foreground">
               <p className="text-lg">
                 Founders don&apos;t fail in abstract ways.<br />
@@ -157,9 +157,9 @@ const HowItWorks = () => {
               <div>
                 <span className="text-sm text-muted-foreground font-medium">03</span>
                 <h2 className="text-2xl font-display font-bold">Talk-Downs — Get your head back</h2>
-              </div>
-            </div>
-            
+                      </div>
+                    </div>
+                    
             <div className="space-y-4 text-muted-foreground">
               <p className="text-lg">
                 Sometimes sound alone isn&apos;t enough.
@@ -195,23 +195,23 @@ const HowItWorks = () => {
                 <p className="text-foreground font-medium">
                   Think of it as:<br />
                   &quot;Get your head back. Now decide.&quot;
-                </p>
-              </div>
-            </div>
+                    </p>
+                  </div>
+                </div>
           </section>
 
           {/* When to use it */}
           <section className="mb-16">
-            <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center">
                 <Zap className="w-6 h-6 text-primary" />
               </div>
               <h2 className="text-2xl font-display font-bold">When to use it</h2>
-            </div>
+          </div>
             
             <div className="space-y-4 text-muted-foreground">
               <p>Use DoNothingSounds when:</p>
-              
+          
               <ul className="space-y-2 pl-4">
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary" />
@@ -252,8 +252,8 @@ const HowItWorks = () => {
               <div className="p-4 rounded-lg bg-muted/30 border border-border text-center">
                 <span className="text-muted-foreground line-through">Not productivity hacks</span>
               </div>
-            </div>
-            
+                    </div>
+                    
             <p className="text-lg text-foreground font-medium">
               This is about <span className="text-primary">state control</span>, not advice.
             </p>
@@ -291,8 +291,8 @@ const HowItWorks = () => {
               
               <p className="text-foreground font-medium text-lg mt-6">
                 That&apos;s it.
-              </p>
-            </div>
+                    </p>
+                  </div>
           </section>
 
           {/* Founder Note */}
@@ -313,20 +313,20 @@ const HowItWorks = () => {
                 <p className="text-sm text-muted-foreground mt-3">
                   — Founder, DoNothingSounds
                 </p>
-              </div>
-            </div>
+                </div>
+          </div>
           </section>
 
-          {/* CTA */}
+        {/* CTA */}
           <div className="text-center pt-8 border-t border-border">
             <h3 className="text-2xl font-display font-bold mb-4">Ready to try it?</h3>
-            <Link href="/soundscapes">
+          <Link href="/soundscapes">
               <Button variant="hero" size="lg">
                 Start Free
-              </Button>
-            </Link>
+            </Button>
+          </Link>
           </div>
-        </div>
+      </div>
       </main>
     </div>
   );
