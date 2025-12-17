@@ -18,7 +18,7 @@ export const PricingSection = () => {
       <div className="container mx-auto px-6 max-w-2xl relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Simple, <span className="text-gradient">vibe-based</span> pricing
+            Simple, <span className="text-gradient">vibe based</span> pricing
           </h2>
         </div>
         
