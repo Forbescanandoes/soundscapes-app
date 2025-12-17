@@ -40,7 +40,7 @@ export const HeroSection = () => {
         </p>
         
         <p className="text-lg text-muted-foreground/80 mb-10 max-w-2xl mx-auto animate-fade-up" style={{ animationDelay: "0.2s" }}>
-          DoNothingSounds gives builders flow-ready soundscapes that make coding, designing, and shipping feel good — no wellness, no pressure, just a vibe that pulls you into the zone.
+          DoNothingSounds gives builders flow-ready soundscapes that make coding, designing, and shipping feel good.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-up" style={{ animationDelay: "0.3s" }}>
@@ -52,17 +52,6 @@ export const HeroSection = () => {
             <Headphones className="w-5 h-5" />
             Hear a Soundscape
           </Button>
-        </div>
-        
-        <p className="mt-12 text-sm font-mono text-muted-foreground animate-fade-up" style={{ animationDelay: "0.4s" }}>
-          Good vibes for people making cool sh*t.
-        </p>
-      </div>
-      
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
-        <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center pt-2">
-          <div className="w-1 h-3 bg-primary rounded-full animate-pulse" />
         </div>
       </div>
     </section>
