@@ -40,7 +40,7 @@ export const TestimonialsSection = () => {
                 "{testimonial.quote}"
               </blockquote>
               <cite className="text-sm font-mono text-muted-foreground not-italic">
-                — {testimonial.author}
+                {testimonial.author}
               </cite>
             </div>
           ))}

@@ -49,10 +49,10 @@ export const ProblemSection = () => {
         
         <div className="text-center space-y-4">
           <p className="text-xl text-foreground">
-            It's not that you can't build —
+            It's not that you can't build.
           </p>
           <p className="text-xl text-primary font-medium">
-            your environment just isn't helping.
+            Your environment just isn't helping.
           </p>
           <p className="text-lg text-muted-foreground mt-8 font-mono">
             When the vibe is wrong, everything feels harder.

@@ -34,7 +34,7 @@ const HowItWorks = () => {
               How DoNothingSounds Works
           </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              DoNothingSounds helps you get out of your own head when it matters most — not by motivating you, but by <span className="text-foreground font-medium">stabilizing your mental state</span> so you can think and act again.
+              DoNothingSounds helps you get out of your own head when it matters most. Not by motivating you, but by <span className="text-foreground font-medium">stabilizing your mental state</span> so you can think and act again.
             </p>
             <p className="text-lg text-muted-foreground mt-4">
               It works through three simple tools you use in real moments.
@@ -49,7 +49,7 @@ const HowItWorks = () => {
               </div>
               <div>
                 <span className="text-sm text-muted-foreground font-medium">01</span>
-                <h2 className="text-2xl font-display font-bold">Soundscapes — Lower the pressure first</h2>
+                <h2 className="text-2xl font-display font-bold">Soundscapes: Lower the pressure first</h2>
         </div>
       </div>
 
@@ -99,7 +99,7 @@ const HowItWorks = () => {
               </div>
               <div>
                 <span className="text-sm text-muted-foreground font-medium">02</span>
-                <h2 className="text-2xl font-display font-bold">Scenarios — Match the moment you&apos;re in</h2>
+                <h2 className="text-2xl font-display font-bold">Scenarios: Match the moment you&apos;re in</h2>
               </div>
           </div>
           
@@ -156,7 +156,7 @@ const HowItWorks = () => {
               </div>
               <div>
                 <span className="text-sm text-muted-foreground font-medium">03</span>
-                <h2 className="text-2xl font-display font-bold">Talk-Downs — Get your head back</h2>
+                <h2 className="text-2xl font-display font-bold">Talk-Downs: Get your head back</h2>
                       </div>
                     </div>
                     
@@ -308,10 +308,10 @@ const HowItWorks = () => {
                   &quot;I built this from my own pain.&quot;
                 </p>
                 <p className="text-muted-foreground">
-                  Every scenario, every soundscape, every talk-down — they exist because I needed them first. This isn&apos;t theory. It&apos;s what actually worked when my brain wouldn&apos;t stop breaking.
+                  Every scenario, every soundscape, every talk-down. They exist because I needed them first. This isn&apos;t theory. It&apos;s what actually worked when my brain wouldn&apos;t stop breaking.
                 </p>
                 <p className="text-sm text-muted-foreground mt-3">
-                  — Founder, DoNothingSounds
+                  Founder, DoNothingSounds
                 </p>
                 </div>
           </div>

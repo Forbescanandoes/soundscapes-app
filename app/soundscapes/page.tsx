@@ -70,7 +70,7 @@ const founderStates = {
 
 // 2 Founder Scenarios
 const founderScenarios = [
-  { id: "scenario-1", name: "The 'I Don't Know What to Build' Loop", trigger: "Too many ideas, none feel 'right,' terrified of choosing wrong", description: "They don't need clarity — they need state stability so they can CHOOSE.", internalVoice: "What if I waste months on the wrong thing?", icon: Target, file: "idk what to build COACH.mp3", free: true },
+  { id: "scenario-1", name: "The 'I Don't Know What to Build' Loop", trigger: "Too many ideas, none feel 'right,' terrified of choosing wrong", description: "They don't need clarity. They need state stability so they can CHOOSE.", internalVoice: "What if I waste months on the wrong thing?", icon: Target, file: "idk what to build COACH.mp3", free: true },
   { id: "scenario-2", name: "The 'Is My Idea Even Good?' Spiral", trigger: "They like their idea… until they don't… then they do again 6 hours later", description: "They confuse mood with market signal.", internalVoice: "I can't tell if this is genius or trash.", icon: Zap, file: "Is My Idea Even Good? COACH.mp3", free: true },
 ];
 

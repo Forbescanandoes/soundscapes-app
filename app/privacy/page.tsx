@@ -33,7 +33,7 @@ const Privacy = () => {
               <p className="text-muted-foreground mb-4">We collect only what&apos;s necessary to run the service:</p>
               <ul className="list-disc list-inside space-y-2 text-muted-foreground">
                 <li>Account information (email, name if provided)</li>
-                <li>Payment information (handled securely by Stripe — we never see or store your card details)</li>
+                <li>Payment information (handled securely by Stripe. We never see or store your card details)</li>
                 <li>Usage data (basic analytics such as which pages or features are used)</li>
                 <li>Communications (messages you send us for support)</li>
               </ul>

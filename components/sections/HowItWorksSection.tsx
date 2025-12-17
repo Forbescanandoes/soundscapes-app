@@ -11,7 +11,7 @@ const steps = [
     number: "02",
     icon: Play,
     title: "Press play",
-    description: "The audio shifts your environment instantly — lighter, calmer, more focused.",
+    description: "The audio shifts your environment instantly. Lighter, calmer, more focused.",
   },
   {
     number: "03",
